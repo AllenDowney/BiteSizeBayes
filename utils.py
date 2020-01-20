@@ -173,13 +173,14 @@ def resample_by_year(df, column='wtssall'):
 
 
 def values(series):
-    """Count the values and sort.
+    """Make a series of values and the number of times they appear.
     
-    series: pd.Series
+    series: Pandas Series
     
-    returns: series mapping from values to frequencies
+    returns: Pandas Series
     """
-    return series.value_counts().sort_index()
+    return series.value_counts(dropna=False).sort_index()
+
 
 def count_by_year(gss, varname):
     """Groups by category and year and counts.
