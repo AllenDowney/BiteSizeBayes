@@ -175,11 +175,17 @@ def resample_by_year(df, column='wtssall'):
 def values(series):
     """Make a series of values and the number of times they appear.
     
+    Returns a DataFrame because Jupyter does a better job 
+    displaying DataFrames.
+    
     series: Pandas Series
     
-    returns: Pandas Series
+    returns: Pandas DataFrame
     """
-    return series.value_counts(dropna=False).sort_index()
+    series = series.value_counts(dropna=False).sort_index()
+    series.index.name = 'values'
+    series.name = 'counts'
+    return pd.DataFrame(series)
 
 
 def count_by_year(gss, varname):
