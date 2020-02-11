@@ -1,37 +1,53 @@
-## Welcome to GitHub Pages
+*Bite Size Bayes* is an introduction to Bayesian statistics using Python and (coming soon) R.  It does not assume any previous knowledge of probability or Bayesian methods.
 
-You can use the [editor on GitHub](https://github.com/AllenDowney/BiteSizeBayes/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+This material is a work in progress, so suggestions are welcome.  The best way to provide feedback is to [click here and create an issue in this GitHub repository](https://github.com/AllenDowney/BiteSizeBayes/issues).
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
+## The notebooks
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+For each of the notebooks below, you have two options: if you view the notebook on NBViewer, you can read it, but you can't run the code.  If you run the notebook on Colab, you'll be able to run the code, do the exercises, and save your modified version of the notebook in a Google Drive (if you have one).
 
-```markdown
-Syntax highlighted code block
+### Notebook 1
 
-# Header 1
-## Header 2
-### Header 3
+**The Linda Problem**: The first notebook ...
 
-- Bulleted
-- List
+Press this button to run this notebook on Colab:
 
-1. Numbered
-2. List
+[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/01_linda.ipynb)
 
-**Bold** and _Italic_ and `Code` text
+[or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/01_linda.ipynb)
 
-[Link](url) and ![Image](src)
-```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+### Notebook 2
 
-### Jekyll Themes
+**Bayes's Theorem**: This notebook...
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/AllenDowney/BiteSizeBayes/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+Press this button to run this notebook on Colab:
 
-### Support or Contact
+[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/02_bayes.ipynb)
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+[or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/02_bayes.ipynb)
+
+
+### Notebook 3
+
+**The Cookie Problem**: This notebook ...
+
+Press this button to run this notebook on Colab:
+
+[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/03_cookie.ipynb)
+
+[or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/03_cookie.ipynb)
+
+
+### Notebook 4
+
+**The Dice Problem**: This notebook ...
+
+Press this button to run this notebook on Colab:
+
+[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/04_dice.ipynb)
+
+[or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/04_dice.ipynb)
+
+
