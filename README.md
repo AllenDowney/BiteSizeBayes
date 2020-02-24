@@ -7,9 +7,10 @@ This material is a work in progress, so suggestions are welcome.  The best way t
 
 For each of the notebooks below, you have two options: if you view the notebook on NBViewer, you can read it, but you can't run the code.  If you run the notebook on Colab, you'll be able to run the code, do the exercises, and save your modified version of the notebook in a Google Drive (if you have one).
 
+
 ### Notebook 1
 
-**The Linda Problem**: The first notebook ...
+**The Linda Problem**: 
 
 Press this button to run this notebook on Colab:
 
@@ -20,7 +21,7 @@ Press this button to run this notebook on Colab:
 
 ### Notebook 2
 
-**Bayes's Theorem**: This notebook...
+**Bayes's Theorem**: 
 
 Press this button to run this notebook on Colab:
 
@@ -31,7 +32,7 @@ Press this button to run this notebook on Colab:
 
 ### Notebook 3
 
-**The Cookie Problem**: This notebook ...
+**The Cookie Problem**: 
 
 Press this button to run this notebook on Colab:
 
@@ -42,12 +43,34 @@ Press this button to run this notebook on Colab:
 
 ### Notebook 4
 
-**The Dice Problem**: This notebook ...
+**The Dice Problem**: 
 
 Press this button to run this notebook on Colab:
 
 [<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/04_dice.ipynb)
 
 [or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/04_dice.ipynb)
+
+
+### Notebook 5
+
+**Interpreting medical tests**: 
+
+Press this button to run this notebook on Colab:
+
+[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/05_test.ipynb)
+
+[or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/05_test.ipynb)
+
+
+### Notebook 6
+
+**The probability mass function**: 
+
+Press this button to run this notebook on Colab:
+
+[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/06_pmf.ipynb)
+
+[or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/06_pmf.ipynb)
 
 
