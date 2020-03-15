@@ -10,7 +10,7 @@ For each of the notebooks below, you have two options: if you view the notebook 
 
 ### Notebook 1
 
-**The Linda Problem**: 
+**The Linda Problem**:
 
 Press this button to run this notebook on Colab:
 
@@ -21,7 +21,7 @@ Press this button to run this notebook on Colab:
 
 ### Notebook 2
 
-**Bayes's Theorem**: 
+**Bayes's Theorem**:
 
 Press this button to run this notebook on Colab:
 
@@ -32,7 +32,7 @@ Press this button to run this notebook on Colab:
 
 ### Notebook 3
 
-**The Cookie Problem**: 
+**The Cookie Problem**:
 
 Press this button to run this notebook on Colab:
 
@@ -43,7 +43,7 @@ Press this button to run this notebook on Colab:
 
 ### Notebook 4
 
-**The Dice Problem**: 
+**The Dice Problem**:
 
 Press this button to run this notebook on Colab:
 
@@ -54,7 +54,7 @@ Press this button to run this notebook on Colab:
 
 ### Notebook 5
 
-**Interpreting medical tests**: 
+**Interpreting medical tests**:
 
 Press this button to run this notebook on Colab:
 
@@ -65,7 +65,7 @@ Press this button to run this notebook on Colab:
 
 ### Notebook 6
 
-**The probability mass function**: 
+**The probability mass function**:
 
 Press this button to run this notebook on Colab:
 
@@ -74,3 +74,23 @@ Press this button to run this notebook on Colab:
 [or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/06_pmf.ipynb)
 
 
+### Notebook 7
+
+**The Euro problem**:
+
+Press this button to run this notebook on Colab:
+
+[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/07_euro.ipynb)
+
+[or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/07_euro.ipynb)
+
+
+### Notebook 8
+
+**The World Cup problem**:
+
+Press this button to run this notebook on Colab:
+
+[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/08_soccer.ipynb)
+
+[or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/08_soccer.ipynb)
