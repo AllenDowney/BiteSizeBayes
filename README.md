@@ -94,3 +94,14 @@ Press this button to run this notebook on Colab:
 [<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/08_soccer.ipynb)
 
 [or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/08_soccer.ipynb)
+
+
+### Notebook 9
+
+**The World Cup problem, part two**:
+
+Press this button to run this notebook on Colab:
+
+[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/09_predict.ipynb)
+
+[or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/09_predict.ipynb)
