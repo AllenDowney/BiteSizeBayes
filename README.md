@@ -105,3 +105,15 @@ Press this button to run this notebook on Colab:
 [<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/09_predict.ipynb)
 
 [or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/09_predict.ipynb)
+
+
+
+### Notebook 10
+
+**Joint distributions**:
+
+Press this button to run this notebook on Colab:
+
+[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/10_joint.ipynb)
+
+[or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/10_joint.ipynb)
