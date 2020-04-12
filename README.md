@@ -117,3 +117,26 @@ Press this button to run this notebook on Colab:
 [<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/10_joint.ipynb)
 
 [or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/10_joint.ipynb)
+
+
+### Notebook 11
+
+**Joint distributions**:
+
+Press this button to run this notebook on Colab:
+
+[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/11_faceoff.ipynb)
+
+[or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/11_faceoff.ipynb)
+
+
+
+### Notebook 12
+
+**Hypothesis testing**:
+
+Press this button to run this notebook on Colab:
+
+[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/12_binomial.ipynb)
+
+[or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/12_binomial.ipynb)
