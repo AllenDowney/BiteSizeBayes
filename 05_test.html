@@ -88,7 +88,7 @@
     <ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="README.html">
-   The notebooks
+   Bite Size Bayes
   </a>
  </li>
 </ul>
@@ -672,122 +672,10 @@
 </div>
 <p><strong>Exercise:</strong> Suppose we take the same test to another town, called Sickville, where the base rate of the disease is 10%, substantially higher than in Bayesville.  If a citizen of Sickville tests positive, what is the probability that they have the condition?</p>
 <p>Use <code class="docutils literal notranslate"><span class="pre">make_bayes_table</span></code> to compute the result.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">hypos</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;condition&#39;</span><span class="p">,</span> <span class="s1">&#39;no condition&#39;</span><span class="p">]</span>
-<span class="n">prior</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span>
-<span class="n">likelihood</span> <span class="o">=</span> <span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.05</span>
-
-<span class="n">make_bayes_table</span><span class="p">(</span><span class="n">hypos</span><span class="p">,</span> <span class="n">prior</span><span class="p">,</span> <span class="n">likelihood</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>prior</th>
-      <th>likelihood</th>
-      <th>unnorm</th>
-      <th>posterior</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>condition</th>
-      <td>0.1</td>
-      <td>0.95</td>
-      <td>0.095</td>
-      <td>0.678571</td>
-    </tr>
-    <tr>
-      <th>no condition</th>
-      <td>0.9</td>
-      <td>0.05</td>
-      <td>0.045</td>
-      <td>0.321429</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
 <p>With a higher base rate, the posterior probability is substantially higher.</p>
 <p><strong>Exercise:</strong> Suppose we go back to Bayesville, where the base rate is 1%, with a new test that is 99.5% accurate.</p>
 <p>If a citizen of Bayesville tests positive with the new test, what is the probability they have the condition?</p>
 <p>Use <code class="docutils literal notranslate"><span class="pre">make_bayes_table</span></code> to compute the result.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">hypos</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;condition&#39;</span><span class="p">,</span> <span class="s1">&#39;no condition&#39;</span><span class="p">]</span>
-<span class="n">prior</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.99</span>
-<span class="n">likelihood</span> <span class="o">=</span> <span class="mf">0.995</span><span class="p">,</span> <span class="mf">0.005</span>
-
-<span class="n">make_bayes_table</span><span class="p">(</span><span class="n">hypos</span><span class="p">,</span> <span class="n">prior</span><span class="p">,</span> <span class="n">likelihood</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>prior</th>
-      <th>likelihood</th>
-      <th>unnorm</th>
-      <th>posterior</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>condition</th>
-      <td>0.01</td>
-      <td>0.995</td>
-      <td>0.00995</td>
-      <td>0.667785</td>
-    </tr>
-    <tr>
-      <th>no condition</th>
-      <td>0.99</td>
-      <td>0.005</td>
-      <td>0.00495</td>
-      <td>0.332215</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
 <p>With an accuracy of 99.5%, the positive test provides stronger evidence, so it is able to overcome the small prior.</p>
 </div>
 <div class="section" id="the-elvis-problem">
@@ -800,62 +688,6 @@
 U.S. Census Bureau, <a class="reference external" href="https://www.cdc.gov/nchs/data/vsushistorical/birthstat_1935.pdf">Birth, Stillbirth, and Infant Mortality Statistics for the Continental United States, the Territory of Hawaii, the Virgin Islands 1935</a> to estimate that in 1935, about 1/3 of twins were identical.</p>
 <p><strong>Exercise:</strong> Use this base rate and a Bayes table to compute the probability that Elvis was an identical twin.</p>
 <p>Hint: Because identical twins have the same genes, they are almost always the same sex.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">hypos</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;identical&#39;</span><span class="p">,</span> <span class="s1">&#39;fraternal&#39;</span><span class="p">]</span>
-<span class="n">prior</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="o">/</span><span class="mi">3</span>
-<span class="n">likelihood</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span>
-
-<span class="n">make_bayes_table</span><span class="p">(</span><span class="n">hypos</span><span class="p">,</span> <span class="n">prior</span><span class="p">,</span> <span class="n">likelihood</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>prior</th>
-      <th>likelihood</th>
-      <th>unnorm</th>
-      <th>posterior</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>identical</th>
-      <td>0.333333</td>
-      <td>1.0</td>
-      <td>0.333333</td>
-      <td>0.5</td>
-    </tr>
-    <tr>
-      <th>fraternal</th>
-      <td>0.666667</td>
-      <td>0.5</td>
-      <td>0.333333</td>
-      <td>0.5</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
 </div>
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>

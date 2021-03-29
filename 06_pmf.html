@@ -88,7 +88,7 @@
     <ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="README.html">
-   The notebooks
+   Bite Size Bayes
   </a>
  </li>
 </ul>
@@ -761,90 +761,6 @@
 </div>
 <p>Now suppose you roll the same die again and get a 6.  What are the posterior probabilities after the second roll?</p>
 <p>Use <code class="docutils literal notranslate"><span class="pre">idxmax</span></code> to find the MAP.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">prior2</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">]</span>
-<span class="n">likelihood2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">12</span>
-
-<span class="n">table2</span> <span class="o">=</span> <span class="n">make_bayes_table</span><span class="p">(</span><span class="n">hypos</span><span class="p">,</span> <span class="n">prior2</span><span class="p">,</span> <span class="n">likelihood2</span><span class="p">)</span>
-<span class="n">table2</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>prior</th>
-      <th>likelihood</th>
-      <th>unnorm</th>
-      <th>posterior</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>H4</th>
-      <td>0.400000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <th>H6</th>
-      <td>0.266667</td>
-      <td>0.166667</td>
-      <td>0.044444</td>
-      <td>0.551724</td>
-    </tr>
-    <tr>
-      <th>H8</th>
-      <td>0.200000</td>
-      <td>0.125000</td>
-      <td>0.025000</td>
-      <td>0.310345</td>
-    </tr>
-    <tr>
-      <th>H12</th>
-      <td>0.133333</td>
-      <td>0.083333</td>
-      <td>0.011111</td>
-      <td>0.137931</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">table2</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;H6&#39;
-</pre></div>
-</div>
-</div>
-</div>
 </div>
 <div class="section" id="id1">
 <h2>Probability Mass Functions<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
@@ -1067,75 +983,6 @@ dtype: float64
 </div>
 <p>The 4-sided and 6-sided dice have been eliminated.  Of the remaining dice, the 8-sided die is the most likely.</p>
 <p><strong>Exercise:</strong> Suppose you have the same set of 5 die.  You choose a die, roll it six times, and get 6, 7, 2, 5, 1, and 2 again.  Use <code class="docutils literal notranslate"><span class="pre">idxmax</span></code> to find the MAP.  What is the posterior probability of the MAP?</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">sides</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">20</span><span class="p">])</span>
-<span class="n">prior</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">5</span>
-
-<span class="n">pmf</span> <span class="o">=</span> <span class="n">make_pmf</span><span class="p">(</span><span class="n">sides</span><span class="p">,</span> <span class="n">prior</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">outcomes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
-
-<span class="k">for</span> <span class="n">outcome</span> <span class="ow">in</span> <span class="n">outcomes</span><span class="p">:</span>
-    <span class="n">likelihood</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">sides</span>
-    <span class="n">too_low</span> <span class="o">=</span> <span class="p">(</span><span class="n">sides</span> <span class="o">&lt;</span> <span class="n">outcome</span><span class="p">)</span>
-    <span class="n">likelihood</span><span class="p">[</span><span class="n">too_low</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    
-    <span class="n">bayes_update</span><span class="p">(</span><span class="n">pmf</span><span class="p">,</span> <span class="n">likelihood</span><span class="p">)</span>
-
-<span class="n">pmf</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4     0.000000
-6     0.000000
-8     0.915845
-12    0.080403
-20    0.003751
-dtype: float64
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">MAP</span> <span class="o">=</span> <span class="n">pmf</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
-<span class="n">MAP</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">pmf</span><span class="p">[</span><span class="n">MAP</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.91584527196901
-</pre></div>
-</div>
-</div>
-</div>
 </div>
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>

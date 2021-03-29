@@ -88,7 +88,7 @@
     <ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="README.html">
-   The notebooks
+   Bite Size Bayes
   </a>
  </li>
 </ul>
@@ -658,78 +658,6 @@
 <p>A friend of mine has two bags of M&amp;Ms, and he tells me that one is from 1994 and one from 1996.  He won’t tell me which is which, but he gives me one M&amp;M from each bag.  One is yellow and one is green.  What is the probability that the yellow M&amp;M came from the 1994 bag?</p>
 </div></blockquote>
 <p>Hint: If the yellow came from 1994, the green must have come from 1996.  By Theorem 2 (conjunction), the likelihood of this combination is (0.2)(0.2).</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;1994&#39;</span><span class="p">,</span> <span class="s1">&#39;1996&#39;</span><span class="p">])</span>
-<span class="n">table</span><span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span>
-<span class="n">table</span><span class="p">[</span><span class="s1">&#39;likelihood&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.2</span> <span class="o">*</span> <span class="mf">0.2</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.14</span> <span class="o">*</span> <span class="mf">0.1</span><span class="p">)</span>
-<span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;likelihood&#39;</span><span class="p">]</span>
-<span class="n">prob_data</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="n">table</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">prob_data</span>
-<span class="n">table</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>prior</th>
-      <th>likelihood</th>
-      <th>unnorm</th>
-      <th>posterior</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1994</th>
-      <td>0.5</td>
-      <td>0.040</td>
-      <td>0.020</td>
-      <td>0.740741</td>
-    </tr>
-    <tr>
-      <th>1996</th>
-      <td>0.5</td>
-      <td>0.014</td>
-      <td>0.007</td>
-      <td>0.259259</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">table</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Year&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Posterior probability&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/04_dice_22_0.png" src="_images/04_dice_22_0.png" />
-</div>
-</div>
 </div>
 <div class="section" id="why-does-this-work">
 <h2>Why does this work?<a class="headerlink" href="#why-does-this-work" title="Permalink to this headline">¶</a></h2>
@@ -831,21 +759,6 @@
 </div>
 </div>
 <p>Use Theorem 4 to compute the probability of choosing a card that is either red, or a face card, or both:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">p_red_or_face</span> <span class="o">=</span> <span class="n">p_red</span> <span class="o">+</span> <span class="n">p_face</span> <span class="o">-</span> <span class="n">p_red_face</span>
-<span class="n">p_red_or_face</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6153846153846154
-</pre></div>
-</div>
-</div>
-</div>
 </div>
 <div class="section" id="total-probability">
 <h2>Total probability<a class="headerlink" href="#total-probability" title="Permalink to this headline">¶</a></h2>
@@ -1019,80 +932,6 @@
 <p>That’s what we got when we solved the problem by hand, so that’s good.</p>
 <p><strong>Exercise:</strong> Suppose you have a 4-sided, 6-sided, and 8-sided die.  You choose one at random and roll it, what is the probability of getting a 1?</p>
 <p>Do you expect it to be higher or lower than in the previous example?</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;H4&#39;</span><span class="p">,</span> <span class="s1">&#39;H6&#39;</span><span class="p">,</span> <span class="s1">&#39;H8&#39;</span><span class="p">])</span>
-<span class="n">table</span><span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span>
-<span class="n">table</span><span class="p">[</span><span class="s1">&#39;likelihood&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">8</span>
-<span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;likelihood&#39;</span><span class="p">]</span>
-<span class="n">table</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>prior</th>
-      <th>likelihood</th>
-      <th>unnorm</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>H4</th>
-      <td>0.333333</td>
-      <td>0.250000</td>
-      <td>0.083333</td>
-    </tr>
-    <tr>
-      <th>H6</th>
-      <td>0.333333</td>
-      <td>0.166667</td>
-      <td>0.055556</td>
-    </tr>
-    <tr>
-      <th>H8</th>
-      <td>0.333333</td>
-      <td>0.125000</td>
-      <td>0.041667</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">prob_data</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="n">prob_data</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.18055555555555555
-</pre></div>
-</div>
-</div>
-</div>
 </div>
 <div class="section" id="prediction-and-inference">
 <h2>Prediction and inference<a class="headerlink" href="#prediction-and-inference" title="Permalink to this headline">¶</a></h2>
@@ -1170,92 +1009,6 @@
 <li><p>Suppose you have a 4-sided, 6-sided, 8-sided, and 12-sided die.  You choose one at random and roll it.  What is the probability of getting a 1?</p></li>
 <li><p>Now suppose the outcome is a 1. What is the probability that the die you rolled is 4-sided?  And what are the posterior probabilities for the other dice?</p></li>
 </ol>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;H4&#39;</span><span class="p">,</span> <span class="s1">&#39;H6&#39;</span><span class="p">,</span> <span class="s1">&#39;H8&#39;</span><span class="p">,</span> <span class="s1">&#39;H12&#39;</span><span class="p">])</span>
-<span class="n">table</span><span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span>
-<span class="n">table</span><span class="p">[</span><span class="s1">&#39;likelihood&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">12</span>
-<span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;likelihood&#39;</span><span class="p">]</span>
-<span class="n">prob_data</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="n">prob_data</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.15625
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">table</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">prob_data</span>
-<span class="n">table</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>prior</th>
-      <th>likelihood</th>
-      <th>unnorm</th>
-      <th>posterior</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>H4</th>
-      <td>0.25</td>
-      <td>0.250000</td>
-      <td>0.062500</td>
-      <td>0.400000</td>
-    </tr>
-    <tr>
-      <th>H6</th>
-      <td>0.25</td>
-      <td>0.166667</td>
-      <td>0.041667</td>
-      <td>0.266667</td>
-    </tr>
-    <tr>
-      <th>H8</th>
-      <td>0.25</td>
-      <td>0.125000</td>
-      <td>0.031250</td>
-      <td>0.200000</td>
-    </tr>
-    <tr>
-      <th>H12</th>
-      <td>0.25</td>
-      <td>0.083333</td>
-      <td>0.020833</td>
-      <td>0.133333</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
 </div>
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>

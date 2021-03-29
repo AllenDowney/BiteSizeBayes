@@ -87,7 +87,7 @@
     <ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="README.html">
-   The notebooks
+   Bite Size Bayes
   </a>
  </li>
 </ul>
@@ -650,34 +650,6 @@ showcases.2012.csv  100%[===================&gt;]   6.56K  --.-KB/s    in 0s
 </div>
 </div>
 <p><strong>Exercise:</strong> Use this function to make a Pmf that represents the prior distribution for Showcase 2, and plot it.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">80000</span><span class="p">,</span> <span class="mi">71</span><span class="p">)</span>
-<span class="n">prior2</span> <span class="o">=</span> <span class="n">make_kde</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Showcase 2&#39;</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">prior1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Prior 1&#39;</span><span class="p">)</span>
-<span class="n">prior2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Prior 2&#39;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Showcase value ($)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Prior and posterior distribution of showcase value&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/13_price_32_0.png" src="_images/13_price_32_0.png" />
-</div>
-</div>
 </div>
 <div class="section" id="distribution-of-error">
 <h2>Distribution of error<a class="headerlink" href="#distribution-of-error" title="Permalink to this headline">¶</a></h2>
@@ -850,87 +822,6 @@ The result is your error under each hypothesis.</p>
 <p>Use <code class="docutils literal notranslate"><span class="pre">diff2</span></code> to construct a normal distribution that represents the distribution of your estimation errors.</p>
 <p>Compute the likelihood of your estimate for each actual price and use it to update <code class="docutils literal notranslate"><span class="pre">prior2</span></code>.</p>
 <p>Plot the posterior distribution and compute the posterior mean.  Based on your estimate, what do you expect the actual price of the showcase to be?</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">mean_diff2</span> <span class="o">=</span> <span class="n">sample_diff2</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-<span class="n">std_diff2</span> <span class="o">=</span> <span class="n">sample_diff2</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
-
-<span class="n">mean_diff2</span><span class="p">,</span> <span class="n">std_diff2</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-3675.891373801917, 6886.260711323408)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">error_dist2</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">std_diff2</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">guess2</span> <span class="o">=</span> <span class="mi">38000</span>
-<span class="n">xs</span> <span class="o">=</span> <span class="n">prior2</span><span class="o">.</span><span class="n">index</span>
-<span class="n">error2</span> <span class="o">=</span> <span class="n">guess2</span> <span class="o">-</span> <span class="n">xs</span>
-
-<span class="n">likelihood2</span> <span class="o">=</span> <span class="n">error_dist2</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">error2</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">posterior2</span> <span class="o">=</span> <span class="n">prior2</span> <span class="o">*</span> <span class="n">likelihood2</span>
-<span class="n">posterior2</span> <span class="o">/=</span> <span class="n">posterior2</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">prior2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Prior 2&#39;</span><span class="p">)</span>
-<span class="n">posterior2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Posterior 2&#39;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Showcase value ($)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Prior and posterior distribution of showcase value&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/13_price_60_0.png" src="_images/13_price_60_0.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">pmf_mean</span><span class="p">(</span><span class="n">prior2</span><span class="p">),</span> <span class="n">pmf_mean</span><span class="p">(</span><span class="n">posterior2</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(31047.686915520928, 34305.20163595075)
-</pre></div>
-</div>
-</div>
-</div>
 </div>
 <div class="section" id="probability-of-winning">
 <h2>Probability of winning<a class="headerlink" href="#probability-of-winning" title="Permalink to this headline">¶</a></h2>
@@ -1209,50 +1100,6 @@ What is the probability that Player 2 underbids by more?</p>
 <p>After using your estimate to compute the posterior distribution, the posterior mean is about $26,000.</p>
 <p>But the bid that maximizes your chance of winning is $21,000.</p>
 <p><strong>Exercise:</strong> Do the same analysis for Player 2.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">bids</span> <span class="o">=</span> <span class="n">posterior2</span><span class="o">.</span><span class="n">index</span>
-
-<span class="n">probs</span> <span class="o">=</span> <span class="p">[</span><span class="n">total_prob_win</span><span class="p">(</span><span class="n">bid</span><span class="p">,</span> <span class="n">posterior2</span><span class="p">,</span> <span class="n">sample_diff1</span><span class="p">)</span> 
-         <span class="k">for</span> <span class="n">bid</span> <span class="ow">in</span> <span class="n">bids</span><span class="p">]</span>
-
-<span class="n">prob_win_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">probs</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">bids</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">prob_win_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Bid ($)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability of winning&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Player 2&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/13_price_95_0.png" src="_images/13_price_95_0.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">prob_win_series</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>29000.0
-</pre></div>
-</div>
-</div>
-</div>
 </div>
 <div class="section" id="maximizing-expected-gain">
 <h2>Maximizing expected gain<a class="headerlink" href="#maximizing-expected-gain" title="Permalink to this headline">¶</a></h2>

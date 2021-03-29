@@ -88,7 +88,7 @@
     <ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="README.html">
-   The notebooks
+   Bite Size Bayes
   </a>
  </li>
 </ul>
@@ -587,62 +587,6 @@ Use <code class="docutils literal notranslate"><span class="pre">prob</span></co
 </ul>
 <p>For each statement, think about whether it is expressing a conjunction, or a conditional probability, or both.</p>
 <p>And for the conditional probabilities, be careful about the order!</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">prob</span><span class="p">(</span><span class="n">young</span> <span class="o">&amp;</span> <span class="n">liberal</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.06579427875836884
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">conditional</span><span class="p">(</span><span class="n">liberal</span><span class="p">,</span> <span class="n">young</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.338517745302714
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">prob</span><span class="p">(</span><span class="n">old</span> <span class="o">&amp;</span> <span class="n">conservative</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.06701156421180766
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">conditional</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">conservative</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.19597721609113564
-</pre></div>
-</div>
-</div>
-</div>
 <p>If your last answer is greater than 30%, you have it backwards!</p>
 </div>
 <div class="section" id="onward">
@@ -726,34 +670,6 @@ Use <code class="docutils literal notranslate"><span class="pre">prob</span></co
 </ul>
 <p>Confirm that you get the same answer.</p>
 <p>Note: Due to floating-point arithmetic, the results might not be exactly the same, but almost all of the digits should be the same.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">conditional</span><span class="p">(</span><span class="n">republican</span><span class="p">,</span> <span class="n">conservative</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.45027886555120444
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">prob</span><span class="p">(</span><span class="n">republican</span> <span class="o">&amp;</span> <span class="n">conservative</span><span class="p">)</span> <span class="o">/</span> <span class="n">prob</span><span class="p">(</span><span class="n">conservative</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.4502788655512045
-</pre></div>
-</div>
-</div>
-</div>
 </div>
 <div class="section" id="proof">
 <h2>Proof?<a class="headerlink" href="#proof" title="Permalink to this headline">¶</a></h2>
@@ -763,34 +679,6 @@ Use <code class="docutils literal notranslate"><span class="pre">prob</span></co
 <p>The blue circle represents male respondents.  The red circle represents builders.  The intersection represents male builders.</p>
 <p>To compute the fraction of builders who are male, we can compute the ratio of the intersection, which is <code class="docutils literal notranslate"><span class="pre">prob(male</span> <span class="pre">&amp;</span> <span class="pre">builder)</span></code> to the red circle, which is <code class="docutils literal notranslate"><span class="pre">prob(builder)</span></code>.</p>
 <p><strong>Exercise:</strong> For practice, compute fraction of bankers who are old both ways: using <code class="docutils literal notranslate"><span class="pre">conditional</span></code> and using Theorem 1.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">conditional</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">banker</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.14697802197802198
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">prob</span><span class="p">(</span><span class="n">old</span> <span class="o">&amp;</span> <span class="n">banker</span><span class="p">)</span> <span class="o">/</span> <span class="n">prob</span><span class="p">(</span><span class="n">banker</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.14697802197802198
-</pre></div>
-</div>
-</div>
-</div>
 </div>
 <div class="section" id="theorem-2">
 <h2>Theorem 2<a class="headerlink" href="#theorem-2" title="Permalink to this headline">¶</a></h2>
@@ -832,34 +720,6 @@ Use <code class="docutils literal notranslate"><span class="pre">prob</span></co
 <li><p>Using Theorem 2.</p></li>
 </ul>
 <p>The results should be the same, or at least very close.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">prob</span><span class="p">(</span><span class="n">old</span> <span class="o">&amp;</span> <span class="n">liberal</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.03653885169405559
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">prob</span><span class="p">(</span><span class="n">old</span><span class="p">)</span> <span class="o">*</span> <span class="n">conditional</span><span class="p">(</span><span class="n">liberal</span><span class="p">,</span> <span class="n">old</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.03653885169405559
-</pre></div>
-</div>
-</div>
-</div>
 </div>
 <div class="section" id="conjunction-is-commutative">
 <h2>Conjunction is commutative<a class="headerlink" href="#conjunction-is-commutative" title="Permalink to this headline">¶</a></h2>
@@ -899,34 +759,6 @@ Use <code class="docutils literal notranslate"><span class="pre">prob</span></co
 </div>
 <p>Same thing!</p>
 <p><strong>Exercise:</strong> Compute the probability of being a male banker both ways and see if you get the same thing.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">prob</span><span class="p">(</span><span class="n">male</span><span class="p">)</span> <span class="o">*</span> <span class="n">conditional</span><span class="p">(</span><span class="n">banker</span><span class="p">,</span> <span class="n">male</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.003388111178738081
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">prob</span><span class="p">(</span><span class="n">banker</span><span class="p">)</span> <span class="o">*</span> <span class="n">conditional</span><span class="p">(</span><span class="n">male</span><span class="p">,</span> <span class="n">banker</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.003388111178738081
-</pre></div>
-</div>
-</div>
-</div>
 </div>
 <div class="section" id="theorem-3">
 <h2>Theorem 3<a class="headerlink" href="#theorem-3" title="Permalink to this headline">¶</a></h2>

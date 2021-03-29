@@ -55,7 +55,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Bayes’s Theorem" href="02_bayes.html" />
-    <link rel="prev" title="The notebooks" href="README.html" />
+    <link rel="prev" title="Bite Size Bayes" href="README.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -86,7 +86,7 @@
     <ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="README.html">
-   The notebooks
+   Bite Size Bayes
   </a>
  </li>
 </ul>
@@ -626,81 +626,6 @@ Name: indus10, dtype: bool
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">sum</span></code> to count the number of female respondents.</p></li>
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">mean</span></code> to compute the fraction of female respondents.</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">values</span><span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>counts</th>
-    </tr>
-    <tr>
-      <th>values</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1</th>
-      <td>22779</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>26511</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">female</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>26511
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">female</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5378575776019476
-</pre></div>
-</div>
-</div>
-</div>
 <p>The fraction of women in this dataset is higher than in the adult U.S. population because <a class="reference external" href="https://gss.norc.org/faq">the GSS does not include people living in institutions</a>, including prisons and military housing, and those populations are more likely to be male.</p>
 <p><strong>Exercise:</strong> The designers of the General Social Survey chose to represent sex as a binary variable.  What alternatives might they have considered?  What are the advantages and disadvantages of their choice?</p>
 <p>For more on this topic, you might be interested in this article: Westbrook and Saperstein, <a class="reference external" href="https://sci-hub.tw/10.1177/0891243215584758">New categories are not enough: rethinking the measurement of sex and gender in social surveys</a></p>
@@ -938,34 +863,6 @@ Name: indus10, dtype: bool
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">mean</span></code> to compute the fraction of Democrats in this dataset.</p></li>
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">prob</span></code> to compute the same fraction, which we will think of as a probability.</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">democrat</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3662609048488537
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">prob</span><span class="p">(</span><span class="n">democrat</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3662609048488537
-</pre></div>
-</div>
-</div>
-</div>
 </div>
 <div class="section" id="conjunction">
 <h2>Conjunction<a class="headerlink" href="#conjunction" title="Permalink to this headline">¶</a></h2>
@@ -1136,48 +1033,6 @@ dtype: bool
 <li><p>What is the probability that a random respondent is female, a banker, and a liberal Democrat?</p></li>
 </ul>
 <p>Notice that as we add more conjunctions, the probabilities get smaller.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">prob</span><span class="p">(</span><span class="n">banker</span> <span class="o">&amp;</span> <span class="n">liberal</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.003306958815175492
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">prob</span><span class="p">(</span><span class="n">female</span> <span class="o">&amp;</span> <span class="n">banker</span> <span class="o">&amp;</span> <span class="n">liberal</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.002556299452221546
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">prob</span><span class="p">(</span><span class="n">female</span> <span class="o">&amp;</span> <span class="n">banker</span> <span class="o">&amp;</span> <span class="n">liberal</span> <span class="o">&amp;</span> <span class="n">democrat</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0012375735443294787
-</pre></div>
-</div>
-</div>
-</div>
 <p><strong>Exercise:</strong> We expect conjunction to be commutative; that is, <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">&amp;</span> <span class="pre">B</span></code> should be the same as <code class="docutils literal notranslate"><span class="pre">B</span> <span class="pre">&amp;</span> <span class="pre">A</span></code>.</p>
 <p>To check, compute these two probabilies:</p>
 <ul class="simple">
@@ -1368,20 +1223,6 @@ dtype: bool
 <p>The results are the same as what we computed above.</p>
 <p><strong>Exercise:</strong> Use <code class="docutils literal notranslate"><span class="pre">conditional</span></code> to compute the probability that a respondent is liberal given that they are female.</p>
 <p>Hint: The answer should be less than 30%.  If your answer is about 54%, you have made a mistake (see the next exercise).</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">conditional</span><span class="p">(</span><span class="n">liberal</span><span class="p">,</span> <span class="n">female</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.27581004111500884
-</pre></div>
-</div>
-</div>
-</div>
 <p><strong>Exercise:</strong>  In a previous exercise, we saw that conjunction is commutative; that is, <code class="docutils literal notranslate"><span class="pre">prob(A</span> <span class="pre">&amp;</span> <span class="pre">B)</span></code> is always equal to <code class="docutils literal notranslate"><span class="pre">prob(B</span> <span class="pre">&amp;</span> <span class="pre">A)</span></code>.</p>
 <p>But conditional probability is NOT commutative; that is, <code class="docutils literal notranslate"><span class="pre">conditional(A,</span> <span class="pre">B)</span></code> is not the same as <code class="docutils literal notranslate"><span class="pre">conditional(B,</span> <span class="pre">A)</span></code>.</p>
 <p>That should be clear if we look at an example.  Previously, we computed the probability a respondent is female, given that they are banker.</p>
@@ -1474,20 +1315,6 @@ dtype: bool
 <p>About 17% of bankers are liberal women.</p>
 <p><strong>Exercise:</strong> What fraction of female bankers are liberal Democrats?</p>
 <p>Hint: If your answer is less than 1%, you have it backwards.  Remember that conditional probability is not commutative.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
-
-<span class="n">conditional</span><span class="p">(</span><span class="n">liberal</span> <span class="o">&amp;</span> <span class="n">democrat</span><span class="p">,</span> <span class="n">female</span> <span class="o">&amp;</span> <span class="n">banker</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.10873440285204991
-</pre></div>
-</div>
-</div>
-</div>
 </div>
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
@@ -1521,7 +1348,7 @@ dtype: bool
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="README.html" title="previous page">The notebooks</a>
+    <a class='left-prev' id="prev-link" href="README.html" title="previous page">Bite Size Bayes</a>
     <a class='right-next' id="next-link" href="02_bayes.html" title="next page">Bayes’s Theorem</a>
 
         </div>
