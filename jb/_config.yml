@@ -1,0 +1,15 @@
+# Book settings
+title: Bite Size Bayes
+author: Allen B. Downey
+
+latex:
+  latex_documents:
+    targetname: book.tex
+
+execute:
+  execute_notebooks: 'off'
+
+repository:
+  url: https://github.com/AllenDowney/BiteSizeBayes
+html:
+  use_repository_button: true

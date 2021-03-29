@@ -1,0 +1,15 @@
+file: README
+sections:
+- file: 01_linda
+- file: 02_bayes.ipynb
+- file: 03_cookie.ipynb
+- file: 04_dice.ipynb
+- file: 05_test.ipynb
+- file: 06_pmf.ipynb
+- file: 07_euro.ipynb
+- file: 08_soccer.ipynb
+- file: 09_predict.ipynb
+- file: 10_joint.ipynb
+- file: 11_faceoff.ipynb
+- file: 12_binomial.ipynb
+- file: 13_price.ipynb
