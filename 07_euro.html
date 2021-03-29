@@ -1,0 +1,1041 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Euro Problem &#8212; Bite Size Bayes</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The World Cup Problem" href="08_soccer.html" />
+    <link rel="prev" title="Probability Mass Functions" href="06_pmf.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Bite Size Bayes</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="README.html">
+   The notebooks
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_linda.html">
+   The Laws of Probability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_bayes.html">
+   Bayes’s Theorem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_cookie.html">
+   The Cookie Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_dice.html">
+   The Dice Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_test.html">
+   Medical Tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06_pmf.html">
+   Probability Mass Functions
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   The Euro Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08_soccer.html">
+   The World Cup Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_predict.html">
+   Prediction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10_joint.html">
+   Joint Probability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11_faceoff.html">
+   Comparisons
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="12_binomial.html">
+   The Binomial Distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="13_price.html">
+   <em>
+    The Price Is Right
+   </em>
+   Problem
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/07_euro.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/BiteSizeBayes"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/BiteSizeBayes/master?urlpath=tree/07_euro.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#review">
+   Review
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   The Euro problem
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#put-a-function-on-it">
+   Put a function on it
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-better-prior">
+   A better prior
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summarizing-the-posterior-distribution">
+   Summarizing the posterior distribution
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#posterior-probability">
+   Posterior probability
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#credible-intervals">
+   Credible intervals
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="the-euro-problem">
+<h1>The Euro Problem<a class="headerlink" href="#the-euro-problem" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="review">
+<h2>Review<a class="headerlink" href="#review" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/06_pmf.ipynb">In the previous notebook</a> we extended the cookie problem with more bowls and the dice problem with more dice.</p>
+<p>And I introduced an alternative to the Bayes table, a probability mass function (PMF), which is a useful way to represent and do computations with distributions.</p>
+<p>Here’s the function I used to create a <code class="docutils literal notranslate"><span class="pre">Pmf</span></code>, given a sequence of quantities, <code class="docutils literal notranslate"><span class="pre">xs</span></code>, and the corresponding probabilities, <code class="docutils literal notranslate"><span class="pre">ps</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_pmf</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ps</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make a Series that represents a PMF.</span>
+<span class="sd">    </span>
+<span class="sd">    xs: sequence of values</span>
+<span class="sd">    ps: sequence of probabilities</span>
+<span class="sd">    options: keyword arguments passed to Series constructor</span>
+<span class="sd">    </span>
+<span class="sd">    returns: Pandas Series</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pmf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">ps</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">xs</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pmf</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here’s the function that performs a Bayesian update, given a sequence of likelihoods:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bayes_update</span><span class="p">(</span><span class="n">pmf</span><span class="p">,</span> <span class="n">likelihood</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Do a Bayesian update.</span>
+<span class="sd">    </span>
+<span class="sd">    pmf: Series that represents the prior</span>
+<span class="sd">    likelihood: sequence of likelihoods</span>
+<span class="sd">    </span>
+<span class="sd">    returns: float probability of the data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pmf</span> <span class="o">*=</span> <span class="n">likelihood</span>
+    <span class="n">prob_data</span> <span class="o">=</span> <span class="n">pmf</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">pmf</span> <span class="o">/=</span> <span class="n">prob_data</span>
+    <span class="k">return</span> <span class="n">prob_data</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We’ll use these functions to solve a new problem similar to the cookie problem.</p>
+</div>
+<div class="section" id="id1">
+<h2>The Euro problem<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Here’s a problem from David MacKay’s book, <a class="reference external" href="http://www.inference.org.uk/mackay/itila/p0.html"><em>Information Theory, Inference, and Learning Algorithms</em></a>, which is the book where I first learned about Bayesian statistics.  MacKay writes:</p>
+<blockquote>
+<div><p>A statistical statement appeared in The Guardian on
+Friday January 4, 2002:</p>
+<blockquote>
+<div><p>“When spun on edge 250 times, a Belgian one-euro coin came
+up heads 140 times and tails 110. ‘It looks very suspicious
+to me’, said Barry Blight, a statistics lecturer at the London
+School of Economics. ‘If the coin were unbiased the chance of
+getting a result as extreme as that would be less than 7%’.”</p>
+</div></blockquote>
+<p>But [asks MacKay] do these data give evidence that the coin is biased rather than fair?</p>
+</div></blockquote>
+<p>To answer this question, we have to make some modeling choices.</p>
+<p>First, let’s assume that if you spin a coin on edge, there is some probability that it will land heads up.  I’ll call that probability <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<p>Second, let’s assume that <span class="math notranslate nohighlight">\(x\)</span> varies from one coin to the next, depending on how the coin is balanced and maybe some other factors.</p>
+<p>With these assumptions we can formulate MacKay’s question as an inference problem: given the data — 140 heads and 110 tails — what do we think <span class="math notranslate nohighlight">\(x\)</span> is for this coin?</p>
+<p>This formulation is similar to the 101 Bowls problem we saw in the previous notebook; in fact, we will use the same likelihoods.</p>
+<p>But in the 101 Bowls problem, we are told that we choose a bowl at random, which implies that all bowls have the same prior probability.</p>
+<p>For the Euro problem, we have to think harder.  What values of <span class="math notranslate nohighlight">\(x\)</span> do you think are reasonable?</p>
+<p>It seems likely that many coins are “fair”, meaning that the probability of heads is close to 50%.  Do you think there are coins where <span class="math notranslate nohighlight">\(x\)</span> is 75%?  How about 90%?</p>
+<p>To be honest, I don’t really know.  To get started, I will assume that all values of <span class="math notranslate nohighlight">\(x\)</span>, from 0% to 100%, are equally likely.  Then we’ll come back and try another prior.</p>
+<p>Here’s a uniform prior from 0 to 100.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">101</span><span class="p">)</span>
+<span class="n">prior</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">101</span>
+<span class="n">pmf</span> <span class="o">=</span> <span class="n">make_pmf</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">prior</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here are the likelihoods for heads and tails:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">likelihood_heads</span> <span class="o">=</span> <span class="n">xs</span> <span class="o">/</span> <span class="mi">100</span>
+<span class="n">likelihood_tails</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">xs</span> <span class="o">/</span> <span class="mi">100</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here are the updates for 140 heads and 110 tails.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">140</span><span class="p">):</span>
+    <span class="n">bayes_update</span><span class="p">(</span><span class="n">pmf</span><span class="p">,</span> <span class="n">likelihood_heads</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">110</span><span class="p">):</span>
+    <span class="n">bayes_update</span><span class="p">(</span><span class="n">pmf</span><span class="p">,</span> <span class="n">likelihood_tails</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s what the results look like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Possible values of x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;140 heads, 110 tails&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/07_euro_19_0.png" src="_images/07_euro_19_0.png" />
+</div>
+</div>
+<p>This curve shows the “posterior distribution” of <span class="math notranslate nohighlight">\(x\)</span>.</p>
+</div>
+<div class="section" id="put-a-function-on-it">
+<h2>Put a function on it<a class="headerlink" href="#put-a-function-on-it" title="Permalink to this headline">¶</a></h2>
+<p>Before we go on, let’s put that update in a function, because we are going to need it again.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bayes_update_euro</span><span class="p">(</span><span class="n">pmf</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Do a Bayesian update.</span>
+<span class="sd">    </span>
+<span class="sd">    pmf: Series that represents a prior PMF</span>
+<span class="sd">    data: tuple of number of heads, tails</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">heads</span><span class="p">,</span> <span class="n">tails</span> <span class="o">=</span> <span class="n">data</span>
+    <span class="n">xs</span> <span class="o">=</span> <span class="n">pmf</span><span class="o">.</span><span class="n">index</span>
+    
+    <span class="n">likelihood_heads</span> <span class="o">=</span> <span class="n">xs</span> <span class="o">/</span> <span class="mi">100</span>
+    <span class="n">likelihood_tails</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">likelihood_heads</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">heads</span><span class="p">):</span>
+        <span class="n">bayes_update</span><span class="p">(</span><span class="n">pmf</span><span class="p">,</span> <span class="n">likelihood_heads</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tails</span><span class="p">):</span>
+        <span class="n">bayes_update</span><span class="p">(</span><span class="n">pmf</span><span class="p">,</span> <span class="n">likelihood_tails</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This function takes a PMF that represents the prior, and a tuple that contains the number of heads and tails.</p>
+<p>Here’s the uniform prior again.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">101</span><span class="p">)</span>
+<span class="n">prior</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">101</span>
+<span class="n">uniform</span> <span class="o">=</span> <span class="n">make_pmf</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">prior</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s the update.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">110</span>
+<span class="n">bayes_update_euro</span><span class="p">(</span><span class="n">uniform</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here are the results again.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">uniform</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Possible values of x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;140 heads, 110 tails&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/07_euro_28_0.png" src="_images/07_euro_28_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="a-better-prior">
+<h2>A better prior<a class="headerlink" href="#a-better-prior" title="Permalink to this headline">¶</a></h2>
+<p>Remember that this result is based on a uniform prior, which assumes that any value of <span class="math notranslate nohighlight">\(x\)</span> from 0 to 100 is equally likely.</p>
+<p>Given what we know about coins, that’s probabily not true.  I can believe that if you spin a lop-sided coin on edge, it might be somewhat more likely to land on heads or tails.</p>
+<p>But unless the coin is heavily weighted on one side, I would be surprised if <span class="math notranslate nohighlight">\(x\)</span> were greater than 60% or less than 40%.</p>
+<p>Of course, I could be wrong, but in general I would expect to find <span class="math notranslate nohighlight">\(x\)</span> closer to 50%, and I would be surprised to find it near 0% or 100%.</p>
+<p>I can represent that prior believe with a triangle-shaped prior.</p>
+<p>Here’s an array that ramps up from 0 to 49 and ramps down from 50 to 0.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ramp_up</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">ramp_down</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">ps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ramp_up</span><span class="p">,</span> <span class="n">ramp_down</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>I’ll put it in a PMF and normalize it so it adds up to 1.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">triangle</span> <span class="o">=</span> <span class="n">make_pmf</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ps</span><span class="p">)</span>
+<span class="n">triangle</span> <span class="o">/=</span> <span class="n">triangle</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s what the triangle prior looks like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">triangle</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Possible values of x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Triangle prior&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/07_euro_34_0.png" src="_images/07_euro_34_0.png" />
+</div>
+</div>
+<p>Now let’s update it with the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">110</span>
+<span class="n">bayes_update_euro</span><span class="p">(</span><span class="n">triangle</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And plot the results, along with the posterior based on a uniform prior.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">uniform</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Uniform&#39;</span><span class="p">)</span>
+<span class="n">triangle</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Triangle&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Possible values of x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;140 heads, 110 tails&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/07_euro_38_0.png" src="_images/07_euro_38_0.png" />
+</div>
+</div>
+<p>The posterior distributions are almost identical because, in this case, we have enough data to “swamp the prior”; that is, the posteriors depend strongly on the data and only weakly on the priors.</p>
+<p>This is good news, because it suggests that we can use data to resolve arguments.  Suppose two people disagree about the correct prior.  If neither can persuade the other, they might have to agree to disagree.</p>
+<p>But if they get new data, and each of them does a Bayesian update, they will usually find their beliefs converging.</p>
+<p>And with enough data, the remaining difference can be so small that it makes no difference in practice.</p>
+</div>
+<div class="section" id="summarizing-the-posterior-distribution">
+<h2>Summarizing the posterior distribution<a class="headerlink" href="#summarizing-the-posterior-distribution" title="Permalink to this headline">¶</a></h2>
+<p>The posterior distribution contains all of the information we have about the value of <span class="math notranslate nohighlight">\(x\)</span>.  But sometimes we want to summarize this information.</p>
+<p>We have already seen one way to summarize a posterior distribution, the Maximum Aposteori Probability, or MAP:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">uniform</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>56
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">idxmax</span></code> returns the value of <span class="math notranslate nohighlight">\(x\)</span> with the highest probability.</p>
+<p>In this example, we get the same MAP with the triangle prior:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">triangle</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>56
+</pre></div>
+</div>
+</div>
+</div>
+<p>Another way to summarize the posterior distribution is the posterior mean.</p>
+<p>Given a set of values, <span class="math notranslate nohighlight">\(x_i\)</span>, and the corresponding probabilities, <span class="math notranslate nohighlight">\(p_i\)</span>, the mean of the distribution is:</p>
+<p><span class="math notranslate nohighlight">\(\sum_i x_i p_i\)</span></p>
+<p>The following function takes a Pmf and computes its mean.  Note that this function only works correctly if the Pmf is normalized.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">pmf_mean</span><span class="p">(</span><span class="n">pmf</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute the mean of a PMF.</span>
+<span class="sd">    </span>
+<span class="sd">    pmf: Series representing a PMF</span>
+<span class="sd">    </span>
+<span class="sd">    return: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pmf</span><span class="o">.</span><span class="n">index</span> <span class="o">*</span> <span class="n">pmf</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s the posterior mean based on the uniform prior:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf_mean</span><span class="p">(</span><span class="n">uniform</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>55.95238095238095
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here’s the posterior mean with the triangle prior:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf_mean</span><span class="p">(</span><span class="n">triangle</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>55.74349943859505
+</pre></div>
+</div>
+</div>
+</div>
+<p>The posterior means are not identical, but they are close enough that the difference probably doesn’t matter.</p>
+<p>In this example, the posterior mean is very close to the MAP.  That’s true when the posterior distribution is symmetric, but it is not always true.</p>
+<p>If someone asks what we think <span class="math notranslate nohighlight">\(x\)</span> is, the MAP or the posterior mean might be a good answer.</p>
+<p>But MacKay asked a different question: do these data give evidence that the coin is biased rather than fair?</p>
+<p>We have more work to do before we can really answer this question.  But first, I want to rule out an approach that is tempting, but incorrect.</p>
+</div>
+<div class="section" id="posterior-probability">
+<h2>Posterior probability<a class="headerlink" href="#posterior-probability" title="Permalink to this headline">¶</a></h2>
+<p>If the coin is “fair”, that means that <span class="math notranslate nohighlight">\(x\)</span> is 50%.  So it might be tempting to use the posterior PMF to compute the probability that <span class="math notranslate nohighlight">\(x\)</span> is 50%:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">uniform</span><span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.020976526129544655
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is the posterior probability that <span class="math notranslate nohighlight">\(x\)</span> is 50%, but it is not the probability that the coin is fair.</p>
+<p>The problem is that <span class="math notranslate nohighlight">\(x\)</span> is really a continuous quantity, which means it could have any value between 0 and 1.</p>
+<p>For purposes of computation, I broke this interval into 101 discrete values, but that was an arbitrary choice.  I could have done the computation with 201 hypotheses, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xs2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">201</span><span class="p">)</span>
+<span class="n">prior2</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">201</span>
+
+<span class="n">uniform2</span> <span class="o">=</span> <span class="n">make_pmf</span><span class="p">(</span><span class="n">xs2</span><span class="p">,</span> <span class="n">prior2</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">uniform2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>201
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s the update.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bayes_update_euro</span><span class="p">(</span><span class="n">uniform2</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here’s what the results look like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">uniform2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;201 possible values of x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;140 heads, 110 tails&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/07_euro_59_0.png" src="_images/07_euro_59_0.png" />
+</div>
+</div>
+<p>The results are visually similar, but you might notice that the curve is a little smoother at the peak.</p>
+<p>The MAPs are the same and the posterior means are almost the same:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">uniform</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(),</span> <span class="n">uniform2</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(56, 56.0)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf_mean</span><span class="p">(</span><span class="n">uniform</span><span class="p">),</span> <span class="n">pmf_mean</span><span class="p">(</span><span class="n">uniform2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(55.95238095238095, 55.95238095238094)
+</pre></div>
+</div>
+</div>
+</div>
+<p>But the total probability is spread out over twice as many hypotheses, so the proability of any single hypothesis is smaller.</p>
+<p>If use both posteriors to compute the probability that <span class="math notranslate nohighlight">\(x\)</span> is 50%, we get very different results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">uniform</span><span class="p">[</span><span class="mi">50</span><span class="p">],</span> <span class="n">uniform2</span><span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.020976526129544655, 0.01048826306477235)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Because <span class="math notranslate nohighlight">\(x\)</span> is continuous, we divided the interval into discrete values.  But the number of values was an arbitrary choice, so the probability of any single value is not meaningful.</p>
+<p>However, we can meaningfully compute the probability that <span class="math notranslate nohighlight">\(x\)</span> falls in an interval.</p>
+</div>
+<div class="section" id="credible-intervals">
+<h2>Credible intervals<a class="headerlink" href="#credible-intervals" title="Permalink to this headline">¶</a></h2>
+<p>We can use a Boolean series to select values from the posterior distribution and add up their probabilities.</p>
+<p>Here’s a function that computes the total probability of all values less than or equal to a given threshold.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">prob_le</span><span class="p">(</span><span class="n">pmf</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+    <span class="n">le</span> <span class="o">=</span> <span class="p">(</span><span class="n">pmf</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;=</span> <span class="n">threshold</span><span class="p">)</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="n">pmf</span><span class="p">[</span><span class="n">le</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">total</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For example, here’s the probability that <span class="math notranslate nohighlight">\(x\)</span> is less than or equal to 60%, based on the uniform prior with 101 values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob_le</span><span class="p">(</span><span class="n">uniform</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.928955163489148
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s what we get with 201 values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob_le</span><span class="p">(</span><span class="n">uniform2</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9164519507463521
+</pre></div>
+</div>
+</div>
+</div>
+<p>The results are not identical, but they are close enough that the differences might not matter.</p>
+<p>So let’s say that the probability is 92% that <span class="math notranslate nohighlight">\(x\)</span> is less than or equal to 61.</p>
+<p>I’ll also compute the probability that <span class="math notranslate nohighlight">\(x\)</span> is less than or equal to 51:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob_le</span><span class="p">(</span><span class="n">uniform</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="n">prob_le</span><span class="p">(</span><span class="n">uniform2</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.04056797774604359, 0.034538255921946155)
+</pre></div>
+</div>
+</div>
+</div>
+<p>It looks like the probability is about 4% that <span class="math notranslate nohighlight">\(x\)</span> is less than 50.</p>
+<p>Putting these results together, we can estimate the probability that <span class="math notranslate nohighlight">\(x\)</span> is between 50 and 60; it’s about 92% - 4% = 88%.</p>
+<p>And interval like this is called a “credible interval” because it tells us how credible it is that <span class="math notranslate nohighlight">\(x\)</span> falls in the interval.</p>
+<p>In this case the interval from 50 to 60 is an 88% credible interval.  We’ll learn more about credible intervals in a future notebook.</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>In this notebook, we used data from a coin-spinning experiment to estimate the probability that a given coin lands on heads.</p>
+<p>We tried three different priors: uniform distributions with 101 and 201 values, and a triangle distribution.  The results are similar, which indicates that we have enough data to “swamp the priors”.</p>
+<p>And we summarized the posterior distributions three ways, computing the value with Maximum Aposteori Probability (MAP), the posterior mean, and a credible interval.</p>
+<p>Although we have made progress, we have not yet answered the question I started with, “Do these data give evidence that the coin is biased rather than fair?”</p>
+<p>We’ll come back to this question in a future notebook, but <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/08_soccer.ipynb">in the next notebook</a>, we’ll work on the World Cup problem.</p>
+</div>
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<p><strong>Exercise:</strong>  Suppose a baseball player gets 3 hits out of 3 at bats during their first game.  What is the probability that their batting average is actually below the mean?  What is the probability that they go 3-for-3 in the next game?</p>
+<p>To answer this question, we have to make some modeling choices:</p>
+<ul class="simple">
+<li><p>Let’s assume that each player has some constant batting average that is their probability of getting a hit during any at bat.</p></li>
+<li><p>As a prior distribution, let’s use a normal distribution with mean 0.260 and standard deviation 0.033.</p></li>
+</ul>
+<p>We can use <code class="docutils literal notranslate"><span class="pre">scipy.stats.norm</span></code> to evaluate the normal distribution for a range of batting averages, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
+
+<span class="n">mean</span> <span class="o">=</span> <span class="mf">0.26</span>
+<span class="n">std</span> <span class="o">=</span> <span class="mf">0.033</span>
+
+<span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ps</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ol class="simple">
+<li><p>Put these values and probabilities in a Series and normalize it to represent the prior.</p></li>
+<li><p>Compute the likelihood of getting 3 hits.</p></li>
+<li><p>Compute the total probability of the data, which is the probability that a new player gets 3 hits in their first game.</p></li>
+<li><p>Compute the posterior distribution for this player’s batting average.</p></li>
+<li><p>Plot the prior and posterior distributions.</p></li>
+<li><p>Compute the prior and posterior means; how much higher is the posterior mean?</p></li>
+<li><p>Compute the posterior probability that the player’s batting average is actually below the mean.</p></li>
+<li><p>Compute the probability the same player will get 3 hits in their next game.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">prior</span> <span class="o">=</span> <span class="n">make_pmf</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ps</span><span class="p">)</span>
+<span class="n">prior</span> <span class="o">/=</span> <span class="n">prior</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">prior</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;prior&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Batting average&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribution of batting averages&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/07_euro_80_0.png" src="_images/07_euro_80_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">likelihood</span> <span class="o">=</span> <span class="n">xs</span><span class="o">**</span><span class="mi">3</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">posterior</span> <span class="o">=</span> <span class="n">prior</span> <span class="o">*</span> <span class="n">likelihood</span>
+<span class="n">total</span> <span class="o">=</span> <span class="n">posterior</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">total</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.018425419999994874
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">posterior</span> <span class="o">/=</span> <span class="n">total</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">prior</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;prior&#39;</span><span class="p">)</span>
+<span class="n">posterior</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;posterior&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Batting average&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribution of batting averages&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/07_euro_84_0.png" src="_images/07_euro_84_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">pmf_mean</span><span class="p">(</span><span class="n">prior</span><span class="p">),</span> <span class="n">pmf_mean</span><span class="p">(</span><span class="n">posterior</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.2599999999999889, 0.2721792047616051)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">posterior</span><span class="p">[</span><span class="n">xs</span> <span class="o">&lt;</span> <span class="n">mean</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.35532439078734424
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">posterior</span> <span class="o">*</span> <span class="n">likelihood</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.02101389001178065
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="06_pmf.html" title="previous page">Probability Mass Functions</a>
+    <a class='right-next' id="next-link" href="08_soccer.html" title="next page">The World Cup Problem</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

@@ -1,0 +1,1203 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Probability Mass Functions &#8212; Bite Size Bayes</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The Euro Problem" href="07_euro.html" />
+    <link rel="prev" title="Medical Tests" href="05_test.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Bite Size Bayes</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="README.html">
+   The notebooks
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_linda.html">
+   The Laws of Probability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_bayes.html">
+   Bayes’s Theorem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_cookie.html">
+   The Cookie Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_dice.html">
+   The Dice Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_test.html">
+   Medical Tests
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Probability Mass Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07_euro.html">
+   The Euro Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08_soccer.html">
+   The World Cup Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_predict.html">
+   Prediction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10_joint.html">
+   Joint Probability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11_faceoff.html">
+   Comparisons
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="12_binomial.html">
+   The Binomial Distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="13_price.html">
+   <em>
+    The Price Is Right
+   </em>
+   Problem
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/06_pmf.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/BiteSizeBayes"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/BiteSizeBayes/master?urlpath=tree/06_pmf.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#review">
+   Review
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bowls">
+   101 Bowls
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#two-cookies">
+   Two cookies
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#three-cookies">
+   Three cookies
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   Probability Mass Functions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-dice-problem">
+   The dice problem
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="probability-mass-functions">
+<h1>Probability Mass Functions<a class="headerlink" href="#probability-mass-functions" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="review">
+<h2>Review<a class="headerlink" href="#review" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/05_test.ipynb">In the previous notebook</a> we used a Bayes table to interpret medical tests.</p>
+<p>In this notebook we’ll solve an expanded version of the cookie problem with 101 Bowls.  It might seem like a silly problem, but it’s not: the solution demonstrates a Bayesian way to estimate a proportion, and it applies to lots of real problems that don’t involve cookies.</p>
+<p>Then I’ll introduce an alternative to the Bayes table, a probability mass function (PMF), which is a useful way to represent and do computations with distributions.</p>
+<p>Here’s the function, from the previous notebook, we’ll use to make Bayes tables:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="k">def</span> <span class="nf">make_bayes_table</span><span class="p">(</span><span class="n">hypos</span><span class="p">,</span> <span class="n">prior</span><span class="p">,</span> <span class="n">likelihood</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make a Bayes table.</span>
+<span class="sd">    </span>
+<span class="sd">    hypos: sequence of hypotheses</span>
+<span class="sd">    prior: prior probabilities</span>
+<span class="sd">    likelihood: sequence of likelihoods</span>
+<span class="sd">    </span>
+<span class="sd">    returns: DataFrame</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">hypos</span><span class="p">)</span>
+    <span class="n">table</span><span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">prior</span>
+    <span class="n">table</span><span class="p">[</span><span class="s1">&#39;likelihood&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">likelihood</span>
+    <span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;likelihood&#39;</span><span class="p">]</span>
+    <span class="n">prob_data</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">table</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">prob_data</span>
+    <span class="k">return</span> <span class="n">table</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="bowls">
+<h2>101 Bowls<a class="headerlink" href="#bowls" title="Permalink to this headline">¶</a></h2>
+<p>In <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/05_dice.ipynb">Notebook 4</a>, we saw that the Bayes table works with more than two hypotheses.  As an example, we solved a cookie problem with five bowls.</p>
+<p>Now we’ll take it even farther and solve a cookie problem with 101 bowls:</p>
+<ul class="simple">
+<li><p>Bowl 0 contains no vanilla cookies,</p></li>
+<li><p>Bowl 1 contains 1% vanilla cookies,</p></li>
+<li><p>Bowl 2 contains 2% vanilla cookies,</p></li>
+</ul>
+<p>and so on, up to</p>
+<ul class="simple">
+<li><p>Bowl 99 contains 99% vanilla cookies, and</p></li>
+<li><p>Bowl 100 contains all vanilla cookies.</p></li>
+</ul>
+<p>As in the previous problems, there are only two kinds of cookies, vanilla and chocolate.  So Bowl 0 is all chocolate cookies, Bowl 1 is 99% chocolate, and so on.</p>
+<p>Suppose we choose a bowl at random, choose a cookie at random, and it turns out to be vanilla.  What is the probability that the cookie came from Bowl <span class="math notranslate nohighlight">\(x\)</span>, for each value of <span class="math notranslate nohighlight">\(x\)</span>?</p>
+<p>To solve this problem, I’ll use <code class="docutils literal notranslate"><span class="pre">np.arange</span></code> to represent 101 hypotheses, numbered from 0 to 100.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">101</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The prior probability for each bowl is <span class="math notranslate nohighlight">\(1/101\)</span>.  I could create a sequence with 101 identical values, but if all of the priors are equal, we only have to probide one value:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prior</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">101</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Because of the way I numbered the bowls, the probability of a vanilla cookie from Bowl <span class="math notranslate nohighlight">\(x\)</span> is <span class="math notranslate nohighlight">\(x/100\)</span>.  So we can compute the likelihoods like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">likelihood</span> <span class="o">=</span> <span class="n">xs</span><span class="o">/</span><span class="mi">100</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And that’s all we need; the Bayes table does the rest:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">make_bayes_table</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">prior</span><span class="p">,</span> <span class="n">likelihood</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s a feature we have not seen before: we can give the index of the Bayes table a name, which will appear when we display the table.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Bowl&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here are the first few rows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+      <th>likelihood</th>
+      <th>unnorm</th>
+      <th>posterior</th>
+    </tr>
+    <tr>
+      <th>Bowl</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.009901</td>
+      <td>0.00</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.009901</td>
+      <td>0.01</td>
+      <td>0.000099</td>
+      <td>0.000198</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.009901</td>
+      <td>0.02</td>
+      <td>0.000198</td>
+      <td>0.000396</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.009901</td>
+      <td>0.03</td>
+      <td>0.000297</td>
+      <td>0.000594</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.009901</td>
+      <td>0.04</td>
+      <td>0.000396</td>
+      <td>0.000792</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Because Bowl 0 contains no vanilla cookies, its likelihood is 0, so its posterior probability is 0.  That is, the cookie cannot have come from Bowl 0.</p>
+<p>Here are the last few rows of the table.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+      <th>likelihood</th>
+      <th>unnorm</th>
+      <th>posterior</th>
+    </tr>
+    <tr>
+      <th>Bowl</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>96</th>
+      <td>0.009901</td>
+      <td>0.96</td>
+      <td>0.009505</td>
+      <td>0.019010</td>
+    </tr>
+    <tr>
+      <th>97</th>
+      <td>0.009901</td>
+      <td>0.97</td>
+      <td>0.009604</td>
+      <td>0.019208</td>
+    </tr>
+    <tr>
+      <th>98</th>
+      <td>0.009901</td>
+      <td>0.98</td>
+      <td>0.009703</td>
+      <td>0.019406</td>
+    </tr>
+    <tr>
+      <th>99</th>
+      <td>0.009901</td>
+      <td>0.99</td>
+      <td>0.009802</td>
+      <td>0.019604</td>
+    </tr>
+    <tr>
+      <th>100</th>
+      <td>0.009901</td>
+      <td>1.00</td>
+      <td>0.009901</td>
+      <td>0.019802</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The posterior probabilities are substantially higher for the high-numbered bowls.</p>
+<p>There is a pattern here that will be clearer if we plot the results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="k">def</span> <span class="nf">plot_table</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot results from the 101 Bowls problem.</span>
+<span class="sd">    </span>
+<span class="sd">    table: DataFrame representing a Bayes table</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">table</span><span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+    <span class="n">table</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Bowl #&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_table</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;One cookie&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/06_pmf_24_0.png" src="_images/06_pmf_24_0.png" />
+</div>
+</div>
+<p>The prior probabilities are uniform; that is, they are the same for every bowl.</p>
+<p>The posterior probabilities increase linearly; Bowl 0 is the least likely (actually impossible), and Bowl 100 is the most likely.</p>
+</div>
+<div class="section" id="two-cookies">
+<h2>Two cookies<a class="headerlink" href="#two-cookies" title="Permalink to this headline">¶</a></h2>
+<p>Suppose we put the first cookie back, stir the bowl thoroughly, and draw another cookie from the same bowl.  and suppose it turns out to be another vanilla cookie.</p>
+<p>Now what is the probability that we are drawing from Bowl <span class="math notranslate nohighlight">\(x\)</span>?</p>
+<p>To answer this question, we can use the posterior probabilities from the previous problem as prior probabilities for a new Bayes table, and then update with the new data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prior2</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">]</span>
+<span class="n">likelihood2</span> <span class="o">=</span> <span class="n">likelihood</span>
+
+<span class="n">table2</span> <span class="o">=</span> <span class="n">make_bayes_table</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">prior2</span><span class="p">,</span> <span class="n">likelihood2</span><span class="p">)</span>
+<span class="n">plot_table</span><span class="p">(</span><span class="n">table2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Two cookies&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/06_pmf_27_0.png" src="_images/06_pmf_27_0.png" />
+</div>
+</div>
+<p>The blue line shows the posterior after one cookie, which is the prior before the second cookie.</p>
+<p>The orange line shows the posterior after two cookies, which curves upward.  Having see two vanilla cookies, the high-numbered bowls are more likely; the low-numbered bowls are less likely.</p>
+<p>I bet you can guess what’s coming next.</p>
+</div>
+<div class="section" id="three-cookies">
+<h2>Three cookies<a class="headerlink" href="#three-cookies" title="Permalink to this headline">¶</a></h2>
+<p>Suppose we put the cookie back, stir, draw another cookie from the same bowl, and get a chocolate cookie.</p>
+<p>What do you think the posterior distribution looks like after these three cookies?</p>
+<p>Hint: what’s the probability that the chocolate cookie came from Bowl 100?</p>
+<p>We’ll use the posterior after two cookies as the prior for the third cookie:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prior3</span> <span class="o">=</span> <span class="n">table2</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, what about the likelihoods?  Remember that the probability of a vanilla cookie from Bowl <span class="math notranslate nohighlight">\(x\)</span> is <span class="math notranslate nohighlight">\(x/100\)</span>.  So the probability of a chocolate cookie is <span class="math notranslate nohighlight">\((1 - x/100)\)</span>, which we can compute like this.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">likelihood3</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">xs</span><span class="o">/</span><span class="mi">100</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>That’s it.  Everything else is the same.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table3</span> <span class="o">=</span> <span class="n">make_bayes_table</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">prior3</span><span class="p">,</span> <span class="n">likelihood3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here are the results</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_table</span><span class="p">(</span><span class="n">table3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Three cookies&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/06_pmf_36_0.png" src="_images/06_pmf_36_0.png" />
+</div>
+</div>
+<p>The blue line is the posterior after two cookies; the orange line is the posterior after three cookies.</p>
+<p>Because Bowl 100 contains no chocolate cookies, the posterior probability for Bowl 100 is 0.</p>
+<p>The posterior distribution has a peak near 60%.  We can use <code class="docutils literal notranslate"><span class="pre">idxmax</span></code> to find it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table3</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>67
+</pre></div>
+</div>
+</div>
+</div>
+<p>The peak in the posterior distribution is at 67%.</p>
+<p>This value has a name; it is the <strong>MAP</strong>, which stands for “Maximum Aposteori Probability” (“aposteori” is Latin for posterior).</p>
+<p>In this example, the MAP is close to the proportion of vanilla cookies in the dataset: 2/3.</p>
+<p><strong>Exercise:</strong> Let’s do a version of the dice problem where we roll the die more than once.  Here’s the statement of the problem again:</p>
+<blockquote>
+<div><p>Suppose you have a 4-sided, 6-sided, 8-sided, and 12-sided die.  You choose one at random, roll it and get a 1. What is the probability that the die you rolled is 4-sided?  What are the posterior probabilities for the other dice?</p>
+</div></blockquote>
+<p>And here’s a solution using a Bayes table:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hypos</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;H4&#39;</span><span class="p">,</span> <span class="s1">&#39;H6&#39;</span><span class="p">,</span> <span class="s1">&#39;H8&#39;</span><span class="p">,</span> <span class="s1">&#39;H12&#39;</span><span class="p">]</span>
+<span class="n">prior</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span>
+<span class="n">likelihood</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">12</span>
+
+<span class="n">table</span> <span class="o">=</span> <span class="n">make_bayes_table</span><span class="p">(</span><span class="n">hypos</span><span class="p">,</span> <span class="n">prior</span><span class="p">,</span> <span class="n">likelihood</span><span class="p">)</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+      <th>likelihood</th>
+      <th>unnorm</th>
+      <th>posterior</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>H4</th>
+      <td>0.25</td>
+      <td>0.250000</td>
+      <td>0.062500</td>
+      <td>0.400000</td>
+    </tr>
+    <tr>
+      <th>H6</th>
+      <td>0.25</td>
+      <td>0.166667</td>
+      <td>0.041667</td>
+      <td>0.266667</td>
+    </tr>
+    <tr>
+      <th>H8</th>
+      <td>0.25</td>
+      <td>0.125000</td>
+      <td>0.031250</td>
+      <td>0.200000</td>
+    </tr>
+    <tr>
+      <th>H12</th>
+      <td>0.25</td>
+      <td>0.083333</td>
+      <td>0.020833</td>
+      <td>0.133333</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Now suppose you roll the same die again and get a 6.  What are the posterior probabilities after the second roll?</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">idxmax</span></code> to find the MAP.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">prior2</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">]</span>
+<span class="n">likelihood2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">12</span>
+
+<span class="n">table2</span> <span class="o">=</span> <span class="n">make_bayes_table</span><span class="p">(</span><span class="n">hypos</span><span class="p">,</span> <span class="n">prior2</span><span class="p">,</span> <span class="n">likelihood2</span><span class="p">)</span>
+<span class="n">table2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+      <th>likelihood</th>
+      <th>unnorm</th>
+      <th>posterior</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>H4</th>
+      <td>0.400000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>H6</th>
+      <td>0.266667</td>
+      <td>0.166667</td>
+      <td>0.044444</td>
+      <td>0.551724</td>
+    </tr>
+    <tr>
+      <th>H8</th>
+      <td>0.200000</td>
+      <td>0.125000</td>
+      <td>0.025000</td>
+      <td>0.310345</td>
+    </tr>
+    <tr>
+      <th>H12</th>
+      <td>0.133333</td>
+      <td>0.083333</td>
+      <td>0.011111</td>
+      <td>0.137931</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">table2</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;H6&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>Probability Mass Functions<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>When we do more than one update, we don’t always want to keep the whole Bayes table.  In this section we’ll replace the Bayes table with a more compact representation, a probability mass function, or PMF.</p>
+<p>A PMF is a set of possible outcomes and their corresponding probabilities.  There are many ways to represent a PMF; in this notebook I’ll use a Pandas Series.</p>
+<p>Here’s a function that takes a sequence of outcomes, <code class="docutils literal notranslate"><span class="pre">xs</span></code>, and a sequence of probabilities, <code class="docutils literal notranslate"><span class="pre">ps</span></code>, and returns a Pandas Series that represents a PMF.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_pmf</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ps</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make a Series that represents a PMF.</span>
+<span class="sd">    </span>
+<span class="sd">    xs: sequence of values</span>
+<span class="sd">    ps: sequence of probabilities</span>
+<span class="sd">    options: keyword arguments passed to Series constructor</span>
+<span class="sd">    </span>
+<span class="sd">    returns: Pandas Series</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pmf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">ps</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">xs</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pmf</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here’s a PMF that represents the prior from the 101 Bowls problem.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">101</span><span class="p">)</span>
+<span class="n">prior</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">101</span>
+
+<span class="n">pmf</span> <span class="o">=</span> <span class="n">make_pmf</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">prior</span><span class="p">)</span>
+<span class="n">pmf</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    0.009901
+1    0.009901
+2    0.009901
+3    0.009901
+4    0.009901
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we have a priod, we need to compute likelihoods.</p>
+<p>Here are the likelihoods for a vanilla cookie:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">likelihood_vanilla</span> <span class="o">=</span> <span class="n">xs</span> <span class="o">/</span> <span class="mi">100</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And for a chocolate cookie.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">likelihood_chocolate</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">xs</span> <span class="o">/</span> <span class="mi">100</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To compute posterior probabilities, I’ll use the following function, which takes a PMF and a sequence of likelihoods, and updates the PMF:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bayes_update</span><span class="p">(</span><span class="n">pmf</span><span class="p">,</span> <span class="n">likelihood</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Do a Bayesian update.</span>
+<span class="sd">    </span>
+<span class="sd">    pmf: Series that represents the prior</span>
+<span class="sd">    likelihood: sequence of likelihoods</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pmf</span> <span class="o">*=</span> <span class="n">likelihood</span>
+    <span class="n">pmf</span> <span class="o">/=</span> <span class="n">pmf</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The steps here are the same as in the Bayes table:</p>
+<ol class="simple">
+<li><p>Multiply the prior by the likelihoods.</p></li>
+<li><p>Add up the products to get the total probability of the data.</p></li>
+<li><p>Divide through to normalize the posteriors.</p></li>
+</ol>
+<p>Now we can do the update for a vanilla cookie.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bayes_update</span><span class="p">(</span><span class="n">pmf</span><span class="p">,</span> <span class="n">likelihood_vanilla</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s what the PMF looks like after the update.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Bowl #&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;One cookie&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/06_pmf_59_0.png" src="_images/06_pmf_59_0.png" />
+</div>
+</div>
+<p>That’s consistent with what we got with the Bayes table.</p>
+<p>The advantage of using a PMF is that it is easier to do multiple updates.  The following cell starts again with the uniform prior and does updates with two vanilla cookies and one chocolate cookie:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;VVC&#39;</span>
+
+<span class="n">pmf</span> <span class="o">=</span> <span class="n">make_pmf</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">prior</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">cookie</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">cookie</span> <span class="o">==</span> <span class="s1">&#39;V&#39;</span><span class="p">:</span>
+        <span class="n">bayes_update</span><span class="p">(</span><span class="n">pmf</span><span class="p">,</span> <span class="n">likelihood_vanilla</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">bayes_update</span><span class="p">(</span><span class="n">pmf</span><span class="p">,</span> <span class="n">likelihood_chocolate</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s what the results look like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Bowl #&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Three cookies&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/06_pmf_63_0.png" src="_images/06_pmf_63_0.png" />
+</div>
+</div>
+<p>Again, that’s consistent with what we got with the Bayes table.</p>
+<p>In the next section, I’ll use a PMF and <code class="docutils literal notranslate"><span class="pre">bayes_update</span></code> to solve a dice problem.</p>
+</div>
+<div class="section" id="the-dice-problem">
+<h2>The dice problem<a class="headerlink" href="#the-dice-problem" title="Permalink to this headline">¶</a></h2>
+<p>As an exercise, let’s do one more version of the dice problem:</p>
+<blockquote>
+<div><p>Suppose you have a 4-sided, 6-sided, 8-sided, 12-sided, and a <strong>20-sided die</strong>.  You choose one at random, roll it and <strong>get a 7</strong>. What is the probability that the die you rolled is 4-sided?  What are the posterior probabilities for the other dice?</p>
+</div></blockquote>
+<p>Notice that in this version I’ve added a 20-sided die and the outcome is 7, not 1.</p>
+<p>Here’s a PMF that represents the prior:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sides</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">20</span><span class="p">])</span>
+<span class="n">prior</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">5</span>
+
+<span class="n">pmf</span> <span class="o">=</span> <span class="n">make_pmf</span><span class="p">(</span><span class="n">sides</span><span class="p">,</span> <span class="n">prior</span><span class="p">)</span>
+<span class="n">pmf</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4     0.2
+6     0.2
+8     0.2
+12    0.2
+20    0.2
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this version, the hypotheses are integers rather than strings, so we can compute the likelihoods like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">likelihood</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">sides</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>But the outcome is 7, so any die with fewer than 7 sides has likelihood 0.</p>
+<p>We can adjust <code class="docutils literal notranslate"><span class="pre">likelihood</span></code> by making a Boolean Series:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">too_low</span> <span class="o">=</span> <span class="p">(</span><span class="n">sides</span> <span class="o">&lt;</span> <span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And using it to set the corresponding elements of <code class="docutils literal notranslate"><span class="pre">likelihood</span></code> to 0.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">likelihood</span><span class="p">[</span><span class="n">too_low</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">likelihood</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.        , 0.        , 0.125     , 0.08333333, 0.05      ])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can do the update and display the results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bayes_update</span><span class="p">(</span><span class="n">pmf</span><span class="p">,</span> <span class="n">likelihood</span><span class="p">)</span>
+<span class="n">pmf</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4     0.000000
+6     0.000000
+8     0.483871
+12    0.322581
+20    0.193548
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>The 4-sided and 6-sided dice have been eliminated.  Of the remaining dice, the 8-sided die is the most likely.</p>
+<p><strong>Exercise:</strong> Suppose you have the same set of 5 die.  You choose a die, roll it six times, and get 6, 7, 2, 5, 1, and 2 again.  Use <code class="docutils literal notranslate"><span class="pre">idxmax</span></code> to find the MAP.  What is the posterior probability of the MAP?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">sides</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">20</span><span class="p">])</span>
+<span class="n">prior</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">5</span>
+
+<span class="n">pmf</span> <span class="o">=</span> <span class="n">make_pmf</span><span class="p">(</span><span class="n">sides</span><span class="p">,</span> <span class="n">prior</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">outcomes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">outcome</span> <span class="ow">in</span> <span class="n">outcomes</span><span class="p">:</span>
+    <span class="n">likelihood</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">sides</span>
+    <span class="n">too_low</span> <span class="o">=</span> <span class="p">(</span><span class="n">sides</span> <span class="o">&lt;</span> <span class="n">outcome</span><span class="p">)</span>
+    <span class="n">likelihood</span><span class="p">[</span><span class="n">too_low</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="n">bayes_update</span><span class="p">(</span><span class="n">pmf</span><span class="p">,</span> <span class="n">likelihood</span><span class="p">)</span>
+
+<span class="n">pmf</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4     0.000000
+6     0.000000
+8     0.915845
+12    0.080403
+20    0.003751
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">MAP</span> <span class="o">=</span> <span class="n">pmf</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+<span class="n">MAP</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">pmf</span><span class="p">[</span><span class="n">MAP</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.91584527196901
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>In this notebook, we extended the cookie problem with more bowls and the dice problem with more dice.</p>
+<p>I defined the MAP, which is the quantity in a posterior distribution with the highest probability.</p>
+<p>Although the cookie problem is not particularly realistic or useful, the method we used to solve it applies to many problems in the real world where we want to estimate a proportion.</p>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/07_euro.ipynb">In the next notebook</a> we’ll use the same method on a related problem, and take another step toward doing Bayesian statistics.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="05_test.html" title="previous page">Medical Tests</a>
+    <a class='right-next' id="next-link" href="07_euro.html" title="next page">The Euro Problem</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

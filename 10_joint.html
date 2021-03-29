@@ -1,0 +1,1098 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Joint Probability &#8212; Bite Size Bayes</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Comparisons" href="11_faceoff.html" />
+    <link rel="prev" title="Prediction" href="09_predict.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Bite Size Bayes</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="README.html">
+   The notebooks
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_linda.html">
+   The Laws of Probability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_bayes.html">
+   Bayes’s Theorem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_cookie.html">
+   The Cookie Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_dice.html">
+   The Dice Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_test.html">
+   Medical Tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06_pmf.html">
+   Probability Mass Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07_euro.html">
+   The Euro Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08_soccer.html">
+   The World Cup Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_predict.html">
+   Prediction
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Joint Probability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11_faceoff.html">
+   Comparisons
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="12_binomial.html">
+   The Binomial Distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="13_price.html">
+   <em>
+    The Price Is Right
+   </em>
+   Problem
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/10_joint.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/BiteSizeBayes"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/BiteSizeBayes/master?urlpath=tree/10_joint.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#review">
+   Review
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cross-tabulation">
+   Cross tabulation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#heatmap">
+   Heatmap
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#joint-distribution">
+   Joint Distribution
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conditional-distributions">
+   Conditional distributions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#marginal-distributions">
+   Marginal distributions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   Review
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="joint-probability">
+<h1>Joint Probability<a class="headerlink" href="#joint-probability" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="review">
+<h2>Review<a class="headerlink" href="#review" title="Permalink to this headline">¶</a></h2>
+<p>So far we have been working with distributions of only one variable.  In this notebook we’ll take a step toward multivariate distributions, starting with two variables.</p>
+<p>We’ll use cross-tabulation to compute a <strong>joint distribution</strong>, then use the joint distribution to compute <strong>conditional distributions</strong> and <strong>marginal distributions</strong>.</p>
+<p>We will re-use <code class="docutils literal notranslate"><span class="pre">pmf_from_seq</span></code>, which I introduced in a previous notebook.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">pmf_from_seq</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make a PMF from a sequence of values.</span>
+<span class="sd">    </span>
+<span class="sd">    seq: sequence</span>
+<span class="sd">    </span>
+<span class="sd">    returns: Series representing a PMF</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pmf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+    <span class="n">pmf</span> <span class="o">/=</span> <span class="n">pmf</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">pmf</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="cross-tabulation">
+<h2>Cross tabulation<a class="headerlink" href="#cross-tabulation" title="Permalink to this headline">¶</a></h2>
+<p>To understand joint distributions, I’ll start with cross tabulation.  And to demonstrate cross tabulation, I’ll generate a dataset of colors and fruits.</p>
+<p>Here are the possible values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">]</span>
+<span class="n">fruits</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="s1">&#39;banana&#39;</span><span class="p">,</span> <span class="s1">&#39;grape&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here’s a random sample of 100 fruits.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">fruit_sample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">fruits</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use <code class="docutils literal notranslate"><span class="pre">pmf_from_seq</span></code> to compute the distribution of fruits.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf_fruit</span> <span class="o">=</span> <span class="n">pmf_from_seq</span><span class="p">(</span><span class="n">fruit_sample</span><span class="p">)</span>
+<span class="n">pmf_fruit</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>apple     0.32
+banana    0.29
+grape     0.39
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here’s what it looks like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf_fruit</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribution of fruit&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/10_joint_15_0.png" src="_images/10_joint_15_0.png" />
+</div>
+</div>
+<p>Similarly, here’s a random sample of colors.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">color_sample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s the distribution of colors.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf_color</span> <span class="o">=</span> <span class="n">pmf_from_seq</span><span class="p">(</span><span class="n">color_sample</span><span class="p">)</span>
+<span class="n">pmf_color</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>green     0.32
+red       0.33
+yellow    0.35
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here’s what it looks like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf_color</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribution of colors&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/10_joint_21_0.png" src="_images/10_joint_21_0.png" />
+</div>
+</div>
+<p>Looking at these distributions, we know the proportion of each fruit, ignoring color, and we know the proportion of each color, ignoring fruit type.</p>
+<p>But if we only have the distributions and not the original data, we don’t know how many apples are green, for example, or how many yellow fruits are bananas.</p>
+<p>We can compute that information using <code class="docutils literal notranslate"><span class="pre">crosstab</span></code>, which computes the number of cases for each combination of fruit type and color.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xtab</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">color_sample</span><span class="p">,</span> <span class="n">fruit_sample</span><span class="p">,</span> 
+                   <span class="n">rownames</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;color&#39;</span><span class="p">],</span> <span class="n">colnames</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;fruit&#39;</span><span class="p">])</span>
+<span class="n">xtab</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>fruit</th>
+      <th>apple</th>
+      <th>banana</th>
+      <th>grape</th>
+    </tr>
+    <tr>
+      <th>color</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>green</th>
+      <td>11</td>
+      <td>9</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>red</th>
+      <td>12</td>
+      <td>8</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>yellow</th>
+      <td>9</td>
+      <td>12</td>
+      <td>14</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The result is a DataFrame with colors along the rows and fruits along the columns.</p>
+</div>
+<div class="section" id="heatmap">
+<h2>Heatmap<a class="headerlink" href="#heatmap" title="Permalink to this headline">¶</a></h2>
+<p>The following function plots a cross tabulation using a pseudo-color plot, also known as a heatmap.</p>
+<p>It represents each element of the cross tabulation with a colored square, where the color corresponds to the magnitude of the element.</p>
+<p>The following function generates a heatmap using the Matplotlib function <code class="docutils literal notranslate"><span class="pre">pcolormesh</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_heatmap</span><span class="p">(</span><span class="n">xtab</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make a heatmap to represent a cross tabulation.</span>
+<span class="sd">    </span>
+<span class="sd">    xtab: DataFrame containing a cross tabulation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">xtab</span><span class="p">)</span>
+
+    <span class="c1"># label the y axis</span>
+    <span class="n">ys</span> <span class="o">=</span> <span class="n">xtab</span><span class="o">.</span><span class="n">index</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">ys</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">locs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ys</span><span class="p">))</span> <span class="o">+</span> <span class="mf">0.5</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">locs</span><span class="p">,</span> <span class="n">ys</span><span class="p">)</span>
+
+    <span class="c1"># label the x axis</span>
+    <span class="n">xs</span> <span class="o">=</span> <span class="n">xtab</span><span class="o">.</span><span class="n">columns</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">xs</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">locs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">))</span> <span class="o">+</span> <span class="mf">0.5</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">locs</span><span class="p">,</span> <span class="n">xs</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_heatmap</span><span class="p">(</span><span class="n">xtab</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/10_joint_27_0.png" src="_images/10_joint_27_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="joint-distribution">
+<h2>Joint Distribution<a class="headerlink" href="#joint-distribution" title="Permalink to this headline">¶</a></h2>
+<p>A cross tabulation represents the “joint distribution” of two variables, which is a complete description of two distributions, including all of the conditional distributions.</p>
+<p>If we normalize <code class="docutils literal notranslate"><span class="pre">xtab</span></code> so the sum of the elements is 1, the result is a joint PMF:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">joint</span> <span class="o">=</span> <span class="n">xtab</span> <span class="o">/</span> <span class="n">xtab</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">joint</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>fruit</th>
+      <th>apple</th>
+      <th>banana</th>
+      <th>grape</th>
+    </tr>
+    <tr>
+      <th>color</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>green</th>
+      <td>0.11</td>
+      <td>0.09</td>
+      <td>0.12</td>
+    </tr>
+    <tr>
+      <th>red</th>
+      <td>0.12</td>
+      <td>0.08</td>
+      <td>0.13</td>
+    </tr>
+    <tr>
+      <th>yellow</th>
+      <td>0.09</td>
+      <td>0.12</td>
+      <td>0.14</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Each column in the joint PMF represents the conditional distribution of color for a given fruit.</p>
+<p>For example, we can select a column like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">col</span> <span class="o">=</span> <span class="n">joint</span><span class="p">[</span><span class="s1">&#39;apple&#39;</span><span class="p">]</span>
+<span class="n">col</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>color
+green     0.11
+red       0.12
+yellow    0.09
+Name: apple, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we normalize it, we get the conditional distribution of color for a given fruit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">col</span> <span class="o">/</span> <span class="n">col</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>color
+green     0.34375
+red       0.37500
+yellow    0.28125
+Name: apple, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Each row of the cross tabulation represents the conditional distribution of fruit for each color.</p>
+<p>If we select a row and normalize it, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">row</span> <span class="o">=</span> <span class="n">xtab</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">]</span>
+<span class="n">row</span> <span class="o">/</span> <span class="n">row</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fruit
+apple     0.363636
+banana    0.242424
+grape     0.393939
+Name: red, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is the conditional distribution of fruit type for a given color.</p>
+</div>
+<div class="section" id="conditional-distributions">
+<h2>Conditional distributions<a class="headerlink" href="#conditional-distributions" title="Permalink to this headline">¶</a></h2>
+<p>The following function takes a joint PMF and computes conditional distributions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">conditional</span><span class="p">(</span><span class="n">joint</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute a conditional distribution.</span>
+<span class="sd">    </span>
+<span class="sd">    joint: DataFrame representing a joint PMF</span>
+<span class="sd">    name: string name of an axis</span>
+<span class="sd">    value: value to condition on</span>
+<span class="sd">    </span>
+<span class="sd">    returns: Series representing a conditional PMF</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">joint</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+        <span class="n">cond</span> <span class="o">=</span> <span class="n">joint</span><span class="p">[</span><span class="n">value</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">joint</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+        <span class="n">cond</span> <span class="o">=</span> <span class="n">joint</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">value</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">cond</span> <span class="o">/</span> <span class="n">cond</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The second argument is a string that identifies which axis we want to select; in this example, <code class="docutils literal notranslate"><span class="pre">'fruit'</span></code> means we are selecting a column, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conditional</span><span class="p">(</span><span class="n">joint</span><span class="p">,</span> <span class="s1">&#39;fruit&#39;</span><span class="p">,</span> <span class="s1">&#39;apple&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>color
+green     0.34375
+red       0.37500
+yellow    0.28125
+Name: apple, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>And <code class="docutils literal notranslate"><span class="pre">'color'</span></code> means we are selecting a row, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conditional</span><span class="p">(</span><span class="n">joint</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fruit
+apple     0.363636
+banana    0.242424
+grape     0.393939
+Name: red, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong> Compute the conditional distribution of color for bananas.  What is the probability that a banana is yellow?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">cond</span> <span class="o">=</span> <span class="n">conditional</span><span class="p">(</span><span class="n">joint</span><span class="p">,</span> <span class="s1">&#39;fruit&#39;</span><span class="p">,</span> <span class="s1">&#39;banana&#39;</span><span class="p">)</span>
+<span class="n">cond</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>color
+green     0.310345
+red       0.275862
+yellow    0.413793
+Name: banana, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">cond</span><span class="p">[</span><span class="s1">&#39;yellow&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.41379310344827586
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="marginal-distributions">
+<h2>Marginal distributions<a class="headerlink" href="#marginal-distributions" title="Permalink to this headline">¶</a></h2>
+<p>Given a joint distribution, we can compute the unconditioned distribution of either variable.</p>
+<p>If we sum along the rows, which is axis 0, we get the distribution of fruit type, regardless of color.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">joint</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fruit
+apple     0.32
+banana    0.29
+grape     0.39
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we sum along the columns, which is axis 1, we get the distribution of color, regardless of fruit type.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">joint</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>color
+green     0.32
+red       0.33
+yellow    0.35
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>These distributions are called “<a class="reference external" href="https://en.wikipedia.org/wiki/Marginal_distribution#Multivariate_distributions">marginal</a>” because of the way they are often displayed.  We’ll see an example later.</p>
+<p>As we did with conditional distributions, we can write a function that takes a joint distribution and computes the marginal distribution of a given variable:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">marginal</span><span class="p">(</span><span class="n">joint</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute a marginal distribution.</span>
+<span class="sd">    </span>
+<span class="sd">    joint: DataFrame representing a joint PMF</span>
+<span class="sd">    name: string name of an axis</span>
+<span class="sd">    </span>
+<span class="sd">    returns: Series representing a marginal PMF</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">joint</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">joint</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">joint</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">joint</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s the marginal distribution of fruit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf_fruit</span> <span class="o">=</span> <span class="n">marginal</span><span class="p">(</span><span class="n">joint</span><span class="p">,</span> <span class="s1">&#39;fruit&#39;</span><span class="p">)</span>
+<span class="n">pmf_fruit</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fruit
+apple     0.32
+banana    0.29
+grape     0.39
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>And the marginal distribution of color:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf_color</span> <span class="o">=</span> <span class="n">marginal</span><span class="p">(</span><span class="n">joint</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">)</span>
+<span class="n">pmf_color</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>color
+green     0.32
+red       0.33
+yellow    0.35
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>The sum of the marginal PMF is the same as the sum of the joint PMF, so if the joint PMF was normalized, the marginal PMF should be, too.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">joint</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf_color</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>However, due to floating point error, the total might not be exactly 1.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf_fruit</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9999999999999999
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong> The following cells load the data from the General Social Survey that we used in Notebooks 1 and 2.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the data file</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;gss_bayes.csv&#39;</span><span class="p">):</span>
+    <span class="o">!</span>wget https://github.com/AllenDowney/BiteSizeBayes/raw/master/gss_bayes.csv
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gss</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;gss_bayes.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As an exercise, you can use this data to explore the joint distribution of two variables:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">partyid</span></code> encodes each respondent’s political affiliation, that is, the party the belong to.  <a class="reference external" href="https://gssdataexplorer.norc.org/variables/141/vshow">Here’s the description</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">polviews</span></code> encodes their political alignment on a spectrum from liberal to conservative.  <a class="reference external" href="https://gssdataexplorer.norc.org/variables/178/vshow">Here’s the description</a>.</p></li>
+</ul>
+<p>The values for <code class="docutils literal notranslate"><span class="pre">partyid</span></code> are</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>	<span class="n">Strong</span> <span class="n">democrat</span>
+<span class="mi">1</span>	<span class="n">Not</span> <span class="nb">str</span> <span class="n">democrat</span>
+<span class="mi">2</span>	<span class="n">Ind</span><span class="p">,</span><span class="n">near</span> <span class="n">dem</span>
+<span class="mi">3</span>	<span class="n">Independent</span>
+<span class="mi">4</span>	<span class="n">Ind</span><span class="p">,</span><span class="n">near</span> <span class="n">rep</span>
+<span class="mi">5</span>	<span class="n">Not</span> <span class="nb">str</span> <span class="n">republican</span>
+<span class="mi">6</span>	<span class="n">Strong</span> <span class="n">republican</span>
+<span class="mi">7</span>	<span class="n">Other</span> <span class="n">party</span>
+</pre></div>
+</div>
+<p>The values for <code class="docutils literal notranslate"><span class="pre">polviews</span></code> are:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>	<span class="n">Extremely</span> <span class="n">liberal</span>
+<span class="mi">2</span>	<span class="n">Liberal</span>
+<span class="mi">3</span>	<span class="n">Slightly</span> <span class="n">liberal</span>
+<span class="mi">4</span>	<span class="n">Moderate</span>
+<span class="mi">5</span>	<span class="n">Slightly</span> <span class="n">conservative</span>
+<span class="mi">6</span>	<span class="n">Conservative</span>
+<span class="mi">7</span>	<span class="n">Extremely</span> <span class="n">conservative</span>
+</pre></div>
+</div>
+<p>Make a cross tabulation of <code class="docutils literal notranslate"><span class="pre">gss['partyid']</span></code> and <code class="docutils literal notranslate"><span class="pre">gss['polviews']</span></code> and normalize it to make a joint PMF.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">xtab2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;partyid&#39;</span><span class="p">],</span> <span class="n">gss</span><span class="p">[</span><span class="s1">&#39;polviews&#39;</span><span class="p">])</span>
+<span class="n">joint2</span> <span class="o">=</span> <span class="n">xtab2</span> <span class="o">/</span> <span class="n">xtab2</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">plot_heatmap</span></code> to display a heatmap of the joint distribution.  What patterns do you notice?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_heatmap</span><span class="p">(</span><span class="n">joint2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;polviews&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Joint distribution of polviews and partyid&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/10_joint_70_0.png" src="_images/10_joint_70_0.png" />
+</div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">marginal</span></code> to compute the marginal distributions of <code class="docutils literal notranslate"><span class="pre">partyid</span></code> and <code class="docutils literal notranslate"><span class="pre">polviews</span></code>, and plot the results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">marginal</span><span class="p">(</span><span class="n">joint2</span><span class="p">,</span> <span class="s1">&#39;polviews&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribution of polviews&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/10_joint_72_0.png" src="_images/10_joint_72_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">marginal</span><span class="p">(</span><span class="n">joint2</span><span class="p">,</span> <span class="s1">&#39;polviews&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C3&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribution of polviews&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/10_joint_73_0.png" src="_images/10_joint_73_0.png" />
+</div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">conditional</span></code> to compute the conditional distribution of <code class="docutils literal notranslate"><span class="pre">partyid</span></code> for people who identify themselves as “Extremely conservative” (<code class="docutils literal notranslate"><span class="pre">polviews==7</span></code>).  How many of them are “strong Republicans” (<code class="docutils literal notranslate"><span class="pre">partyid==6</span></code>)?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">cond1</span> <span class="o">=</span> <span class="n">conditional</span><span class="p">(</span><span class="n">joint2</span><span class="p">,</span> <span class="s1">&#39;polviews&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+<span class="n">cond1</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Extremely conservative&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C4&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribution of partyid&#39;</span><span class="p">)</span>
+
+<span class="n">cond1</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.35297805642633234
+</pre></div>
+</div>
+<img alt="_images/10_joint_75_1.png" src="_images/10_joint_75_1.png" />
+</div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">conditional</span></code> to compute the conditional distribution of <code class="docutils literal notranslate"><span class="pre">polviews</span></code> for people who identify themselves as “Strong Democrat” (<code class="docutils literal notranslate"><span class="pre">partyid==0</span></code>).  How many of them are “Extremely liberal” (<code class="docutils literal notranslate"><span class="pre">polviews==1</span></code>)?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">cond2</span> <span class="o">=</span> <span class="n">conditional</span><span class="p">(</span><span class="n">joint2</span><span class="p">,</span> <span class="s1">&#39;partyid&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">cond2</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Strong democrat&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C6&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribution of polviews&#39;</span><span class="p">)</span>
+
+<span class="n">cond2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.06887366818873669
+</pre></div>
+</div>
+<img alt="_images/10_joint_77_1.png" src="_images/10_joint_77_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>Review<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>In this notebook we started with cross tabulation, which we normalized to create a joint distribution, which describes the distribution of two (or more) variables and all of their conditional distributions.</p>
+<p>We used heatmaps to visualize cross tabulations and joint distributions.</p>
+<p>Then we defined <code class="docutils literal notranslate"><span class="pre">conditional</span></code> and <code class="docutils literal notranslate"><span class="pre">marginal</span></code> functions that take a joint distribution and compute conditional and marginal distributions for each variables.</p>
+<p>As an exercise, you had a chance to apply the same methods to explore the relationship between political alignment and party affiliation using data from the General Social Survey.</p>
+<p>You might have noticed that we did not use Bayes’s Theorem in this notebook.  <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/11_faceoff.ipynb">In the next notebook</a> we’ll take the ideas from this notebook and apply them Bayesian inference.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="09_predict.html" title="previous page">Prediction</a>
+    <a class='right-next' id="next-link" href="11_faceoff.html" title="next page">Comparisons</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

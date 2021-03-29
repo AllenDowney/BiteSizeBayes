@@ -1,0 +1,1553 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Laws of Probability &#8212; Bite Size Bayes</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Bayes’s Theorem" href="02_bayes.html" />
+    <link rel="prev" title="The notebooks" href="README.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Bite Size Bayes</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="README.html">
+   The notebooks
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   The Laws of Probability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_bayes.html">
+   Bayes’s Theorem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_cookie.html">
+   The Cookie Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_dice.html">
+   The Dice Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_test.html">
+   Medical Tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06_pmf.html">
+   Probability Mass Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07_euro.html">
+   The Euro Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08_soccer.html">
+   The World Cup Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_predict.html">
+   Prediction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10_joint.html">
+   Joint Probability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11_faceoff.html">
+   Comparisons
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="12_binomial.html">
+   The Binomial Distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="13_price.html">
+   <em>
+    The Price Is Right
+   </em>
+   Problem
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/01_linda.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/BiteSizeBayes"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/BiteSizeBayes/master?urlpath=tree/01_linda.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#probability">
+   Probability
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#banking">
+   Banking
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#political-views">
+   Political views
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-probability-function">
+   The probability function
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conjunction">
+   Conjunction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conditional-probability">
+   Conditional probability
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conditions-and-conjunctions">
+   Conditions and conjunctions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="the-laws-of-probability">
+<h1>The Laws of Probability<a class="headerlink" href="#the-laws-of-probability" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">values</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>This notebook takes a computational approach to understanding probability.  We’ll use data from the General Social Survey to compute the probability of propositions like:</p>
+<ul class="simple">
+<li><p>If I choose a random survey respondent, what is the probability they are female?</p></li>
+<li><p>If I choose a random survey respondent, what is the probability they work in banking?</p></li>
+</ul>
+<p>From there, we will explore two related concepts:</p>
+<ul class="simple">
+<li><p>Conjunction, which is the probability that two propositions are both true; for example, what is the probability of choosing a female banker?</p></li>
+<li><p>Conditional probability, which is the probability that one proposition is true, given that another is true; for example, given than a respondent is female, what is the probability that she is a banker?</p></li>
+</ul>
+<p>I chose these examples because they are related to a famous experiment by Tversky and Kahneman, who posed the following question:</p>
+<blockquote>
+<div><p>Linda is 31 years old, single, outspoken, and very bright. She majored in philosophy. As a student, she was deeply concerned with issues of discrimination and social justice, and also participated in anti-nuclear demonstrations.  Which is more probable?</p>
+<ol class="simple">
+<li><p>Linda is a bank teller.</p></li>
+<li><p>Linda is a bank teller and is active in the feminist movement.</p></li>
+</ol>
+</div></blockquote>
+<p>Many people choose the second answer, presumably because it seems more consistent with the description.  It seems unlikely that Linda would be <em>just</em> a bank teller; if she is a bank teller, it seems likely that she would also be a feminist.</p>
+<p>But the second answer cannot be “more probable”, as the question asks.  Suppose we find 1000 people who fit Linda’s description and 10 of them work as bank tellers.  How many of them are also feminists?  At most, all 10 of them are; in that case, the two options are <em>equally</em> likely.  More likely, only some of them are; in that case the second option is <em>less</em> likely.  But there can’t be more than 10 out of 10, so the second option cannot be more likely.</p>
+<p>The error people make if they choose the second option is called the <a class="reference external" href="https://en.wikipedia.org/wiki/Conjunction_fallacy">conjunction fallacy</a>.   It’s called a <a class="reference external" href="https://en.wikipedia.org/wiki/Fallacy">fallacy</a> because it’s a logical error and “conjunction” because “bank teller AND feminist” is a <a class="reference external" href="https://en.wikipedia.org/wiki/Logical_conjunction">logical conjunction</a>.</p>
+<p>If this example makes you uncomfortable, you are in good company.  The biologist <a class="reference external" href="https://sci-hub.tw/https://doi.org/10.1080/09332480.1989.10554932">Stephen J. Gould wrote</a> :</p>
+<blockquote>
+<div><p>I am particularly fond of this example because I know that the [second] statement is least probable, yet a little <a class="reference external" href="https://en.wikipedia.org/wiki/Homunculus_argument">homunculus</a> in my head continues to jump up and down, shouting at me, “but she can’t just be a bank teller; read the description.”</p>
+</div></blockquote>
+<p>If the little person in your head is still unhappy, maybe this notebook will help.</p>
+</div>
+<div class="section" id="probability">
+<h2>Probability<a class="headerlink" href="#probability" title="Permalink to this headline">¶</a></h2>
+<p>At this point I should define probability, but that <a class="reference external" href="https://en.wikipedia.org/wiki/Probability_interpretations">turns out to be surprisingly difficult</a>.  To avoid getting bogged down before we get started, I’ll start with a simple definition: a <strong>probability</strong> is a <strong>fraction</strong> of a dataset.</p>
+<p>For example, if we survey 1000 people, and 20 of them are bank tellers, the fraction that work as bank tellers is 0.02 or 2%.  If we choose a person from this population at random, the probability that they are a bank teller is 2%.</p>
+<p>(By “at random” I mean that every person in the dataset has the same chance of being chosen, and by “they” I mean the <a class="reference external" href="https://en.wikipedia.org/wiki/Singular_they">singular, gender-neutral pronoun</a>, which is a correct and useful feature of English.)</p>
+<p>With this definition and an appropriate dataset, we can compute probabilities by counting.</p>
+<p>To demonstrate, I’ll use a data set from the <a class="reference external" href="http://gss.norc.org/">General Social Survey</a> or GSS.  The following cell reads the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gss</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;gss_bayes.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The results is a Pandas DataFrame with one row for each person surveyed and one column for each variable I selected.</p>
+<p>Here are the number of rows and columns:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gss</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(49290, 6)
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here are the first few rows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gss</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>age</th>
+      <th>sex</th>
+      <th>polviews</th>
+      <th>partyid</th>
+      <th>indus10</th>
+    </tr>
+    <tr>
+      <th>caseid</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>1974</td>
+      <td>21.0</td>
+      <td>1</td>
+      <td>4.0</td>
+      <td>2.0</td>
+      <td>4970.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1974</td>
+      <td>41.0</td>
+      <td>1</td>
+      <td>5.0</td>
+      <td>0.0</td>
+      <td>9160.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1974</td>
+      <td>58.0</td>
+      <td>2</td>
+      <td>6.0</td>
+      <td>1.0</td>
+      <td>2670.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1974</td>
+      <td>30.0</td>
+      <td>1</td>
+      <td>5.0</td>
+      <td>4.0</td>
+      <td>6870.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1974</td>
+      <td>48.0</td>
+      <td>1</td>
+      <td>5.0</td>
+      <td>4.0</td>
+      <td>7860.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The columns are</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">caseid</span></code>: Respondent id (which is the index of the table).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">year</span></code>: Year when the respondent was surveyed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">age</span></code>: Respondent’s age when surveyed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sex</span></code>: Male or female.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">polviews</span></code>: Political views on a range from liberal to conservative.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">partyid</span></code>: Political party affiliation, Democrat, Independent, or Republican.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">indus10</span></code>: <a class="reference external" href="https://www.census.gov/cgi-bin/sssd/naics/naicsrch?chart=2007">Code</a> for the industry the respondent works in.</p></li>
+</ul>
+<p>Let’s look at these variables in more detail, starting with <code class="docutils literal notranslate"><span class="pre">indus10</span></code>.</p>
+</div>
+<div class="section" id="banking">
+<h2>Banking<a class="headerlink" href="#banking" title="Permalink to this headline">¶</a></h2>
+<p>The code for “Banking and related activities” is 6870, so we can select bankers like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">banker</span> <span class="o">=</span> <span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;indus10&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">6870</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is a Boolean series, which is a Pandas Series that contains the values <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code>.  Here are the first few entries:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">banker</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>caseid
+1    False
+2    False
+5    False
+6     True
+7    False
+Name: indus10, dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use <code class="docutils literal notranslate"><span class="pre">values</span></code> to see how many times each value appears.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">values</span><span class="p">(</span><span class="n">banker</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>counts</th>
+    </tr>
+    <tr>
+      <th>values</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>False</th>
+      <td>48562</td>
+    </tr>
+    <tr>
+      <th>True</th>
+      <td>728</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>In this dataset, there are 728 bankers.</p>
+<p>If we use the <code class="docutils literal notranslate"><span class="pre">sum</span></code> function on this Series, it treats <code class="docutils literal notranslate"><span class="pre">True</span></code> as 1 and <code class="docutils literal notranslate"><span class="pre">False</span></code> as 0, so the total is the number of bankers.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">banker</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>728
+</pre></div>
+</div>
+</div>
+</div>
+<p>To compute the <em>fraction</em> of bankers, we can divide by the number of people in the dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">banker</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">banker</span><span class="o">.</span><span class="n">size</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.014769730168391155
+</pre></div>
+</div>
+</div>
+</div>
+<p>But we can also use the <code class="docutils literal notranslate"><span class="pre">mean</span></code> function, which computes the fraction of <code class="docutils literal notranslate"><span class="pre">True</span></code> values in the Series:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">banker</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.014769730168391155
+</pre></div>
+</div>
+</div>
+</div>
+<p>About 1.5% of the respondents work in banking.</p>
+<p>That means if we choose a random person from the dataset, the probability they are a banker is about 1.5%.</p>
+<p><strong>Exercise</strong>: The values of the column <code class="docutils literal notranslate"><span class="pre">sex</span></code> are encoded like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>    <span class="n">Male</span>
+<span class="mi">2</span>    <span class="n">Female</span>
+</pre></div>
+</div>
+<p>The following cell creates a Boolean series that is <code class="docutils literal notranslate"><span class="pre">True</span></code> for female respondents and <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">female</span> <span class="o">=</span> <span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">values</span></code> to display the number of <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code> values in <code class="docutils literal notranslate"><span class="pre">female</span></code>.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">sum</span></code> to count the number of female respondents.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">mean</span></code> to compute the fraction of female respondents.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">values</span><span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>counts</th>
+    </tr>
+    <tr>
+      <th>values</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>22779</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>26511</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">female</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>26511
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">female</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5378575776019476
+</pre></div>
+</div>
+</div>
+</div>
+<p>The fraction of women in this dataset is higher than in the adult U.S. population because <a class="reference external" href="https://gss.norc.org/faq">the GSS does not include people living in institutions</a>, including prisons and military housing, and those populations are more likely to be male.</p>
+<p><strong>Exercise:</strong> The designers of the General Social Survey chose to represent sex as a binary variable.  What alternatives might they have considered?  What are the advantages and disadvantages of their choice?</p>
+<p>For more on this topic, you might be interested in this article: Westbrook and Saperstein, <a class="reference external" href="https://sci-hub.tw/10.1177/0891243215584758">New categories are not enough: rethinking the measurement of sex and gender in social surveys</a></p>
+</div>
+<div class="section" id="political-views">
+<h2>Political views<a class="headerlink" href="#political-views" title="Permalink to this headline">¶</a></h2>
+<p>The values of <code class="docutils literal notranslate"><span class="pre">polviews</span></code> are on a seven-point scale:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>	<span class="n">Extremely</span> <span class="n">liberal</span>
+<span class="mi">2</span>	<span class="n">Liberal</span>
+<span class="mi">3</span>	<span class="n">Slightly</span> <span class="n">liberal</span>
+<span class="mi">4</span>	<span class="n">Moderate</span>
+<span class="mi">5</span>	<span class="n">Slightly</span> <span class="n">conservative</span>
+<span class="mi">6</span>	<span class="n">Conservative</span>
+<span class="mi">7</span>	<span class="n">Extremely</span> <span class="n">conservative</span>
+</pre></div>
+</div>
+<p>Here are the number of people who gave each response:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">values</span><span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;polviews&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>counts</th>
+    </tr>
+    <tr>
+      <th>values</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1.0</th>
+      <td>1442</td>
+    </tr>
+    <tr>
+      <th>2.0</th>
+      <td>5808</td>
+    </tr>
+    <tr>
+      <th>3.0</th>
+      <td>6243</td>
+    </tr>
+    <tr>
+      <th>4.0</th>
+      <td>18943</td>
+    </tr>
+    <tr>
+      <th>5.0</th>
+      <td>7940</td>
+    </tr>
+    <tr>
+      <th>6.0</th>
+      <td>7319</td>
+    </tr>
+    <tr>
+      <th>7.0</th>
+      <td>1595</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>I’ll define <code class="docutils literal notranslate"><span class="pre">liberal</span></code> to be <code class="docutils literal notranslate"><span class="pre">True</span></code> for anyone whose response is “Extremely liberal”, “Liberal”, or “Slightly liberal”.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">liberal</span> <span class="o">=</span> <span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;polviews&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here are the number of <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code> values:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">values</span><span class="p">(</span><span class="n">liberal</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>counts</th>
+    </tr>
+    <tr>
+      <th>values</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>False</th>
+      <td>35797</td>
+    </tr>
+    <tr>
+      <th>True</th>
+      <td>13493</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>And the fraction of respondents who are “liberal”.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">liberal</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.27374721038750255
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we choose a random person in this dataset, the probability they are liberal is about 27%.</p>
+</div>
+<div class="section" id="the-probability-function">
+<h2>The probability function<a class="headerlink" href="#the-probability-function" title="Permalink to this headline">¶</a></h2>
+<p>To summarize what we have done so far:</p>
+<ul class="simple">
+<li><p>To represent a logical proposition like “this respondent is liberal”, we are using a Boolean series, which contains the values <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p>To compute the probability that a proposition is true, we are using the <code class="docutils literal notranslate"><span class="pre">mean</span></code> function, which computes the fraction of <code class="docutils literal notranslate"><span class="pre">True</span></code> values in a series.</p></li>
+</ul>
+<p>To make this computation more explicit, I’ll define a function that takes a Boolean series and returns a probability:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">prob</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Computes the probability of a proposition, A.</span>
+<span class="sd">    </span>
+<span class="sd">    A: Boolean series</span>
+<span class="sd">    </span>
+<span class="sd">    returns: probability</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">A</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;bool&#39;</span>
+    
+    <span class="k">return</span> <span class="n">A</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">assert</span></code> statements check whether <code class="docutils literal notranslate"><span class="pre">A</span></code> is a Boolean series.  If not, they display an error message.</p>
+<p>Using this function to compute probabilities makes the code more readable.  Here are the probabilities for the propositions we have computed so far.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">banker</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.014769730168391155
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">female</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5378575776019476
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">liberal</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.27374721038750255
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise</strong>: The values of <code class="docutils literal notranslate"><span class="pre">partyid</span></code> are encoded like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>	<span class="n">Strong</span> <span class="n">democrat</span>
+<span class="mi">1</span>	<span class="n">Not</span> <span class="nb">str</span> <span class="n">democrat</span>
+<span class="mi">2</span>	<span class="n">Ind</span><span class="p">,</span><span class="n">near</span> <span class="n">dem</span>
+<span class="mi">3</span>	<span class="n">Independent</span>
+<span class="mi">4</span>	<span class="n">Ind</span><span class="p">,</span><span class="n">near</span> <span class="n">rep</span>
+<span class="mi">5</span>	<span class="n">Not</span> <span class="nb">str</span> <span class="n">republican</span>
+<span class="mi">6</span>	<span class="n">Strong</span> <span class="n">republican</span>
+<span class="mi">7</span>	<span class="n">Other</span> <span class="n">party</span>
+</pre></div>
+</div>
+<p>I’ll define <code class="docutils literal notranslate"><span class="pre">democrat</span></code> to include respondents who chose “Strong democrat” or “Not str democrat”:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">democrat</span> <span class="o">=</span> <span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;partyid&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">mean</span></code> to compute the fraction of Democrats in this dataset.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">prob</span></code> to compute the same fraction, which we will think of as a probability.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">democrat</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3662609048488537
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">prob</span><span class="p">(</span><span class="n">democrat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3662609048488537
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="conjunction">
+<h2>Conjunction<a class="headerlink" href="#conjunction" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have a definition of probability and a function that computes it, let’s move on to conjunction.</p>
+<p>“Conjunction” is another name for the logical <code class="docutils literal notranslate"><span class="pre">and</span></code> operation.  If you have two propositions, <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code>, the conjunction <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">and</span> <span class="pre">B</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code> if both <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code> are <code class="docutils literal notranslate"><span class="pre">True</span></code>, and <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
+<p>I’ll demonstrate using two Boolean series constructed to enumerate every combination of <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">((</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+<span class="n">A</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     True
+1     True
+2    False
+3    False
+dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">B</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">((</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+<span class="n">B</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     True
+1    False
+2     True
+3    False
+dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<p>To compute the conjunction of <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code>, we can use the <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> operator, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">&amp;</span> <span class="n">B</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     True
+1    False
+2    False
+3    False
+dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is <code class="docutils literal notranslate"><span class="pre">True</span></code> only when <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code> are <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<p>To show this operation more clearly, I’ll put the operands and the result in a DataFrame:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">B</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">&#39;A &amp; B&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span> <span class="o">&amp;</span> <span class="n">B</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>A &amp; B</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>This way of representing a logical operation is called a <a class="reference external" href="https://en.wikipedia.org/wiki/Truth_table">truth table</a>.</p>
+<p>In a previous section, we computed the probability that a random respondent is a banker:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">banker</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.014769730168391155
+</pre></div>
+</div>
+</div>
+</div>
+<p>And the probability that a respondent is a Democrat:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">democrat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3662609048488537
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can compute the probability that a random respondent is a banker <em>and</em> a Democrat:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">banker</span> <span class="o">&amp;</span> <span class="n">democrat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.004686548995739501
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we should expect, <code class="docutils literal notranslate"><span class="pre">prob(banker</span> <span class="pre">&amp;</span> <span class="pre">democrat)</span></code> is less than <code class="docutils literal notranslate"><span class="pre">prob(banker)</span></code>, because not all bankers are Democrats.</p>
+<p><strong>Exercise:</strong> Use <code class="docutils literal notranslate"><span class="pre">prob</span></code> and the <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> operator to compute the following probabilities.</p>
+<ul class="simple">
+<li><p>What is the probability that a random respondent is a banker and liberal?</p></li>
+<li><p>What is the probability that a random respondent is female, a banker, and liberal?</p></li>
+<li><p>What is the probability that a random respondent is female, a banker, and a liberal Democrat?</p></li>
+</ul>
+<p>Notice that as we add more conjunctions, the probabilities get smaller.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">prob</span><span class="p">(</span><span class="n">banker</span> <span class="o">&amp;</span> <span class="n">liberal</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.003306958815175492
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">prob</span><span class="p">(</span><span class="n">female</span> <span class="o">&amp;</span> <span class="n">banker</span> <span class="o">&amp;</span> <span class="n">liberal</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.002556299452221546
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">prob</span><span class="p">(</span><span class="n">female</span> <span class="o">&amp;</span> <span class="n">banker</span> <span class="o">&amp;</span> <span class="n">liberal</span> <span class="o">&amp;</span> <span class="n">democrat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0012375735443294787
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong> We expect conjunction to be commutative; that is, <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">&amp;</span> <span class="pre">B</span></code> should be the same as <code class="docutils literal notranslate"><span class="pre">B</span> <span class="pre">&amp;</span> <span class="pre">A</span></code>.</p>
+<p>To check, compute these two probabilies:</p>
+<ul class="simple">
+<li><p>What is the probability that a random respondent is a banker and liberal?</p></li>
+<li><p>What is the probability that a random respondent is liberal and a banker?</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">banker</span> <span class="o">&amp;</span> <span class="n">liberal</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.003306958815175492
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">liberal</span> <span class="o">&amp;</span> <span class="n">banker</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.003306958815175492
+</pre></div>
+</div>
+</div>
+</div>
+<p>If they are not the same, something has gone very wrong!</p>
+</div>
+<div class="section" id="conditional-probability">
+<h2>Conditional probability<a class="headerlink" href="#conditional-probability" title="Permalink to this headline">¶</a></h2>
+<p>Conditional probability is a probability that depends on a condition, but that might not be the most helpful definition.  Here are some examples:</p>
+<ul class="simple">
+<li><p>What is the probability that a respondent is a Democrat, given that they are liberal?</p></li>
+<li><p>What is the probability that a respondent is female, given that they are a banker?</p></li>
+<li><p>What is the probability that a respondent is liberal, given that they are female?</p></li>
+</ul>
+<p>Let’s start with the first one, which we can interpret like this: “Of all the respondents who are liberal, what fraction are Democrats?”</p>
+<p>We can compute this probability in two steps:</p>
+<ol class="simple">
+<li><p>Select all respondents who are liberal.</p></li>
+<li><p>Compute the fraction of the selected respondents who are Democrats.</p></li>
+</ol>
+<p>To select liberal respondents, we can use the bracket operator, <code class="docutils literal notranslate"><span class="pre">[]</span></code>, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selected</span> <span class="o">=</span> <span class="n">democrat</span><span class="p">[</span><span class="n">liberal</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is a Boolean series that contains a subset of the values in <code class="docutils literal notranslate"><span class="pre">democrat</span></code>.  Specifically, it contains only the values where <code class="docutils literal notranslate"><span class="pre">liberal</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<p>To confirm that, let’s check the length of the result:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">selected</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>13493
+</pre></div>
+</div>
+</div>
+</div>
+<p>If things have gone according to plan, that should be the same as the number of <code class="docutils literal notranslate"><span class="pre">True</span></code> values in <code class="docutils literal notranslate"><span class="pre">liberal</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">liberal</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>13493
+</pre></div>
+</div>
+</div>
+</div>
+<p>Good.</p>
+<p><code class="docutils literal notranslate"><span class="pre">selected</span></code> contains the value of <code class="docutils literal notranslate"><span class="pre">democrat</span></code> for liberal respondents, so the mean of <code class="docutils literal notranslate"><span class="pre">selected</span></code> is the fraction of liberals who are Democrats:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selected</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5206403320240125
+</pre></div>
+</div>
+</div>
+</div>
+<p>A little more than half of liberals are Democrats.  If the result is lower than you expected, keep in mind:</p>
+<ol class="simple">
+<li><p>We used a somewhat strict definition of “Democrat”, excluding Independents who “lean” democratic.</p></li>
+<li><p>The dataset includes respondents as far back as 1974; in the early part of this interval, there was less alignment between political views and party affiliation, compared to the present.</p></li>
+</ol>
+<p>Let’s try the second example, “What is the probability that a respondent is female, given that they are a banker?”</p>
+<p>We can interpret that to mean, “Of all respondents who are bankers, what fraction are female?”</p>
+<p>Again, we’ll use the bracket operator to select only the bankers:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selected</span> <span class="o">=</span> <span class="n">female</span><span class="p">[</span><span class="n">banker</span><span class="p">]</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">selected</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>728
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we’ve seen, there are 728 bankers in the dataset.</p>
+<p>Now we can use <code class="docutils literal notranslate"><span class="pre">mean</span></code> to compute the conditional probability that a respondent is female, given that they are a banker:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selected</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7706043956043956
+</pre></div>
+</div>
+</div>
+</div>
+<p>About 77% of the bankers in this dataset are female.</p>
+<p>We can get the same result using <code class="docutils literal notranslate"><span class="pre">prob</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">selected</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7706043956043956
+</pre></div>
+</div>
+</div>
+</div>
+<p>Remember that we defined <code class="docutils literal notranslate"><span class="pre">prob</span></code> to make the code easier to read.  We can do the same thing with conditional probability.</p>
+<p>I’ll define <code class="docutils literal notranslate"><span class="pre">conditional</span></code> to take two Boolean series, <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code>, and compute the conditional probability of <code class="docutils literal notranslate"><span class="pre">A</span></code> given <code class="docutils literal notranslate"><span class="pre">B</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">conditional</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Conditional probability of A given B.</span>
+<span class="sd">    </span>
+<span class="sd">    A: Boolean series</span>
+<span class="sd">    B: Boolean series</span>
+<span class="sd">    </span>
+<span class="sd">    returns: probability</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">prob</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">B</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can use it to compute the probability that a liberal is a Democrat:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conditional</span><span class="p">(</span><span class="n">democrat</span><span class="p">,</span> <span class="n">liberal</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5206403320240125
+</pre></div>
+</div>
+</div>
+</div>
+<p>And the probability that a banker is female:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conditional</span><span class="p">(</span><span class="n">female</span><span class="p">,</span> <span class="n">banker</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7706043956043956
+</pre></div>
+</div>
+</div>
+</div>
+<p>The results are the same as what we computed above.</p>
+<p><strong>Exercise:</strong> Use <code class="docutils literal notranslate"><span class="pre">conditional</span></code> to compute the probability that a respondent is liberal given that they are female.</p>
+<p>Hint: The answer should be less than 30%.  If your answer is about 54%, you have made a mistake (see the next exercise).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">conditional</span><span class="p">(</span><span class="n">liberal</span><span class="p">,</span> <span class="n">female</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.27581004111500884
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong>  In a previous exercise, we saw that conjunction is commutative; that is, <code class="docutils literal notranslate"><span class="pre">prob(A</span> <span class="pre">&amp;</span> <span class="pre">B)</span></code> is always equal to <code class="docutils literal notranslate"><span class="pre">prob(B</span> <span class="pre">&amp;</span> <span class="pre">A)</span></code>.</p>
+<p>But conditional probability is NOT commutative; that is, <code class="docutils literal notranslate"><span class="pre">conditional(A,</span> <span class="pre">B)</span></code> is not the same as <code class="docutils literal notranslate"><span class="pre">conditional(B,</span> <span class="pre">A)</span></code>.</p>
+<p>That should be clear if we look at an example.  Previously, we computed the probability a respondent is female, given that they are banker.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conditional</span><span class="p">(</span><span class="n">female</span><span class="p">,</span> <span class="n">banker</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7706043956043956
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result shows that the majority of bankers are female.  That is not the same as the probability that a respondent is a banker, given that they are female:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conditional</span><span class="p">(</span><span class="n">banker</span><span class="p">,</span> <span class="n">female</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.02116102749801969
+</pre></div>
+</div>
+</div>
+</div>
+<p>Only about 2% of female respondents are bankers.</p>
+<p><strong>Exercise:</strong> Use <code class="docutils literal notranslate"><span class="pre">conditional</span></code> to compute the following probabilities:</p>
+<ul class="simple">
+<li><p>What is the probability that a respondent is liberal, given that they are a Democrat?</p></li>
+<li><p>What is the probability that a respondent is a Democrat, given that they are liberal?</p></li>
+</ul>
+<p>Think carefully about the order of the series you pass to <code class="docutils literal notranslate"><span class="pre">conditional</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conditional</span><span class="p">(</span><span class="n">liberal</span><span class="p">,</span> <span class="n">democrat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3891320002215698
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conditional</span><span class="p">(</span><span class="n">democrat</span><span class="p">,</span> <span class="n">liberal</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5206403320240125
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="conditions-and-conjunctions">
+<h2>Conditions and conjunctions<a class="headerlink" href="#conditions-and-conjunctions" title="Permalink to this headline">¶</a></h2>
+<p>We can combine conditional probability and conjunction.  For example, here’s the probability a respondent is female, given that they are a liberal Democrat.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conditional</span><span class="p">(</span><span class="n">female</span><span class="p">,</span> <span class="n">liberal</span> <span class="o">&amp;</span> <span class="n">democrat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.576085409252669
+</pre></div>
+</div>
+</div>
+</div>
+<p>Almost 57% of liberal Democrats are female.</p>
+<p>And here’s the probability they are a liberal female, given that they are a banker:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conditional</span><span class="p">(</span><span class="n">liberal</span> <span class="o">&amp;</span> <span class="n">female</span><span class="p">,</span> <span class="n">banker</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.17307692307692307
+</pre></div>
+</div>
+</div>
+</div>
+<p>About 17% of bankers are liberal women.</p>
+<p><strong>Exercise:</strong> What fraction of female bankers are liberal Democrats?</p>
+<p>Hint: If your answer is less than 1%, you have it backwards.  Remember that conditional probability is not commutative.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">conditional</span><span class="p">(</span><span class="n">liberal</span> <span class="o">&amp;</span> <span class="n">democrat</span><span class="p">,</span> <span class="n">female</span> <span class="o">&amp;</span> <span class="n">banker</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.10873440285204991
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>At this point, you should understand the definition of probability, at least in the simple case where we have a finite dataset.  Later we will consider cases where the definition of probability is more controversial.</p>
+<p>And you should understand conjunction and conditional probability.  <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/02_bayes.ipynb">In the next notebook</a>, we will explore the relationship between conjunction and conditional probability, and use it to derive Bayes’s Theorem, which is the foundation of Bayesian statistics.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="README.html" title="previous page">The notebooks</a>
+    <a class='right-next' id="next-link" href="02_bayes.html" title="next page">Bayes’s Theorem</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

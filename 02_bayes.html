@@ -1,0 +1,1060 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bayes’s Theorem &#8212; Bite Size Bayes</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The Cookie Problem" href="03_cookie.html" />
+    <link rel="prev" title="The Laws of Probability" href="01_linda.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Bite Size Bayes</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="README.html">
+   The notebooks
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_linda.html">
+   The Laws of Probability
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Bayes’s Theorem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_cookie.html">
+   The Cookie Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_dice.html">
+   The Dice Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_test.html">
+   Medical Tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06_pmf.html">
+   Probability Mass Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07_euro.html">
+   The Euro Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08_soccer.html">
+   The World Cup Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_predict.html">
+   Prediction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10_joint.html">
+   Joint Probability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11_faceoff.html">
+   Comparisons
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="12_binomial.html">
+   The Binomial Distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="13_price.html">
+   <em>
+    The Price Is Right
+   </em>
+   Problem
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/02_bayes.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/BiteSizeBayes"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/BiteSizeBayes/master?urlpath=tree/02_bayes.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#review">
+   Review
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#more-propositions">
+   More propositions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#onward">
+   Onward!
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#theorem-1">
+   Theorem 1
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#proof">
+   Proof?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#theorem-2">
+   Theorem 2
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conjunction-is-commutative">
+   Conjunction is commutative
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#theorem-3">
+   Theorem 3
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="bayes-s-theorem">
+<h1>Bayes’s Theorem<a class="headerlink" href="#bayes-s-theorem" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">values</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="review">
+<h2>Review<a class="headerlink" href="#review" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/01_linda.ipynb">In the previous notebook</a> I defined probability, conjunction, and conditional probability, and used data from the General Social Survey (GSS) to compute the probability of various logical propositions.</p>
+<p>To review, here’s how we loaded the dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gss</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;gss_bayes.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here are the logical propositions we defined, represented using Boolean series.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">banker</span> <span class="o">=</span> <span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;indus10&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">6870</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">female</span> <span class="o">=</span> <span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">liberal</span> <span class="o">=</span> <span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;polviews&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">democrat</span> <span class="o">=</span> <span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;partyid&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>I defined the following function, which uses <code class="docutils literal notranslate"><span class="pre">mean</span></code> to compute the fraction of <code class="docutils literal notranslate"><span class="pre">True</span></code> values in a Boolean series.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">prob</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Computes the probability of a proposition, A.</span>
+<span class="sd">    </span>
+<span class="sd">    A: Boolean series</span>
+<span class="sd">    </span>
+<span class="sd">    returns: probability</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">A</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;bool&#39;</span>
+    
+    <span class="k">return</span> <span class="n">A</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>So we can compute the probability of a proposition like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">female</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5378575776019476
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then we used the <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> operator to compute the probability of a conjunction, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">female</span> <span class="o">&amp;</span> <span class="n">banker</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.011381618989653074
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next I defined the following function, which uses the bracket operator to compute conditional probability:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">conditional</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Conditional probability of A given B.</span>
+<span class="sd">    </span>
+<span class="sd">    A: Boolean series</span>
+<span class="sd">    B: Boolean series</span>
+<span class="sd">    </span>
+<span class="sd">    returns: probability</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">prob</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">B</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We showed that conjunction is commutative, so <code class="docutils literal notranslate"><span class="pre">prob(A</span> <span class="pre">&amp;</span> <span class="pre">B)</span></code> equals <code class="docutils literal notranslate"><span class="pre">prob(B</span> <span class="pre">&amp;</span> <span class="pre">A)</span></code>, for any logical propositions <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code>.</p>
+<p>For example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">liberal</span> <span class="o">&amp;</span> <span class="n">democrat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.1425238385067965
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">democrat</span> <span class="o">&amp;</span> <span class="n">liberal</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.1425238385067965
+</pre></div>
+</div>
+</div>
+</div>
+<p>But conditional probability is NOT commutative, so <code class="docutils literal notranslate"><span class="pre">conditional(A,</span> <span class="pre">B)</span></code> is generally not the same as <code class="docutils literal notranslate"><span class="pre">conditional(B,</span> <span class="pre">A)</span></code>.</p>
+<p>For example, here’s the probability that a respondent is female, given that they are a banker.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conditional</span><span class="p">(</span><span class="n">female</span><span class="p">,</span> <span class="n">banker</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7706043956043956
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here’s the probability that a respondent is a banker, given that they are female.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conditional</span><span class="p">(</span><span class="n">banker</span><span class="p">,</span> <span class="n">female</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.02116102749801969
+</pre></div>
+</div>
+</div>
+</div>
+<p>Not even close.</p>
+</div>
+<div class="section" id="more-propositions">
+<h2>More propositions<a class="headerlink" href="#more-propositions" title="Permalink to this headline">¶</a></h2>
+<p>For the sake of variety in our examples, let’s define some new propositions.</p>
+<p>Here’s the probability that a random respondent is male.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">male</span> <span class="o">=</span> <span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">prob</span><span class="p">(</span><span class="n">male</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.46214242239805237
+</pre></div>
+</div>
+</div>
+</div>
+<p>The industry code for “Construction” is <code class="docutils literal notranslate"><span class="pre">770</span></code>.  Let’s call someone in this field a “builder”.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">builder</span> <span class="o">=</span> <span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;indus10&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">770</span><span class="p">)</span>
+<span class="n">prob</span><span class="p">(</span><span class="n">builder</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.05978900385473727
+</pre></div>
+</div>
+</div>
+</div>
+<p>And let’s define propositions for conservatives and Republicans.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conservative</span> <span class="o">=</span> <span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;polviews&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">prob</span><span class="p">(</span><span class="n">conservative</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3419354838709677
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">republican</span> <span class="o">=</span> <span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;partyid&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]))</span>
+<span class="n">prob</span><span class="p">(</span><span class="n">republican</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.2610062893081761
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">isin</span></code> function checks whether values are in a given sequence.  In this example, the values <code class="docutils literal notranslate"><span class="pre">5</span></code> and <code class="docutils literal notranslate"><span class="pre">6</span></code> represent the responses “Strong Republican” and “Not Strong Republican”.</p>
+<p>Finally, I’ll use <code class="docutils literal notranslate"><span class="pre">age</span></code> to define propositions for <code class="docutils literal notranslate"><span class="pre">young</span></code> and <code class="docutils literal notranslate"><span class="pre">old</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">young</span> <span class="o">=</span> <span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">prob</span><span class="p">(</span><span class="n">young</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.19435991073240008
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">old</span> <span class="o">=</span> <span class="p">(</span><span class="n">gss</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">65</span><span class="p">)</span>
+<span class="n">prob</span><span class="p">(</span><span class="n">old</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.17328058429701765
+</pre></div>
+</div>
+</div>
+</div>
+<p>For these thresholds, I chose round numbers near the 20th and 80th percentiles.  Depending on your age, you may or may not agree with these definitions of “young” and “old”.</p>
+<p><strong>Exercise:</strong> There’s a <a class="reference external" href="https://quoteinvestigator.com/2014/02/24/heart-head/">famous quote</a> about young people, old people, liberals, and conservatives that goes something like:</p>
+<blockquote>
+<div><p>If you are not a liberal at 25, you have no heart. If you are not a conservative at 35, you have no brain.</p>
+</div></blockquote>
+<p>Whether you agree with this proposition or not, it suggests some probabilities we can compute as a review exercise.<br />
+Use <code class="docutils literal notranslate"><span class="pre">prob</span></code> and <code class="docutils literal notranslate"><span class="pre">conditional</span></code> to compute these probabilities.</p>
+<ul class="simple">
+<li><p>What is the probability that a randomly chosen respondent is a young liberal?</p></li>
+<li><p>What is the probability that a young person is liberal?</p></li>
+<li><p>What fraction of respondents are old conservatives?</p></li>
+<li><p>What fraction of conservatives are old?</p></li>
+</ul>
+<p>For each statement, think about whether it is expressing a conjunction, or a conditional probability, or both.</p>
+<p>And for the conditional probabilities, be careful about the order!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">prob</span><span class="p">(</span><span class="n">young</span> <span class="o">&amp;</span> <span class="n">liberal</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.06579427875836884
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">conditional</span><span class="p">(</span><span class="n">liberal</span><span class="p">,</span> <span class="n">young</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.338517745302714
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">prob</span><span class="p">(</span><span class="n">old</span> <span class="o">&amp;</span> <span class="n">conservative</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.06701156421180766
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">conditional</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">conservative</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.19597721609113564
+</pre></div>
+</div>
+</div>
+</div>
+<p>If your last answer is greater than 30%, you have it backwards!</p>
+</div>
+<div class="section" id="onward">
+<h2>Onward!<a class="headerlink" href="#onward" title="Permalink to this headline">¶</a></h2>
+<p>In this notebook, we’ll derive three relationships between conjunction and conditional probability:</p>
+<ul class="simple">
+<li><p>Theorem 1: Using conjunction to compute a conditional probability.</p></li>
+<li><p>Theorem 2: Using a conditional probability to compute a conjunction.</p></li>
+<li><p>Theorem 3: Using <code class="docutils literal notranslate"><span class="pre">conditional(A,</span> <span class="pre">B)</span></code> to compute <code class="docutils literal notranslate"><span class="pre">conditional(B,</span> <span class="pre">A)</span></code>.</p></li>
+</ul>
+<p>Theorem 3 is also known as Bayes’s Theorem, which is the foundation of Bayesian statistics.</p>
+<p>For parts of this notebook it will be useful to use mathematical notation for probability, so I’ll introduce that now.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(A)\)</span> is the probability of proposition <span class="math notranslate nohighlight">\(A\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(A~\mathrm{and}~B)\)</span> is the probability of the conjunction of <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, that is, the probability that both are true.</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(A | B)\)</span> is the conditional probability of <span class="math notranslate nohighlight">\(A\)</span> given that <span class="math notranslate nohighlight">\(B\)</span> is true.  The vertical line between <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> is pronounced “given”.</p></li>
+</ul>
+<p>With that, we are ready for Theorem 1.</p>
+</div>
+<div class="section" id="theorem-1">
+<h2>Theorem 1<a class="headerlink" href="#theorem-1" title="Permalink to this headline">¶</a></h2>
+<p>What fraction of builders are male?  We have already seen one way to compute the answer:</p>
+<ol class="simple">
+<li><p>Use the bracket operator to select the builders, then</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">mean</span></code> to compute the fraction of builders who are male.</p></li>
+</ol>
+<p>We can write these steps like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">male</span><span class="p">[</span><span class="n">builder</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8920936545639634
+</pre></div>
+</div>
+</div>
+</div>
+<p>Or we can use the <code class="docutils literal notranslate"><span class="pre">conditional</span></code> function, which does the same thing:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conditional</span><span class="p">(</span><span class="n">male</span><span class="p">,</span> <span class="n">builder</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8920936545639634
+</pre></div>
+</div>
+</div>
+</div>
+<p>But there is another way: to compute the fraction of builders who are male, we can compute the ratio of two probabilities:</p>
+<ol class="simple">
+<li><p>The fraction of respondents who are male builders, and</p></li>
+<li><p>The fraction of respondents who are builders.</p></li>
+</ol>
+<p>Here’s what that looks like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">male</span> <span class="o">&amp;</span> <span class="n">builder</span><span class="p">)</span> <span class="o">/</span> <span class="n">prob</span><span class="p">(</span><span class="n">builder</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8920936545639634
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is the same.</p>
+<p>This example demonstrates a general rule that relates conditional probability and conjunction.  Here’s what it looks like in math notation:</p>
+<p><span class="math notranslate nohighlight">\(P(A|B) = \frac{P(A~\mathrm{and}~B)}{P(B)}\)</span></p>
+<p>And that’s Theorem 1.</p>
+<p>In this example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">conditional(male,</span> <span class="pre">builder)</span> <span class="pre">=</span> <span class="pre">prob(male</span> <span class="pre">&amp;</span> <span class="pre">builder)</span> <span class="pre">/</span> <span class="pre">prob(builder)</span></code></p>
+<p><strong>Exercise:</strong>  What fraction of conservatives are Republican?  Compute the answer two ways:</p>
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">conditional</span></code> (which uses the bracket operator), and</p></li>
+<li><p>Use Theorem 1.</p></li>
+</ul>
+<p>Confirm that you get the same answer.</p>
+<p>Note: Due to floating-point arithmetic, the results might not be exactly the same, but almost all of the digits should be the same.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">conditional</span><span class="p">(</span><span class="n">republican</span><span class="p">,</span> <span class="n">conservative</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.45027886555120444
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">prob</span><span class="p">(</span><span class="n">republican</span> <span class="o">&amp;</span> <span class="n">conservative</span><span class="p">)</span> <span class="o">/</span> <span class="n">prob</span><span class="p">(</span><span class="n">conservative</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.4502788655512045
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="proof">
+<h2>Proof?<a class="headerlink" href="#proof" title="Permalink to this headline">¶</a></h2>
+<p>I didn’t really prove Theorem 1; mostly, it is a statement of what conditional probability means.</p>
+<p>For example, consider this Venn diagram:</p>
+<img width="200" src="https://github.com/AllenDowney/BiteSizeBayes/raw/master/theorem1_venn_diagram.png">
+<p>The blue circle represents male respondents.  The red circle represents builders.  The intersection represents male builders.</p>
+<p>To compute the fraction of builders who are male, we can compute the ratio of the intersection, which is <code class="docutils literal notranslate"><span class="pre">prob(male</span> <span class="pre">&amp;</span> <span class="pre">builder)</span></code> to the red circle, which is <code class="docutils literal notranslate"><span class="pre">prob(builder)</span></code>.</p>
+<p><strong>Exercise:</strong> For practice, compute fraction of bankers who are old both ways: using <code class="docutils literal notranslate"><span class="pre">conditional</span></code> and using Theorem 1.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">conditional</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">banker</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.14697802197802198
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">prob</span><span class="p">(</span><span class="n">old</span> <span class="o">&amp;</span> <span class="n">banker</span><span class="p">)</span> <span class="o">/</span> <span class="n">prob</span><span class="p">(</span><span class="n">banker</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.14697802197802198
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="theorem-2">
+<h2>Theorem 2<a class="headerlink" href="#theorem-2" title="Permalink to this headline">¶</a></h2>
+<p>Here’s Theorem 1 again:</p>
+<p><span class="math notranslate nohighlight">\(P(A|B) = \frac{P(A~\mathrm{and}~B)}{P(B)}\)</span></p>
+<p>If we multiply both sides by <span class="math notranslate nohighlight">\(P(B)\)</span>, we get Theorem 2.</p>
+<p><span class="math notranslate nohighlight">\(P(A~\mathrm{and}~B) = P(B) P(A|B)\)</span></p>
+<p>This formula suggests a second way to compute a conjunction: instead of using the <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> operator, we can compute the product of two probabilities.</p>
+<p>Let’s see if it works for <code class="docutils literal notranslate"><span class="pre">conservative</span></code> and <code class="docutils literal notranslate"><span class="pre">republican</span></code>.  Here’s the result using <code class="docutils literal notranslate"><span class="pre">&amp;</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">conservative</span> <span class="o">&amp;</span> <span class="n">republican</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.15396632176912153
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here’s the result using Theorem 2:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">republican</span><span class="p">)</span> <span class="o">*</span> <span class="n">conditional</span><span class="p">(</span><span class="n">conservative</span><span class="p">,</span> <span class="n">republican</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.1539663217691215
+</pre></div>
+</div>
+</div>
+</div>
+<p>Because of floating-point errors, they might not be identical, but almost all of the digits are the same.</p>
+<p><strong>Exercise:</strong> Check Theorem 2 one more time by computing the fraction of respondents who are old liberals both ways:</p>
+<ul class="simple">
+<li><p>Using the <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> operator, and</p></li>
+<li><p>Using Theorem 2.</p></li>
+</ul>
+<p>The results should be the same, or at least very close.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">prob</span><span class="p">(</span><span class="n">old</span> <span class="o">&amp;</span> <span class="n">liberal</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.03653885169405559
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">prob</span><span class="p">(</span><span class="n">old</span><span class="p">)</span> <span class="o">*</span> <span class="n">conditional</span><span class="p">(</span><span class="n">liberal</span><span class="p">,</span> <span class="n">old</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.03653885169405559
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="conjunction-is-commutative">
+<h2>Conjunction is commutative<a class="headerlink" href="#conjunction-is-commutative" title="Permalink to this headline">¶</a></h2>
+<p>We have already established that conjunction is commutative.  In math notation, that means:</p>
+<p><span class="math notranslate nohighlight">\(P(A~\mathrm{and}~B) = P(B~\mathrm{and}~A)\)</span></p>
+<p>If we apply Theorem 2 to both sides, we have</p>
+<p><span class="math notranslate nohighlight">\(P(B) P(A|B) = P(A) P(B|A)\)</span></p>
+<p>Here’s one way to interpret that: if you want to check <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, you can do it in either order:</p>
+<ol class="simple">
+<li><p>You can check <span class="math notranslate nohighlight">\(B\)</span> first, then <span class="math notranslate nohighlight">\(A\)</span> conditioned on <span class="math notranslate nohighlight">\(B\)</span>, or</p></li>
+<li><p>You can check <span class="math notranslate nohighlight">\(A\)</span> first, then <span class="math notranslate nohighlight">\(B\)</span> conditioned on <span class="math notranslate nohighlight">\(A\)</span>.</p></li>
+</ol>
+<p>To try it out, I’ll compute the fraction of young builders both ways:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">young</span><span class="p">)</span> <span class="o">*</span> <span class="n">conditional</span><span class="p">(</span><span class="n">builder</span><span class="p">,</span> <span class="n">young</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.012314871170622844
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">builder</span><span class="p">)</span> <span class="o">*</span> <span class="n">conditional</span><span class="p">(</span><span class="n">young</span><span class="p">,</span> <span class="n">builder</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.012314871170622844
+</pre></div>
+</div>
+</div>
+</div>
+<p>Same thing!</p>
+<p><strong>Exercise:</strong> Compute the probability of being a male banker both ways and see if you get the same thing.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">prob</span><span class="p">(</span><span class="n">male</span><span class="p">)</span> <span class="o">*</span> <span class="n">conditional</span><span class="p">(</span><span class="n">banker</span><span class="p">,</span> <span class="n">male</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.003388111178738081
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">prob</span><span class="p">(</span><span class="n">banker</span><span class="p">)</span> <span class="o">*</span> <span class="n">conditional</span><span class="p">(</span><span class="n">male</span><span class="p">,</span> <span class="n">banker</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.003388111178738081
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="theorem-3">
+<h2>Theorem 3<a class="headerlink" href="#theorem-3" title="Permalink to this headline">¶</a></h2>
+<p>In the previous section we established that</p>
+<p><span class="math notranslate nohighlight">\(P(B) P(A|B) = P(A) P(B|A)\)</span></p>
+<p>If we divide through by <span class="math notranslate nohighlight">\(P(B)\)</span>, we get Theorem 3:</p>
+<p><span class="math notranslate nohighlight">\(P(A|B) = \frac{P(A) P(B|A)}{P(B)}\)</span></p>
+<p>And that, my friends, is Bayes’s Theorem.</p>
+<p>To see how it works, let’s try one more combination of our propositions.  Let’s compute the fraction of builders who are liberal, first using <code class="docutils literal notranslate"><span class="pre">conditional</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conditional</span><span class="p">(</span><span class="n">liberal</span><span class="p">,</span> <span class="n">builder</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.24431625381744146
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now using Bayes’s Theorem:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">liberal</span><span class="p">)</span> <span class="o">*</span> <span class="n">conditional</span><span class="p">(</span><span class="n">builder</span><span class="p">,</span> <span class="n">liberal</span><span class="p">)</span> <span class="o">/</span> <span class="n">prob</span><span class="p">(</span><span class="n">builder</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.24431625381744151
+</pre></div>
+</div>
+</div>
+</div>
+<p>Same thing!</p>
+<p><strong>Exercise:</strong> Try it yourself!  Compute the fraction of young people who are Republican both ways: using <code class="docutils literal notranslate"><span class="pre">conditional</span></code> and using Bayes’s Theorem.  See if you get the same thing.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conditional</span><span class="p">(</span><span class="n">republican</span><span class="p">,</span> <span class="n">young</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.23319415448851774
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">republican</span><span class="p">)</span> <span class="o">*</span> <span class="n">conditional</span><span class="p">(</span><span class="n">young</span><span class="p">,</span> <span class="n">republican</span><span class="p">)</span> <span class="o">/</span> <span class="n">prob</span><span class="p">(</span><span class="n">young</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.2331941544885177
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>Here’s what we have so far:</p>
+<p><strong>Theorem 1</strong> gives us a new way to compute a conditional probability using a conjunction:</p>
+<p><span class="math notranslate nohighlight">\(P(A|B) = \frac{P(A~\mathrm{and}~B)}{P(B)}\)</span></p>
+<p><strong>Theorem 2</strong> gives us a new way to compute a conjunction using a conditional probability:</p>
+<p><span class="math notranslate nohighlight">\(P(A~\mathrm{and}~B) = P(B) P(A|B)\)</span></p>
+<p><strong>Theorem 3</strong>, also known as Bayes’s Theorem, gives us a way to get from <span class="math notranslate nohighlight">\(P(A|B)\)</span> to <span class="math notranslate nohighlight">\(P(B|A)\)</span>, or the other way around:</p>
+<p><span class="math notranslate nohighlight">\(P(A|B) = \frac{P(A) P(B|A)}{P(B)}\)</span></p>
+<p>But at this point you might ask, “So what?”  If we have all of the data, we can compute any probability we want, any conjunction, or any conditional probability, just by counting.  Why do we need these formulas?</p>
+<p>And you are right, <em>if</em> we have all of the data.  But often we don’t, and in that case, these formulas can be pretty useful – especially Bayes’s Theorem.</p>
+<p>In the next notebook, we’ll see how.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="01_linda.html" title="previous page">The Laws of Probability</a>
+    <a class='right-next' id="next-link" href="03_cookie.html" title="next page">The Cookie Problem</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

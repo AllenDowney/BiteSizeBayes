@@ -1,0 +1,1336 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Dice Problem &#8212; Bite Size Bayes</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Medical Tests" href="05_test.html" />
+    <link rel="prev" title="The Cookie Problem" href="03_cookie.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Bite Size Bayes</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="README.html">
+   The notebooks
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_linda.html">
+   The Laws of Probability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_bayes.html">
+   Bayes’s Theorem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_cookie.html">
+   The Cookie Problem
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   The Dice Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_test.html">
+   Medical Tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06_pmf.html">
+   Probability Mass Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07_euro.html">
+   The Euro Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08_soccer.html">
+   The World Cup Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_predict.html">
+   Prediction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10_joint.html">
+   Joint Probability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11_faceoff.html">
+   Comparisons
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="12_binomial.html">
+   The Binomial Distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="13_price.html">
+   <em>
+    The Price Is Right
+   </em>
+   Problem
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/04_dice.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/BiteSizeBayes"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/BiteSizeBayes/master?urlpath=tree/04_dice.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#review">
+   Review
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#more-hypotheses">
+   More hypotheses
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#why-does-this-work">
+   Why does this work?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#rolling-the-dice">
+   Rolling the dice
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#disjunction">
+   Disjunction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#total-probability">
+   Total probability
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prediction-and-inference">
+   Prediction and inference
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="the-dice-problem">
+<h1>The Dice Problem<a class="headerlink" href="#the-dice-problem" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">values</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="review">
+<h2>Review<a class="headerlink" href="#review" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/03_cookie.ipynb">In the previous notebook</a> we started with Bayes’s Theorem, written like this:</p>
+<p><span class="math notranslate nohighlight">\(P(A|B) = P(A) ~ P(B|A) ~/~ P(B)\)</span></p>
+<p>And applied it to the case where we use data, <span class="math notranslate nohighlight">\(D\)</span>, to update the probability of a hypothesis, <span class="math notranslate nohighlight">\(H\)</span>.  In this context, we write Bayes’s Theorem like this:</p>
+<p><span class="math notranslate nohighlight">\(P(H|D) = P(H) ~ P(D|H) ~/~ P(D)\)</span></p>
+<p>And give each term a name:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(H)\)</span> is the “prior probability” of the hypothesis, which represents how confident you are that <span class="math notranslate nohighlight">\(H\)</span> is true prior to seeing the data,</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(D|H)\)</span> is the “likelihood” of the data, which is the probability of seeing <span class="math notranslate nohighlight">\(D\)</span> if the hypothesis is true,</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(D)\)</span> is the “total probability of the data”, that is, the chance of seeing <span class="math notranslate nohighlight">\(D\)</span> regardless of whether <span class="math notranslate nohighlight">\(H\)</span> is true or not.</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(H|D)\)</span> is the “posterior probability” of the hypothesis, which indicates how confident you should be that <span class="math notranslate nohighlight">\(H\)</span> is true after taking the data into account.</p></li>
+</ul>
+<p>We used Bayes’s Theorem to solve a cookie-related problem, and I presented the Bayes table, a way to solve Bayesian problems more generally.  I didn’t really explain how it works, though.  That’s the goal of this notebook.</p>
+<p>I’ll start by extending the table method to a problem with more than two hypotheses.</p>
+</div>
+<div class="section" id="more-hypotheses">
+<h2>More hypotheses<a class="headerlink" href="#more-hypotheses" title="Permalink to this headline">¶</a></h2>
+<p>One nice thing about the table method is that it works with more than two hypotheses.  As an example, let’s do another version of the cookie problem.</p>
+<p>Suppose you have five bowls:</p>
+<ul class="simple">
+<li><p>Bowl 0 contains no vanilla cookies.</p></li>
+<li><p>Bowl 1 contains 25% vanilla cookies.</p></li>
+<li><p>Bowl 2 contains 50% vanilla cookies.</p></li>
+<li><p>Bowl 3 contains 75% vanilla cookies.</p></li>
+<li><p>Bowl 4 contains 100% vanilla cookies.</p></li>
+</ul>
+<p>Now suppose we choose a bowl at random and then choose a cookie, and we get a vanilla cookie.  What is the posterior probability that we chose each bowl?</p>
+<p>Here’s a table that represents the five hypotheses and their prior probabilities:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">5</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The likelihood of drawing a vanilla cookie from each bowl is the given proportion of vanilla cookies:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;likelihood&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mi">1</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+      <th>likelihood</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.2</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.2</td>
+      <td>0.25</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.2</td>
+      <td>0.50</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.2</td>
+      <td>0.75</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.2</td>
+      <td>1.00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Once we have priors and likelihoods, the remaining steps are always the same.  We compute the unnormalized posteriors:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;likelihood&#39;</span><span class="p">]</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+      <th>likelihood</th>
+      <th>unnorm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.2</td>
+      <td>0.00</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.2</td>
+      <td>0.25</td>
+      <td>0.05</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.2</td>
+      <td>0.50</td>
+      <td>0.10</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.2</td>
+      <td>0.75</td>
+      <td>0.15</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.2</td>
+      <td>1.00</td>
+      <td>0.20</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>And the total probability of the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob_data</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">prob_data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then divide through to get the normalized posteriors.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">prob_data</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+      <th>likelihood</th>
+      <th>unnorm</th>
+      <th>posterior</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.2</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.2</td>
+      <td>0.25</td>
+      <td>0.05</td>
+      <td>0.1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.2</td>
+      <td>0.50</td>
+      <td>0.10</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.2</td>
+      <td>0.75</td>
+      <td>0.15</td>
+      <td>0.3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.2</td>
+      <td>1.00</td>
+      <td>0.20</td>
+      <td>0.4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Two things you might notice about these results:</p>
+<ol class="simple">
+<li><p>One of the hypotheses has a posterior probability of 0, which means it has been ruled out entirely.  And that makes sense: Bowl 0 contains no vanilla cookies, so if we get a vanilla cookie, we know it’s not from Bowl 0.</p></li>
+<li><p>The posterior probabilities form a straight line.  We can see this more clearly by plotting the results.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Bowl #&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Posterior probability&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/04_dice_19_0.png" src="_images/04_dice_19_0.png" />
+</div>
+</div>
+<p><strong>Exercise:</strong>  Use the table method to solve the following problem and plot the results as a bar chart.</p>
+<blockquote>
+<div><p>The blue M&amp;M was introduced in 1995.  Before then, the color mix in a bag of plain M&amp;Ms was (30% Brown, 20% Yellow, 20% Red, 10% Green, 10% Orange, 10% Tan).</p>
+<p>Afterward it was (24% Blue , 20% Green, 16% Orange, 14% Yellow, 13% Red, 13% Brown).</p>
+<p>A friend of mine has two bags of M&amp;Ms, and he tells me that one is from 1994 and one from 1996.  He won’t tell me which is which, but he gives me one M&amp;M from each bag.  One is yellow and one is green.  What is the probability that the yellow M&amp;M came from the 1994 bag?</p>
+</div></blockquote>
+<p>Hint: If the yellow came from 1994, the green must have come from 1996.  By Theorem 2 (conjunction), the likelihood of this combination is (0.2)(0.2).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;1994&#39;</span><span class="p">,</span> <span class="s1">&#39;1996&#39;</span><span class="p">])</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">&#39;likelihood&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.2</span> <span class="o">*</span> <span class="mf">0.2</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.14</span> <span class="o">*</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;likelihood&#39;</span><span class="p">]</span>
+<span class="n">prob_data</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">prob_data</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+      <th>likelihood</th>
+      <th>unnorm</th>
+      <th>posterior</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1994</th>
+      <td>0.5</td>
+      <td>0.040</td>
+      <td>0.020</td>
+      <td>0.740741</td>
+    </tr>
+    <tr>
+      <th>1996</th>
+      <td>0.5</td>
+      <td>0.014</td>
+      <td>0.007</td>
+      <td>0.259259</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">table</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Year&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Posterior probability&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/04_dice_22_0.png" src="_images/04_dice_22_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="why-does-this-work">
+<h2>Why does this work?<a class="headerlink" href="#why-does-this-work" title="Permalink to this headline">¶</a></h2>
+<p>Now I will explain how the table method works, making two arguments:</p>
+<ol class="simple">
+<li><p>First, I’ll show that it makes sense to normalize the posteriors so they add up to 1.</p></li>
+<li><p>Then I’ll show that this step is consistent with Bayes’s Theorem, because the total of the unnormalized posteriors is the total probability of the data, <span class="math notranslate nohighlight">\(P(D)\)</span>.</p></li>
+</ol>
+<p>Here’s the first argument.  Let’s start with Bayes’s Theorem:</p>
+<p><span class="math notranslate nohighlight">\(P(H|D) = P(H) ~ P(D|H)~/~P(D)\)</span></p>
+<p>Notice that the denominator, <span class="math notranslate nohighlight">\(P(D)\)</span>, does not depend on <span class="math notranslate nohighlight">\(H\)</span>, so it is the same for all hypotheses.  If we factor it out, we get:</p>
+<p><span class="math notranslate nohighlight">\(P(H|D) \sim P(H) ~ P(D|H)\)</span></p>
+<p>which says that the posterior probabilities <em>are proportional to</em> the unnormalized posteriors.  In other words, if we leave out <span class="math notranslate nohighlight">\(P(D)\)</span>, we get the proportions right, but not the total.</p>
+<p>Then how do we figure out the total?  Well, in this example we know that the cookie came from exactly one of the bowls.  So the hypotheses are:</p>
+<ul class="simple">
+<li><p>Mutually exclusive, that is, only one of them can be true, and</p></li>
+<li><p>Collectively exhaustive, that is, at least one of them must be true.</p></li>
+</ul>
+<p>Exactly one of the hypotheses must be true, so the posterior probabilities have to add up to 1.  Most of the time, the unnormalized posteriors don’t add up to 1, but when we divide through by the total, we ensure that the <em>normalized</em> posteriors do.</p>
+<p>That’s the first argument.  I hope it makes some sense, but if you don’t find it entirely satisfying, keep going.</p>
+</div>
+<div class="section" id="rolling-the-dice">
+<h2>Rolling the dice<a class="headerlink" href="#rolling-the-dice" title="Permalink to this headline">¶</a></h2>
+<p>Before I can make the second argument, we need one more law of probability, which I will explain with a new example:</p>
+<blockquote>
+<div><p>Suppose you have a 4-sided die and a 6-sided die.  You choose one at random and roll it.  What is the probability of getting a 1?</p>
+</div></blockquote>
+<p>To answer that, I’ll define two hypotheses and a datum:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(H_4\)</span>: You chose the 4-sided die.</p></li>
+<li><p><span class="math notranslate nohighlight">\(H_6\)</span>: You chose the 6-sided die.</p></li>
+<li><p><span class="math notranslate nohighlight">\(D\)</span>: You rolled a 1.</p></li>
+</ul>
+<p>On a 4-sided die, the probability of rolling 1 is <span class="math notranslate nohighlight">\(1/4\)</span>; on a 6-sided die it is <span class="math notranslate nohighlight">\(1/6\)</span>.  So we can write the conditional probabilities:</p>
+<p><span class="math notranslate nohighlight">\(P(D|H_4) = 1/4\)</span></p>
+<p><span class="math notranslate nohighlight">\(P(D|H_6) = 1/6\)</span></p>
+<p>And if the probability of choosing either die is equal, we know the prior probabilities:</p>
+<p><span class="math notranslate nohighlight">\(P(H_4) = 1/2\)</span></p>
+<p><span class="math notranslate nohighlight">\(P(H_6) = 1/2\)</span></p>
+<p>But what is the total probability of the data, <span class="math notranslate nohighlight">\(P(D)\)</span>?</p>
+<p>At this point your intuition might tell you that it is the weighted sum of the conditional probabilities:</p>
+<p><span class="math notranslate nohighlight">\(P(D) = P(H_4)P(D|H_4) + P(H_6)P(D|H_6)\)</span></p>
+<p>Which is</p>
+<p><span class="math notranslate nohighlight">\(P(D) = (1/2)(1/4) + (1/2)(1/6)\)</span></p>
+<p>Which is</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.20833333333333331
+</pre></div>
+</div>
+</div>
+</div>
+<p>And that’s correct.  But if your intuition did not tell you that, or if you would like to see something closer to a proof, keep going.</p>
+</div>
+<div class="section" id="disjunction">
+<h2>Disjunction<a class="headerlink" href="#disjunction" title="Permalink to this headline">¶</a></h2>
+<p>In this example, we can describe the outcome in terms of logical operators like this:</p>
+<blockquote>
+<div><p>The outcome is 1 if you choose the 4-sided die <strong>and</strong> roll 1 <strong>or</strong> you roll the 6-sided die <strong>and</strong> roll 1.</p>
+</div></blockquote>
+<p>Using math notation, <span class="math notranslate nohighlight">\(D\)</span> is true if:</p>
+<p><span class="math notranslate nohighlight">\((H_4 ~and~ D) ~or~ (H_6 ~and~ D)\)</span></p>
+<p>We’ve already seen the <span class="math notranslate nohighlight">\(and\)</span> operator, also known as “conjunction”, but we have not yet seen the <span class="math notranslate nohighlight">\(or\)</span> operator, which is also known as “disjunction”?</p>
+<p>For that, we a new rule, which I’ll call <strong>Theorem 4</strong>:</p>
+<p><span class="math notranslate nohighlight">\(P(A ~or~ B) = P(A) + P(B) - P(A ~and~ B)\)</span></p>
+<p>To see why that’s true, let’s take a look at the Venn diagram:</p>
+<img width="200" src="https://github.com/AllenDowney/BiteSizeBayes/raw/master/theorem4_venn_diagram.png">
+<p>What we want is the total of the blue, red, and purple regions.  If we add <span class="math notranslate nohighlight">\(P(A)\)</span> and <span class="math notranslate nohighlight">\(P(B)\)</span>, we get the blue and red regions right, but we double-count the purple region.  So we have to subtract off one purple region, which is <span class="math notranslate nohighlight">\(P(A ~and~ B)\)</span>.</p>
+<p><strong>Exercise:</strong> Let’s do a quick example using disjunction.</p>
+<p>A standard deck of playing cards contains 52 cards;</p>
+<ul class="simple">
+<li><p>26 of them are red,</p></li>
+<li><p>12 of them are face cards, and</p></li>
+<li><p>6 of them are red face cards.</p></li>
+</ul>
+<p>The following diagram shows what I mean: the red rectangle contains the red cards; the blue rectangle contains the face cards, and the overlap includes the red face cards.</p>
+<p><img width="500"
+     src="https://github.com/AllenDowney/BiteSizeBayes/raw/master/card_venn_diagram.png"></p>
+<p>If we choose a card at random, here are the probabilities of choosing a red card, a face card, and a red face card:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p_red</span> <span class="o">=</span> <span class="mi">26</span><span class="o">/</span><span class="mi">52</span>
+<span class="n">p_face</span> <span class="o">=</span> <span class="mi">12</span><span class="o">/</span><span class="mi">52</span>
+<span class="n">p_red_face</span> <span class="o">=</span> <span class="mi">6</span><span class="o">/</span><span class="mi">52</span>
+
+<span class="n">p_red</span><span class="p">,</span> <span class="n">p_face</span><span class="p">,</span> <span class="n">p_red_face</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.5, 0.23076923076923078, 0.11538461538461539)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Use Theorem 4 to compute the probability of choosing a card that is either red, or a face card, or both:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">p_red_or_face</span> <span class="o">=</span> <span class="n">p_red</span> <span class="o">+</span> <span class="n">p_face</span> <span class="o">-</span> <span class="n">p_red_face</span>
+<span class="n">p_red_or_face</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6153846153846154
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="total-probability">
+<h2>Total probability<a class="headerlink" href="#total-probability" title="Permalink to this headline">¶</a></h2>
+<p>In the dice example, <span class="math notranslate nohighlight">\(H_4\)</span> and <span class="math notranslate nohighlight">\(H_6\)</span> are mutually exclusive, which means only one of them can be true, so the purple region is 0.  Therefore:</p>
+<p><span class="math notranslate nohighlight">\(P(D) = P(H_4 ~and~ D) + P(H_6 ~and~ D) - 0\)</span></p>
+<p>Now we can use <strong>Theorem 2</strong> to replace the conjunctions with conditonal probabilities:</p>
+<p><span class="math notranslate nohighlight">\(P(D) = P(H_4)~P(D|H_4) + P(H_6)~P(D|H_6)\)</span></p>
+<p>By a similar argument, we can show that this is true for any number of hypotheses.  For example, if we add an 8-sided die to the mix, we can write:</p>
+<p><span class="math notranslate nohighlight">\(P(D) = P(H_4)~P(D|H_4) + P(H_6)~P(D|H_6) + P(H_8)~P(D|H_8)\)</span></p>
+<p>And more generally, with any number of hypotheses <span class="math notranslate nohighlight">\(H_i\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(P(D) = \sum_i P(H_i)~P(D|H_i)\)</span></p>
+<p>Which shows that the total probability of the data is the sum of the unnormalized posteriors.</p>
+<p>And that’s why the table method works.</p>
+<p>Now let’s get back to the original question:</p>
+<blockquote>
+<div><p>Suppose you have a 4-sided die and a 6-sided die.  You choose one at random and roll it.  What is the probability of getting a 1?</p>
+</div></blockquote>
+<p>We can use a Bayes table to compute the answer.  Here are the priors:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;H4&#39;</span><span class="p">,</span> <span class="s1">&#39;H6&#39;</span><span class="p">])</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>H4</th>
+      <td>0.5</td>
+    </tr>
+    <tr>
+      <th>H6</th>
+      <td>0.5</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>And the likelihoods:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;likelihood&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">6</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+      <th>likelihood</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>H4</th>
+      <td>0.5</td>
+      <td>0.250000</td>
+    </tr>
+    <tr>
+      <th>H6</th>
+      <td>0.5</td>
+      <td>0.166667</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Now we compute the unnormalized posteriors in the usual way:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;likelihood&#39;</span><span class="p">]</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+      <th>likelihood</th>
+      <th>unnorm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>H4</th>
+      <td>0.5</td>
+      <td>0.250000</td>
+      <td>0.125000</td>
+    </tr>
+    <tr>
+      <th>H6</th>
+      <td>0.5</td>
+      <td>0.166667</td>
+      <td>0.083333</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>And the total probability of the data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob_data</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">prob_data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.20833333333333331
+</pre></div>
+</div>
+</div>
+</div>
+<p>That’s what we got when we solved the problem by hand, so that’s good.</p>
+<p><strong>Exercise:</strong> Suppose you have a 4-sided, 6-sided, and 8-sided die.  You choose one at random and roll it, what is the probability of getting a 1?</p>
+<p>Do you expect it to be higher or lower than in the previous example?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;H4&#39;</span><span class="p">,</span> <span class="s1">&#39;H6&#39;</span><span class="p">,</span> <span class="s1">&#39;H8&#39;</span><span class="p">])</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">&#39;likelihood&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">8</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;likelihood&#39;</span><span class="p">]</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+      <th>likelihood</th>
+      <th>unnorm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>H4</th>
+      <td>0.333333</td>
+      <td>0.250000</td>
+      <td>0.083333</td>
+    </tr>
+    <tr>
+      <th>H6</th>
+      <td>0.333333</td>
+      <td>0.166667</td>
+      <td>0.055556</td>
+    </tr>
+    <tr>
+      <th>H8</th>
+      <td>0.333333</td>
+      <td>0.125000</td>
+      <td>0.041667</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">prob_data</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">prob_data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.18055555555555555
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="prediction-and-inference">
+<h2>Prediction and inference<a class="headerlink" href="#prediction-and-inference" title="Permalink to this headline">¶</a></h2>
+<p>In the previous section, we use a Bayes table to solve this problem:</p>
+<blockquote>
+<div><p>Suppose you have a 4-sided die and a 6-sided die.  You choose one at random and roll it.  What is the probability of getting a 1?</p>
+</div></blockquote>
+<p>I’ll call this a “prediction problem” because we are given a scenario and asked for the probability of a predicted outcome.</p>
+<p>Now let’s solve a closely-related problem:</p>
+<blockquote>
+<div><p>Suppose you have a 4-sided die and a 6-sided die.  You choose one at random, roll it, and get a 1.  What is the probability that the die you rolled is 4-sided?</p>
+</div></blockquote>
+<p>I’ll call this an “inference problem” because we are given the outcome and asked to figure out, or “infer”, which die was rolled.</p>
+<p>Here’s a solution:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;H4&#39;</span><span class="p">,</span> <span class="s1">&#39;H6&#39;</span><span class="p">])</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">&#39;likelihood&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">6</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;likelihood&#39;</span><span class="p">]</span>
+<span class="n">prob_data</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">prob_data</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+      <th>likelihood</th>
+      <th>unnorm</th>
+      <th>posterior</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>H4</th>
+      <td>0.5</td>
+      <td>0.250000</td>
+      <td>0.125000</td>
+      <td>0.6</td>
+    </tr>
+    <tr>
+      <th>H6</th>
+      <td>0.5</td>
+      <td>0.166667</td>
+      <td>0.083333</td>
+      <td>0.4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Given that the outcome is a 1, there is a 60% chance the die you rolled was 4-sided.</p>
+<p>As this example shows, prediction and inference closely-related problems, and we can use the same methods for both.</p>
+<p><strong>Exercise:</strong> Let’s add some more dice:</p>
+<ol class="simple">
+<li><p>Suppose you have a 4-sided, 6-sided, 8-sided, and 12-sided die.  You choose one at random and roll it.  What is the probability of getting a 1?</p></li>
+<li><p>Now suppose the outcome is a 1. What is the probability that the die you rolled is 4-sided?  And what are the posterior probabilities for the other dice?</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;H4&#39;</span><span class="p">,</span> <span class="s1">&#39;H6&#39;</span><span class="p">,</span> <span class="s1">&#39;H8&#39;</span><span class="p">,</span> <span class="s1">&#39;H12&#39;</span><span class="p">])</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">&#39;likelihood&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">12</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;likelihood&#39;</span><span class="p">]</span>
+<span class="n">prob_data</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">prob_data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.15625
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">table</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">prob_data</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+      <th>likelihood</th>
+      <th>unnorm</th>
+      <th>posterior</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>H4</th>
+      <td>0.25</td>
+      <td>0.250000</td>
+      <td>0.062500</td>
+      <td>0.400000</td>
+    </tr>
+    <tr>
+      <th>H6</th>
+      <td>0.25</td>
+      <td>0.166667</td>
+      <td>0.041667</td>
+      <td>0.266667</td>
+    </tr>
+    <tr>
+      <th>H8</th>
+      <td>0.25</td>
+      <td>0.125000</td>
+      <td>0.031250</td>
+      <td>0.200000</td>
+    </tr>
+    <tr>
+      <th>H12</th>
+      <td>0.25</td>
+      <td>0.083333</td>
+      <td>0.020833</td>
+      <td>0.133333</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>In this notebook, I introduced a new law of probability, so now we have four:</p>
+<p><strong>Theorem 1</strong> gives us a way to compute a conditional probability using a conjunction:</p>
+<p><span class="math notranslate nohighlight">\(P(A|B) = \frac{P(A~\mathrm{and}~B)}{P(B)}\)</span></p>
+<p><strong>Theorem 2</strong> gives us a way to compute a conjunction using a conditional probability:</p>
+<p><span class="math notranslate nohighlight">\(P(A~\mathrm{and}~B) = P(B) P(A|B)\)</span></p>
+<p><strong>Theorem 3</strong> gives us a way to get from <span class="math notranslate nohighlight">\(P(A|B)\)</span> to <span class="math notranslate nohighlight">\(P(B|A)\)</span>, or the other way around:</p>
+<p><span class="math notranslate nohighlight">\(P(A|B) = \frac{P(A) P(B|A)}{P(B)}\)</span></p>
+<p><strong>Theorem 4</strong> gives us a way to compute a disjunction using a conjunction.</p>
+<p><span class="math notranslate nohighlight">\(P(A ~or~ B) = P(A) + P(B) - P(A ~and~ B)\)</span></p>
+<p>Then we used Theorems 2 and 4 to show that the sum of the unnormalized posteriors is the total probability of the data, which we wrote like this:</p>
+<p><span class="math notranslate nohighlight">\(P(D) = \sum_i P(H_i)~P(D|H_i)\)</span></p>
+<p>This conclusion is useful for two reasons:</p>
+<ol class="simple">
+<li><p>It provides a way to compute the probability of future data using prior probabilities and likelihoods, and</p></li>
+<li><p>It explains why the Bayes table method works.</p></li>
+</ol>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/05_test.ipynb">In the next notebook</a> we will explore a famously useful application of Bayes’s Theorem, medical testing.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="03_cookie.html" title="previous page">The Cookie Problem</a>
+    <a class='right-next' id="next-link" href="05_test.html" title="next page">Medical Tests</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>
