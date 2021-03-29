@@ -897,24 +897,13 @@ dtype: float64
 <span class="mi">7</span>	<span class="n">Extremely</span> <span class="n">conservative</span>
 </pre></div>
 </div>
-<p>Make a cross tabulation of <code class="docutils literal notranslate"><span class="pre">gss['partyid']</span></code> and <code class="docutils literal notranslate"><span class="pre">gss['polviews']</span></code> and normalize it to make a joint PMF.</p>
-<p>Use <code class="docutils literal notranslate"><span class="pre">plot_heatmap</span></code> to display a heatmap of the joint distribution.  What patterns do you notice?</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_heatmap</span><span class="p">(</span><span class="n">joint2</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;polviews&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Joint distribution of polviews and partyid&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/10_joint_70_0.png" src="_images/10_joint_70_0.png" />
-</div>
-</div>
-<p>Use <code class="docutils literal notranslate"><span class="pre">marginal</span></code> to compute the marginal distributions of <code class="docutils literal notranslate"><span class="pre">partyid</span></code> and <code class="docutils literal notranslate"><span class="pre">polviews</span></code>, and plot the results.</p>
-<p>Use <code class="docutils literal notranslate"><span class="pre">conditional</span></code> to compute the conditional distribution of <code class="docutils literal notranslate"><span class="pre">partyid</span></code> for people who identify themselves as “Extremely conservative” (<code class="docutils literal notranslate"><span class="pre">polviews==7</span></code>).  How many of them are “strong Republicans” (<code class="docutils literal notranslate"><span class="pre">partyid==6</span></code>)?</p>
-<p>Use <code class="docutils literal notranslate"><span class="pre">conditional</span></code> to compute the conditional distribution of <code class="docutils literal notranslate"><span class="pre">polviews</span></code> for people who identify themselves as “Strong Democrat” (<code class="docutils literal notranslate"><span class="pre">partyid==0</span></code>).  How many of them are “Extremely liberal” (<code class="docutils literal notranslate"><span class="pre">polviews==1</span></code>)?</p>
+<ol class="simple">
+<li><p>Make a cross tabulation of <code class="docutils literal notranslate"><span class="pre">gss['partyid']</span></code> and <code class="docutils literal notranslate"><span class="pre">gss['polviews']</span></code> and normalize it to make a joint PMF.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">plot_heatmap</span></code> to display a heatmap of the joint distribution.  What patterns do you notice?</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">marginal</span></code> to compute the marginal distributions of <code class="docutils literal notranslate"><span class="pre">partyid</span></code> and <code class="docutils literal notranslate"><span class="pre">polviews</span></code>, and plot the results.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">conditional</span></code> to compute the conditional distribution of <code class="docutils literal notranslate"><span class="pre">partyid</span></code> for people who identify themselves as “Extremely conservative” (<code class="docutils literal notranslate"><span class="pre">polviews==7</span></code>).  How many of them are “strong Republicans” (<code class="docutils literal notranslate"><span class="pre">partyid==6</span></code>)?</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">conditional</span></code> to compute the conditional distribution of <code class="docutils literal notranslate"><span class="pre">polviews</span></code> for people who identify themselves as “Strong Democrat” (<code class="docutils literal notranslate"><span class="pre">partyid==0</span></code>).  How many of them are “Extremely liberal” (<code class="docutils literal notranslate"><span class="pre">polviews==1</span></code>)?</p></li>
+</ol>
 </div>
 <div class="section" id="id1">
 <h2>Review<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>

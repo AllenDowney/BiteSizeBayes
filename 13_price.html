@@ -1238,50 +1238,10 @@ By averaging over the prices and probabilities in the posterior distribution, we
 <p>The bid that maximizes the chance of winning is $21,000.</p>
 <p>And the bid that maximizes your the expected gain is $22,000.</p>
 <p><strong>Exercise:</strong> Do the same analysis for Player 2.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bids</span> <span class="o">=</span> <span class="n">posterior2</span><span class="o">.</span><span class="n">index</span>
-
-<span class="n">gains</span> <span class="o">=</span> <span class="p">[</span><span class="n">expected_gain</span><span class="p">(</span><span class="n">bid</span><span class="p">,</span> <span class="n">posterior2</span><span class="p">,</span> <span class="n">sample_diff1</span><span class="p">)</span> <span class="k">for</span> <span class="n">bid</span> <span class="ow">in</span> <span class="n">bids</span><span class="p">]</span>
-
-<span class="n">expected_gain_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">gains</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">bids</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Here are the results.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expected_gain_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Bid ($)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Expected gain ($)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Player 2&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/13_price_117_0.png" src="_images/13_price_117_0.png" />
-</div>
-</div>
-<p>And here is the optimal bid.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expected_gain_series</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>30000.0
-</pre></div>
-</div>
-</div>
-</div>
 </div>
 <div class="section" id="id2">
 <h2>Review<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>In this notebook</p>
-<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/13_xxx.ipynb">In the next notebook</a></p>
 </div>
 </div>
 
