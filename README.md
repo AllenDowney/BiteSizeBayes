@@ -1,3 +1,5 @@
+# Bite Size Bayes
+
 *Bite Size Bayes* is an introduction to Bayesian statistics using Python and (coming soon) R.  It does not assume any previous knowledge of probability or Bayesian methods.
 
 This material is a work in progress, so suggestions are welcome.  The best way to provide feedback is to [click here and create an issue in this GitHub repository](https://github.com/AllenDowney/BiteSizeBayes/issues).
@@ -12,20 +14,16 @@ For each of the notebooks below, you have two options: if you view the notebook 
 
 **The Linda Problem**:
 
-Press this button to run this notebook on Colab:
-
-[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/01_linda.ipynb)
-
-[or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/01_linda.ipynb)
+[Click here to run this notebook on Colab](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/01_linda.ipynb)
+or
+[Click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/01_linda.ipynb)
 
 
 ### Notebook 2
 
 **Bayes's Theorem**:
 
-Press this button to run this notebook on Colab:
-
-[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/02_bayes.ipynb)
+[Click here to run this notebook on Colab](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/02_bayes.ipynb)
 
 [or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/02_bayes.ipynb)
 
@@ -34,9 +32,7 @@ Press this button to run this notebook on Colab:
 
 **The Cookie Problem**:
 
-Press this button to run this notebook on Colab:
-
-[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/03_cookie.ipynb)
+[Click here to run this notebook on Colab](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/03_cookie.ipynb)
 
 [or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/03_cookie.ipynb)
 
@@ -45,9 +41,7 @@ Press this button to run this notebook on Colab:
 
 **The Dice Problem**:
 
-Press this button to run this notebook on Colab:
-
-[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/04_dice.ipynb)
+[Click here to run this notebook on Colab](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/04_dice.ipynb)
 
 [or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/04_dice.ipynb)
 
@@ -56,9 +50,7 @@ Press this button to run this notebook on Colab:
 
 **Interpreting medical tests**:
 
-Press this button to run this notebook on Colab:
-
-[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/05_test.ipynb)
+[Click here to run this notebook on Colab](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/05_test.ipynb)
 
 [or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/05_test.ipynb)
 
@@ -69,7 +61,7 @@ Press this button to run this notebook on Colab:
 
 Press this button to run this notebook on Colab:
 
-[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/06_pmf.ipynb)
+[Click here to run this notebook on Colab](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/06_pmf.ipynb)
 
 [or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/06_pmf.ipynb)
 
@@ -78,9 +70,7 @@ Press this button to run this notebook on Colab:
 
 **The Euro problem**:
 
-Press this button to run this notebook on Colab:
-
-[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/07_euro.ipynb)
+[Click here to run this notebook on Colab](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/07_euro.ipynb)
 
 [or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/07_euro.ipynb)
 
@@ -89,9 +79,7 @@ Press this button to run this notebook on Colab:
 
 **The World Cup problem**:
 
-Press this button to run this notebook on Colab:
-
-[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/08_soccer.ipynb)
+[Click here to run this notebook on Colab](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/08_soccer.ipynb)
 
 [or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/08_soccer.ipynb)
 
@@ -100,9 +88,7 @@ Press this button to run this notebook on Colab:
 
 **The World Cup problem, part two**:
 
-Press this button to run this notebook on Colab:
-
-[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/09_predict.ipynb)
+[Click here to run this notebook on Colab](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/09_predict.ipynb)
 
 [or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/09_predict.ipynb)
 
@@ -112,20 +98,16 @@ Press this button to run this notebook on Colab:
 
 **Joint distributions**:
 
-Press this button to run this notebook on Colab:
-
-[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/10_joint.ipynb)
+[Click here to run this notebook on Colab](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/10_joint.ipynb)
 
 [or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/10_joint.ipynb)
 
 
 ### Notebook 11
 
-**Joint distributions**:
+**Comparisons**:
 
-Press this button to run this notebook on Colab:
-
-[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/11_faceoff.ipynb)
+[Click here to run this notebook on Colab](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/11_faceoff.ipynb)
 
 [or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/11_faceoff.ipynb)
 
@@ -133,10 +115,17 @@ Press this button to run this notebook on Colab:
 
 ### Notebook 12
 
-**Hypothesis testing**:
+**The Binomial Distribution**:
 
-Press this button to run this notebook on Colab:
-
-[<img src="run_on_colab_small.png">](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/12_binomial.ipynb)
+[Click here to run this notebook on Colab](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/12_binomial.ipynb)
 
 [or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/12_binomial.ipynb)
+
+
+### Notebook 13
+
+**The Price Is Right Problem**:
+
+[Click here to run this notebook on Colab](https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/13_price.ipynb)
+
+[or click here to read it on NBViewer](https://nbviewer.jupyter.org/github/AllenDowney/BiteSizeBayes/blob/master/13_price.ipynb)
