@@ -1,0 +1,1245 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calibration &#8212; Recidivism Case Study</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Fairness" href="03_fairness.html" />
+    <link rel="prev" title="Classification" href="01_classification.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Recidivism Case Study</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Recidivism Case Study
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_classification.html">
+   Classification
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Calibration
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_fairness.html">
+   Fairness
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/02_calibration.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/RecidivismCaseStudy"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/RecidivismCaseStudy/master?urlpath=tree/02_calibration.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#review">
+   Review
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data">
+   Data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-bias">
+   Data bias
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#code">
+   Code
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-wapo-response">
+   The WaPo response
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   Calibration
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#matrices-and-metrics">
+   Matrices and metrics
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-would-it-take">
+   What would it take?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#roc">
+   ROC
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#auc">
+   AUC
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="calibration">
+<h1>Calibration<a class="headerlink" href="#calibration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="review">
+<h2>Review<a class="headerlink" href="#review" title="Permalink to this headline">¶</a></h2>
+<p>This is the second in a series of notebooks that make up a <a class="reference external" href="https://allendowney.github.io/RecidivismCaseStudy/">case study on classification and algorithmic fairness</a>.
+This case study is part of the <a class="reference external" href="https://allendowney.github.io/ElementsOfDataScience/"><em>Elements of Data Science</em></a> curriculum.</p>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/RecidivismCaseStudy/blob/master/01_classification.ipynb">In the previous notebook</a> we replicated the analysis reported in
+“<a class="reference external" href="https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing">Machine Bias</a>”, by Julia Angwin, Jeff Larson, Surya Mattu and Lauren Kirchner, published by <a class="reference external" href="https://www.propublica.org">ProPublica</a> in May 2016.</p>
+<p>After the ProPublica article, the Washington Post published a response by Sam Corbett-Davies, Emma Pierson, Avi Feller and Sharad Goel: “<a class="reference external" href="https://www.washingtonpost.com/news/monkey-cage/wp/2016/10/17/can-an-algorithm-be-racist-our-analysis-is-more-cautious-than-propublicas/">A computer program used for bail and sentencing decisions was labeled biased against blacks. It’s actually not that clear.</a>”.</p>
+<p>I strongly encourage you to read both of those articles before you go on.  In this notebook, I explain some of the arguments presented in the Washington Post (WaPo) article, and we will replicate their analysis.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="data">
+<h2>Data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h2>
+<p>The authors of “Machine Bias” published their data and analysis in <a class="reference external" href="https://github.com/propublica/compas-analysis">this repository</a>.
+The terms of use for the data <a class="reference external" href="https://www.propublica.org/datastore/terms">are here</a>.  In compliance with those terms, I am not redistributing the data.  The following cell downloads the data file we’ll use directly from their repository.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">basename</span><span class="p">,</span> <span class="n">exists</span>
+
+<span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">basename</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+        <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+
+<span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/propublica/compas-analysis/raw/master/&#39;</span> <span class="o">+</span>
+         <span class="s1">&#39;compas-scores-two-years.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell reads the data file:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;compas-scores-two-years.csv&#39;</span><span class="p">)</span>
+<span class="n">cp</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(7214, 53)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The dataset includes 7214 rows, one for each defendant, and 53 columns.</p>
+</div>
+<div class="section" id="data-bias">
+<h2>Data bias<a class="headerlink" href="#data-bias" title="Permalink to this headline">¶</a></h2>
+<p>[<strong>Note:</strong> I wrote about data bias in the previous notebook, but I am repeating it here in case someone reads this notebook without reading the previous one.]</p>
+<p>Systems like COMPAS are trying to predict whether a defendant will <em>commit</em> another crime if released.  But the dataset reports whether a defendant was <em>charged</em> with another crime.</p>
+<p>Not everyone who commits a crime gets charged (not even close).  The probability of getting charged for a particular crime depends on the type of crime and location; the presence of witnesses and their willingness to work with police; the decisions of police about where to patrol, what crimes to investigate, and who to arrest; and decisions of prosecutors about who to charge.</p>
+<p>It is likely that every one of these factors depends on the race of the defendant.  In this dataset, the prevalence of <em>new charges</em> is higher for black defendants, but that doesn’t necessarily mean that the prevalence of <em>new crimes</em> is higher.</p>
+<p>If the dataset is affected by racial bias in the probability of being charged, prediction algorithms like COMPAS will be biased, too.  In discussions of whether and how these systems should be used in the criminal justice system, this is an important issue.</p>
+<p>However, I am going to put it aside <em>for now</em> in order to focus on understanding the arguments posed in the ProPublica article and the metrics they are based on.  For the rest of this notebook I will take the “recidivism rates” in the dataset at face value; but I will try to be clear about that they mean (and don’t mean).</p>
+</div>
+<div class="section" id="code">
+<h2>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h2>
+<p>The functions from the previous notebook are in a file called <code class="docutils literal notranslate"><span class="pre">utils.py</span></code>; the following cell downloads it if you don’t already have it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/AllenDowney/RecidivismCaseStudy/&#39;</span> <span class="o">+</span>
+         <span class="s1">&#39;master/utils.py&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="the-wapo-response">
+<h2>The WaPo response<a class="headerlink" href="#the-wapo-response" title="Permalink to this headline">¶</a></h2>
+<p>The Washington Post article summarizes the ProPublica article and the response from Northpointe, the company that makes COMPAS, like this:</p>
+<ul class="simple">
+<li><p>ProPublica claims that COMPAS is unfair because “among defendants who ultimately did not reoffend, blacks were more than twice as likely as whites to be classified as medium or high risk.”</p></li>
+<li><p>Northpointe claims that COMPAS is fair because “scores mean essentially the same thing regardless of the defendant’s race. For example, among defendants who scored a seven on the COMPAS scale, 60 percent of white defendants reoffended, which is nearly identical to the 61 percent of black defendants who reoffended.”</p></li>
+</ul>
+<p>So ProPublica and Northpointe are invoking different definitions of “fair”.</p>
+<p>In the previous notebook we explored the first definition by computing error rates (false positive and false negative) for white and black defendants.</p>
+<p>In this notebook, we’ll explore the second definition, which is called “calibration”.</p>
+</div>
+<div class="section" id="id1">
+<h2>Calibration<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>The WaPo article includes this figure, which shows “white and black defendants with the same risk score are roughly equally likely to reoffend.”</p>
+<img width=70%, src='https://raw.githubusercontent.com/AllenDowney/RecidivismCaseStudy/master/calibration1.png'><p>To understand this figure, let’s start by replicating it.</p>
+<p>The following function groups defendants by risk score and computes the fraction in each group that were charged with another crime within two years.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calibration_curve</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fraction in each risk group charged with another crime.</span>
+<span class="sd">    </span>
+<span class="sd">    df: DataFrame</span>
+<span class="sd">    </span>
+<span class="sd">    returns: Series</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">grouped</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;decile_score&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">grouped</span><span class="p">[</span><span class="s1">&#39;two_year_recid&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following figure shows this calibration curve for all defendants and for white and black defendants separately.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">decorate</span>
+
+<span class="n">cal_all</span> <span class="o">=</span> <span class="n">calibration_curve</span><span class="p">(</span><span class="n">cp</span><span class="p">)</span>
+<span class="n">cal_all</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">,</span> 
+              <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span>
+              <span class="n">label</span><span class="o">=</span><span class="s1">&#39;All defendants&#39;</span><span class="p">)</span>
+
+<span class="n">white</span> <span class="o">=</span> <span class="p">(</span><span class="n">cp</span><span class="p">[</span><span class="s1">&#39;race&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Caucasian&#39;</span><span class="p">)</span>
+<span class="n">cal_white</span> <span class="o">=</span> <span class="n">calibration_curve</span><span class="p">(</span><span class="n">cp</span><span class="p">[</span><span class="n">white</span><span class="p">])</span>
+<span class="n">cal_white</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;White&#39;</span><span class="p">)</span>
+
+<span class="n">black</span> <span class="o">=</span> <span class="p">(</span><span class="n">cp</span><span class="p">[</span><span class="s1">&#39;race&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;African-American&#39;</span><span class="p">)</span>
+<span class="n">cal_black</span> <span class="o">=</span> <span class="n">calibration_curve</span><span class="p">(</span><span class="n">cp</span><span class="p">[</span><span class="n">black</span><span class="p">])</span>
+<span class="n">cal_black</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Black&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Risk score&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Fraction charged with new crime&#39;</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Recivism vs risk score, grouped by race&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/02_calibration_18_0.png" src="_images/02_calibration_18_0.png" />
+</div>
+</div>
+<p>This figure shows that people with higher risk scores are more likely to be charged with a new crime within two years.  In that sense COMPAS works as intended.</p>
+<p>Furthermore, the test is equally calibrated for black and white defendants; that is, in each risk group, the rate of recidivism is about the same for black and white defendants.</p>
+<p>The WaPo article explains why this is important:</p>
+<blockquote>
+<div><p>A risk score of seven for black defendants should mean the same thing as a score of seven for white defendants. Imagine if that were not so, and we systematically assigned whites higher risk scores than equally risky black defendants with the goal of mitigating ProPublica’s criticism. We would consider that a violation of the fundamental tenet of equal treatment.</p>
+</div></blockquote>
+<p>So we want a test that has the same calibration for all groups, and we want a test that has the same error rates for all groups.  But there’s the problem: as the WaPo article explains, it is mathematically impossible to be fair by both definitions at the same time.</p>
+<p>To see why, let’s go back to the confusion matrix.</p>
+</div>
+<div class="section" id="matrices-and-metrics">
+<h2>Matrices and metrics<a class="headerlink" href="#matrices-and-metrics" title="Permalink to this headline">¶</a></h2>
+<p>In the previous notebook, we computed confusion matrices for white and black defendants.  Here they are again:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">make_matrix</span>
+
+<span class="n">matrix_white</span> <span class="o">=</span> <span class="n">make_matrix</span><span class="p">(</span><span class="n">cp</span><span class="p">[</span><span class="n">white</span><span class="p">])</span>
+<span class="n">matrix_white</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Actual</th>
+      <th>Condition</th>
+      <th>No Condition</th>
+    </tr>
+    <tr>
+      <th>Predicted</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Positive</th>
+      <td>505</td>
+      <td>349</td>
+    </tr>
+    <tr>
+      <th>Negative</th>
+      <td>461</td>
+      <td>1139</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">matrix_black</span> <span class="o">=</span> <span class="n">make_matrix</span><span class="p">(</span><span class="n">cp</span><span class="p">[</span><span class="n">black</span><span class="p">])</span>
+<span class="n">matrix_black</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Actual</th>
+      <th>Condition</th>
+      <th>No Condition</th>
+    </tr>
+    <tr>
+      <th>Predicted</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Positive</th>
+      <td>1369</td>
+      <td>805</td>
+    </tr>
+    <tr>
+      <th>Negative</th>
+      <td>532</td>
+      <td>990</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>And here are the metrics we computed from the confusion matrices:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">compute_metrics</span>
+
+<span class="n">metrics_white</span> <span class="o">=</span> <span class="n">compute_metrics</span><span class="p">(</span><span class="n">matrix_white</span><span class="p">,</span> 
+                                <span class="s1">&#39;White defendants&#39;</span><span class="p">)</span>
+<span class="n">metrics_white</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Percent</th>
+    </tr>
+    <tr>
+      <th>White defendants</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>FPR</th>
+      <td>23.454301</td>
+    </tr>
+    <tr>
+      <th>FNR</th>
+      <td>47.722567</td>
+    </tr>
+    <tr>
+      <th>PPV</th>
+      <td>59.133489</td>
+    </tr>
+    <tr>
+      <th>NPV</th>
+      <td>71.187500</td>
+    </tr>
+    <tr>
+      <th>Prevalence</th>
+      <td>39.364303</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metrics_black</span> <span class="o">=</span> <span class="n">compute_metrics</span><span class="p">(</span><span class="n">matrix_black</span><span class="p">,</span> 
+                                <span class="s1">&#39;Black defendants&#39;</span><span class="p">)</span>
+<span class="n">metrics_black</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Percent</th>
+    </tr>
+    <tr>
+      <th>Black defendants</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>FPR</th>
+      <td>44.846797</td>
+    </tr>
+    <tr>
+      <th>FNR</th>
+      <td>27.985271</td>
+    </tr>
+    <tr>
+      <th>PPV</th>
+      <td>62.971481</td>
+    </tr>
+    <tr>
+      <th>NPV</th>
+      <td>65.045992</td>
+    </tr>
+    <tr>
+      <th>Prevalence</th>
+      <td>51.433983</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>If we look at the error rates (FPR and FNR), it seems like COMPAS is biased against black defendants:</p>
+<ul class="simple">
+<li><p>Their false positive rate is higher (45% vs 23%): among people who <em>will not</em> recidivate, black defendants are more likely to be classified high risk.</p></li>
+<li><p>Their false negative rate is lower (28% vs 48%): among people who <em>will</em> recidivate, black defendants are less likely to be classified low risk.</p></li>
+</ul>
+<p>But if we look at the the predictive values (PPV and NPV) it seems like COMPAS is biased in favor of black defendants:</p>
+<ul class="simple">
+<li><p>Among people in the <em>high risk group</em>, black defendants are more likely to be charged with another crime (63% vs 59%).</p></li>
+<li><p>Among people in the <em>low risk group</em>, black defendants are less likely to “survive” two years without another charge (65% vs 71%).</p></li>
+</ul>
+<p>It seems like we should be able to fix these problems, but it turns out that we can’t.</p>
+<p>We’ll see why in the next section.</p>
+</div>
+<div class="section" id="what-would-it-take">
+<h2>What would it take?<a class="headerlink" href="#what-would-it-take" title="Permalink to this headline">¶</a></h2>
+<p>Suppose we want to fix COMPAS so that predictive values are the same for black and white defendants.  We could do that by using different thresholds for the two groups.</p>
+<p>In this section, we’ll figure out what it would take to re-calibrate COMPAS; then we’ll see what effect that would have on predictive values.</p>
+<p>The following function loops through possible thresholds, makes the confusion matrix with each threshold, and computes accuracy metrics.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sweep_threshold</span><span class="p">(</span><span class="n">cp</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sweep a range of threshold and compute accuracy metrics.</span>
+<span class="sd">    </span>
+<span class="sd">    cp: DataFrame of COMPAS data</span>
+<span class="sd">    </span>
+<span class="sd">    returns: DataFrame with one row for each threshold and</span>
+<span class="sd">             one column for each metric</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;FPR&#39;</span><span class="p">,</span> <span class="s1">&#39;FNR&#39;</span><span class="p">,</span> <span class="s1">&#39;PPV&#39;</span><span class="p">,</span> <span class="s1">&#39;NPV&#39;</span><span class="p">,</span> <span class="s1">&#39;Prevalence&#39;</span><span class="p">]</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> 
+
+    <span class="k">for</span> <span class="n">threshold</span> <span class="ow">in</span> <span class="n">index</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">make_matrix</span><span class="p">(</span><span class="n">cp</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="n">compute_metrics</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">threshold</span><span class="p">]</span> <span class="o">=</span> <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;Percent&#39;</span><span class="p">]</span>
+        
+    <span class="k">return</span> <span class="n">table</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s the resulting table for all defendants.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table_all</span> <span class="o">=</span> <span class="n">sweep_threshold</span><span class="p">(</span><span class="n">cp</span><span class="p">)</span>
+<span class="n">table_all</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>FPR</th>
+      <th>FNR</th>
+      <th>PPV</th>
+      <th>NPV</th>
+      <th>Prevalence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>100.000000</td>
+      <td>0.000000</td>
+      <td>45.065151</td>
+      <td>NaN</td>
+      <td>45.065151</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>71.435781</td>
+      <td>9.474008</td>
+      <td>50.969865</td>
+      <td>78.611111</td>
+      <td>45.065151</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>55.084532</td>
+      <td>18.486620</td>
+      <td>54.831368</td>
+      <td>74.758505</td>
+      <td>45.065151</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>43.325763</td>
+      <td>27.130114</td>
+      <td>57.978463</td>
+      <td>71.803069</td>
+      <td>45.065151</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>32.349230</td>
+      <td>37.403876</td>
+      <td>61.350618</td>
+      <td>68.796510</td>
+      <td>45.065151</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>23.391370</td>
+      <td>47.431560</td>
+      <td>64.833080</td>
+      <td>66.317169</td>
+      <td>45.065151</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>16.250315</td>
+      <td>58.443556</td>
+      <td>67.719298</td>
+      <td>63.594558</td>
+      <td>45.065151</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>10.143830</td>
+      <td>69.209474</td>
+      <td>71.347113</td>
+      <td>61.280330</td>
+      <td>45.065151</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>6.056018</td>
+      <td>79.975392</td>
+      <td>73.063973</td>
+      <td>58.880278</td>
+      <td>45.065151</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2.195307</td>
+      <td>90.895109</td>
+      <td>77.284595</td>
+      <td>56.741326</td>
+      <td>45.065151</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.000000</td>
+      <td>100.000000</td>
+      <td>NaN</td>
+      <td>54.934849</td>
+      <td>45.065151</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The following figure shows error rates as a function of threshold.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table_all</span><span class="p">[</span><span class="s1">&#39;FPR&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">)</span>
+<span class="n">table_all</span><span class="p">[</span><span class="s1">&#39;FNR&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C4&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Threshold&#39;</span><span class="p">,</span> 
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Percent&#39;</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Error rates for a range of thresholds&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/02_calibration_34_0.png" src="_images/02_calibration_34_0.png" />
+</div>
+</div>
+<p>When the threshold is low, almost everyone is in the high risk group; in that case:</p>
+<ul class="simple">
+<li><p>FNR is low because most recidivists are in the high risk group, but</p></li>
+<li><p>FPR is high because most non-recidivists are <em>also</em> in the high risk group.</p></li>
+</ul>
+<p>When the threshold is high, almost everyone is in the low risk group, and the metrics are the other way around:</p>
+<ul class="simple">
+<li><p>FPR is low because most non-recidivists are in the low risk group, but</p></li>
+<li><p>FNR is high because most recidivists are <em>also</em> in the low risk group.</p></li>
+</ul>
+<p>The following figure shows predictive values for a range of thresholds.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table_all</span><span class="p">[</span><span class="s1">&#39;PPV&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">)</span>
+<span class="n">table_all</span><span class="p">[</span><span class="s1">&#39;NPV&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Threshold&#39;</span><span class="p">,</span> 
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Percent&#39;</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Predictive values for a range of thresholds&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/02_calibration_36_0.png" src="_images/02_calibration_36_0.png" />
+</div>
+</div>
+<p>When the threshold is too low, PPV is low.  When the threshold is too high, NPV is low.</p>
+<p>Now I’ll compute tables for black and white defendants separately.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table_white</span> <span class="o">=</span> <span class="n">sweep_threshold</span><span class="p">(</span><span class="n">cp</span><span class="p">[</span><span class="n">white</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table_black</span> <span class="o">=</span> <span class="n">sweep_threshold</span><span class="p">(</span><span class="n">cp</span><span class="p">[</span><span class="n">black</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>I’ll use the following function to interpolate columns in the table; that is, for a given threshold I can compute the corresponding metric.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">interp1d</span>
+
+<span class="k">def</span> <span class="nf">interpolate</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Evaluate a function at a value.</span>
+<span class="sd">    </span>
+<span class="sd">    series: Series</span>
+<span class="sd">    value: number</span>
+<span class="sd">    options: passed to interp1d (default is linear interp)</span>
+<span class="sd">    </span>
+<span class="sd">    returns: number</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">interp</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">series</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">interp</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following function goes the other way: it estimates the threshold where a column passes through a given metric.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">crossing</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Find where a function crosses a value.</span>
+<span class="sd">    </span>
+<span class="sd">    series: Series</span>
+<span class="sd">    value: number</span>
+<span class="sd">    options: passed to interp1d (default is linear interp)</span>
+<span class="sd">    </span>
+<span class="sd">    returns: number</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">interp</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">series</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">interp</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use <code class="docutils literal notranslate"><span class="pre">crossing</span></code> to calibrate the test for white defendants; that is, we can compute the threshold that would make the error rates for white defendants the same as for the general population.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">error_rates</span>
+
+<span class="n">matrix_all</span> <span class="o">=</span> <span class="n">make_matrix</span><span class="p">(</span><span class="n">cp</span><span class="p">)</span>
+<span class="n">fpr</span><span class="p">,</span> <span class="n">fnr</span> <span class="o">=</span> <span class="n">error_rates</span><span class="p">(</span><span class="n">matrix_all</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crossing</span><span class="p">(</span><span class="n">table_white</span><span class="p">[</span><span class="s1">&#39;FPR&#39;</span><span class="p">],</span> <span class="n">fpr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array(3.23048519)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crossing</span><span class="p">(</span><span class="n">table_white</span><span class="p">[</span><span class="s1">&#39;FNR&#39;</span><span class="p">],</span> <span class="n">fnr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array(3.11788885)
+</pre></div>
+</div>
+</div>
+</div>
+<p>With a threshold near 3.2, white defendants would have the same error rates as the general population.</p>
+<p>Now let’s do the same computation for black defendants.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crossing</span><span class="p">(</span><span class="n">table_black</span><span class="p">[</span><span class="s1">&#39;FPR&#39;</span><span class="p">],</span> <span class="n">fpr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array(5.20906103)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crossing</span><span class="p">(</span><span class="n">table_black</span><span class="p">[</span><span class="s1">&#39;FNR&#39;</span><span class="p">],</span> <span class="n">fnr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array(5.01417524)
+</pre></div>
+</div>
+</div>
+</div>
+<p>To get the same error rates for black and white defendants, we would need different thresholds: about 5.1 compared to 3.2.</p>
+<p>At those levels, the predictive values are substantially different.</p>
+<p>Here’s PPV for each group with different thresholds:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interpolate</span><span class="p">(</span><span class="n">table_white</span><span class="p">[</span><span class="s1">&#39;PPV&#39;</span><span class="p">],</span> <span class="mf">3.2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array(55.23319482)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interpolate</span><span class="p">(</span><span class="n">table_black</span><span class="p">[</span><span class="s1">&#39;PPV&#39;</span><span class="p">],</span> <span class="mf">5.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array(66.21639173)
+</pre></div>
+</div>
+</div>
+</div>
+<p>With equal error rates, we get different PPV:</p>
+<ul class="simple">
+<li><p>Among white defendants in the high risk group, about 55% would recidivate.</p></li>
+<li><p>Among black defendants in the high risk group, about 66% would recidivate.</p></li>
+</ul>
+<p>Here’s NPV for each group with different thresholds:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interpolate</span><span class="p">(</span><span class="n">table_white</span><span class="p">[</span><span class="s1">&#39;NPV&#39;</span><span class="p">],</span> <span class="mf">3.2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array(73.06639734)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interpolate</span><span class="p">(</span><span class="n">table_black</span><span class="p">[</span><span class="s1">&#39;NPV&#39;</span><span class="p">],</span> <span class="mf">5.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array(62.16782561)
+</pre></div>
+</div>
+</div>
+</div>
+<p>With equal error rates, the NPVs are substantially different:</p>
+<ul class="simple">
+<li><p>Among white defendants in the low risk group, 73% survive two years without another charge.</p></li>
+<li><p>Among black defendants in the low risk group, 62% survive.</p></li>
+</ul>
+<p>To summarize, if the test is calibrated in terms of error rates, it is not calibrated in terms of predictive values.</p>
+<ul class="simple">
+<li><p>If we make the error rates more equal, we make the predictive values more unfair, and</p></li>
+<li><p>If we make the predictive values more equal, we make the error rates more unfair.</p></li>
+</ul>
+<p>Fundamentally, the problem is that the prevalence of recidivism is different in the two groups: about 39% of white defendants were charged with another crime within two years, compared to 51% of black defendants.</p>
+<p>As long as that’s the case (for any two groups) the predictive values and error rates can’t be “fair” at the same time.</p>
+</div>
+<div class="section" id="roc">
+<h2>ROC<a class="headerlink" href="#roc" title="Permalink to this headline">¶</a></h2>
+<p>In the previous section I plotted various metrics as as function of threshold.  Another common and useful way to visualize these results is to plot sensitivity (which is the complement of FNR) versus FPR.  For historical reasons, the result is called a <a class="reference external" href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">receiver operating characteristic (ROC) curve</a>.</p>
+<p>The following function plots the ROC curve:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_roc</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot the ROC curve.</span>
+<span class="sd">    </span>
+<span class="sd">    table: DataFrame of metrics as a function of </span>
+<span class="sd">           classification threshold</span>
+<span class="sd">    options: passed to plot</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">sens</span> <span class="o">=</span> <span class="mi">100</span><span class="o">-</span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;FNR&#39;</span><span class="p">]</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;FPR&#39;</span><span class="p">],</span> <span class="n">sens</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;FPR&#39;</span><span class="p">,</span>
+             <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Sensitivity (1-FNR)&#39;</span><span class="p">,</span>
+             <span class="n">title</span><span class="o">=</span><span class="s1">&#39;ROC curve&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s the ROC curve for all defendants.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_roc</span><span class="p">(</span><span class="n">table_all</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;All defendants&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/02_calibration_62_0.png" src="_images/02_calibration_62_0.png" />
+</div>
+</div>
+<p>The green line is the ROC curve.  The gray dotted line shows the identity line for comparison.</p>
+<p>An ideal test would have high sensitivity for all values of FPR, but in reality there is almost always a trade-off:</p>
+<ul class="simple">
+<li><p>When FPR is low, sensitivity is low.</p></li>
+<li><p>In order to get more sensitivity, we have to accept a higher FPR.</p></li>
+</ul>
+<p>The ROC curve tells us how much sensitivity we get for a given FPR or, the other way around, how much FPR we have to accept to achieve a given sensitivity.</p>
+<p>The following figure shows the ROC curves for white and black defendants.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_roc</span><span class="p">(</span><span class="n">table_white</span><span class="p">)</span>
+<span class="n">plot_roc</span><span class="p">(</span><span class="n">table_black</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/02_calibration_64_0.png" src="_images/02_calibration_64_0.png" />
+</div>
+</div>
+<p>The ROC curves are similar for the two groups, which shows that we can achieve nearly the same error rates (FPR and FNR) for the two groups, as we did in the previous section.</p>
+<p>It also shows that the test has nearly the same “concordance” for both groups, which I explain in the next section.</p>
+</div>
+<div class="section" id="auc">
+<h2>AUC<a class="headerlink" href="#auc" title="Permalink to this headline">¶</a></h2>
+<p>The authors of the ProPublica article published a supplementary article,
+<a class="reference external" href="https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm"><em>How We Analyzed the COMPAS Recidivism Algorithm</em></a>, which describes their analysis in more detail.</p>
+<p>As another metric of accuracy, they estimate <a class="reference external" href="https://cran.r-project.org/web/packages/survival/vignettes/concordance.pdf">concordance</a>, which they describe like this:</p>
+<blockquote>
+<div><p>Overall, [COMPAS has] a concordance score of 63.6 percent.  That means for any randomly selected pair of defendants in the sample, the COMPAS system can accurately rank their recidivism risk 63.6 percent of the time (e.g. if one person of the pair recidivates, that pair will count as a successful match if that person also had a higher score). In its study, Northpointe reported a slightly higher concordance: 68 percent.</p>
+</div></blockquote>
+<p>They explain:</p>
+<blockquote>
+<div><p>[These estimates] are lower than what Northpointe describes as a threshold for reliability. “A rule of thumb according to several recent articles is that AUCs of .70 or above typically indicate satisfactory predictive accuracy, and measures between .60 and .70 suggest low to moderate predictive accuracy,” the company says in its study.</p>
+</div></blockquote>
+<p>There are several ways to compute concordance, but one of the simplest is to compute the area under the ROC curve.  If you would like to know why this works, <a class="reference external" href="https://stats.stackexchange.com/questions/180638/how-to-derive-the-probabilistic-interpretation-of-the-auc">you might find this discussion helpful</a>.</p>
+<p>Since we’ve already computed the ROC, we can use <a class="reference external" href="https://en.wikipedia.org/wiki/Simpson%27s_rule">Simpson’s rule</a> to estimate the area under the curve.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">simps</span>
+
+<span class="k">def</span> <span class="nf">compute_auc</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute the area under the ROC curve.</span>
+<span class="sd">    </span>
+<span class="sd">    Uses the trapezoid rule, so </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">100</span><span class="o">-</span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;FNR&#39;</span><span class="p">]</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;FPR&#39;</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span>
+    <span class="k">return</span> <span class="n">simps</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The concordance (AUC) for all respondents is about 70%.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">compute_auc</span><span class="p">(</span><span class="n">table_all</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7059974460900778
+</pre></div>
+</div>
+</div>
+</div>
+<p>For the subgroups it is slightly lower, but also near 70%.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">compute_auc</span><span class="p">(</span><span class="n">table_white</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6995093159638619
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">compute_auc</span><span class="p">(</span><span class="n">table_black</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.694567757058852
+</pre></div>
+</div>
+</div>
+</div>
+<p>Different ways of computing concordance handle ties differently, which is probably why we, ProPublica, and Northpointe get somewhat different estimates.</p>
+<p>But qualitatively they all tell the same story; as a binary classifier, COMPAS is only moderately accurate.  However, it seems to be equally accurate, by this metric, for white and black defendants.</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>In this notebook, we replicated the analysis reported in the WaPo article and confirmed two of the arguments they presented:</p>
+<ol class="simple">
+<li><p>COMPAS is calibrated in the sense that white and black defendants with the same risk score have almost the same probability of being charged with another crime.  This implies that it has roughly the same predictive value for both groups.</p></li>
+<li><p>It is mathematically impossible for COMPAS to have the same predictive values for both groups and the same error rates at the same time.</p></li>
+</ol>
+<p>And we showed:</p>
+<ul class="simple">
+<li><p>If you design a test to achieve equal predictive value across groups with different prevalence, you will find that error rates differ.  Specifically, false positive rates will be higher in groups with higher recividism.</p></li>
+<li><p>If you design a test to achieve equal error rates across groups, you will find that predictive values differ.  Specifically, positive predictive value will be lower in groups with lower rates of recidivism.</p></li>
+</ul>
+<p>Finally, we derived the ROC curve and computed AUC, which shows that COMPAS has nearly the same concordance for white and black defendants.</p>
+<p>In <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/RecidivismCaseStudy/blob/master/03_fairness.ipynb">the next notebook</a> I apply the same analysis to evaluate the performance of COMPAS for male and female defendants.  I find that COMPAS is unfair to women, but in a way that’s opposite what we have seen so far: the error rates are about the same for both groups, but the predictive values are substantially different.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="01_classification.html" title="previous page">Classification</a>
+    <a class='right-next' id="next-link" href="03_fairness.html" title="next page">Fairness</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

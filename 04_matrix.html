@@ -1,0 +1,1565 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Confusion matrix &#8212; Recidivism Case Study</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Recidivism Case Study</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Recidivism Case Study
+  </a>
+ </li>
+</ul>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_classification.html">
+   Classification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_calibration.html">
+   Calibration
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_fairness.html">
+   Fairness
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/04_matrix.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/RecidivismCaseStudy"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/RecidivismCaseStudy/master?urlpath=tree/04_matrix.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data">
+   Data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#code">
+   Code
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#recreating-the-confusion-matrix">
+   Recreating the confusion matrix
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-constant-predictive-value-model">
+   The constant predictive value model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#constant-error-rate-model">
+   Constant error rate model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#constant-predictive-value-model">
+   Constant predictive value model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   Constant error rate model
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="confusion-matrix">
+<h1>Confusion matrix<a class="headerlink" href="#confusion-matrix" title="Permalink to this headline">¶</a></h1>
+<p>Part of a <a class="reference external" href="https://allendowney.github.io/RecidivismCaseStudy/">Recidivism Case Study</a></p>
+<p>by <a class="reference external" href="https://allendowney.com">Allen Downey</a></p>
+<p><a class="reference external" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="data">
+<h2>Data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h2>
+<p>The authors of “Machine Bias” published their data and analysis in <a class="reference external" href="https://github.com/propublica/compas-analysis">this repository</a>.</p>
+<p>The terms of use for the data <a class="reference external" href="https://www.propublica.org/datastore/terms">are here</a>.  In compliance with those terms, I am not redistributing the data.  The following cell downloads the data file we’ll use directly from their repository.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;compas-scores-two-years.csv&#39;</span><span class="p">):</span>
+    <span class="o">!</span>wget https://github.com/propublica/compas-analysis/raw/master/compas-scores-two-years.csv
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell reads the data file:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;compas-scores-two-years.csv&quot;</span><span class="p">)</span>
+<span class="n">cp</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(7214, 53)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The dataset includes 7214 rows, one for each defendant, and 53 columns.</p>
+</div>
+<div class="section" id="code">
+<h2>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h2>
+<p>The functions from the previous notebooks are in a file called <code class="docutils literal notranslate"><span class="pre">utils.py</span></code>; the following cell downloads it if you don’t already have it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;utils.py&#39;</span><span class="p">):</span>
+    <span class="o">!</span>wget https://raw.githubusercontent.com/AllenDowney/RecidivismCaseStudy/master/utils.py
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="recreating-the-confusion-matrix">
+<h2>Recreating the confusion matrix<a class="headerlink" href="#recreating-the-confusion-matrix" title="Permalink to this headline">¶</a></h2>
+<p>An ideal test should have equal predictive value in all groups; that is, two people with the same risk score should have the same probability of recidivism, regardless of what group they are in.</p>
+<p>An ideal test should also have the same error rates for all groups; that is, any two recidivists should have same probability of being mis-classified as low risk (FNR), and any two non-recidivists should have the same probability of being mis-classified as high risk (FPR).</p>
+<p>But it is not possible to achieve both of these goals at the same time:</p>
+<ul class="simple">
+<li><p>If you design a test to achieve equal predictive value across groups with different prevalence, you will find that error rates differ. Specifically, false positive rates will be higher in groups with higher recividism.</p></li>
+<li><p>If you design a test to achieve equal error rates across groups, you will find that predictive values differ. Specifically, positive predictive value will be lower in groups with lower rates of recidivism.</p></li>
+</ul>
+<p>In previous notebooks I asserted these claims without proof.  In this notebook I will prove them by showing:</p>
+<ul class="simple">
+<li><p>Given prevalence, PPV and NPV, we can compute the confusion matrix and the error rates.</p></li>
+<li><p>Given prevalence, FPR and FNR, we can compute the confusion matrix and the predictive values.</p></li>
+</ul>
+<p>To see why, consider this: the confusion matrix has four numbers in it, but they have to add up to 100%, so if you provide any three (independent) metrics, I can compute the elements of the matrix and any other metrics.</p>
+<p>We could do the algebra by hand, but it is easier (and probably more reliable) to use SymPy.</p>
+<p>Here are the symbols we’ll use:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">symbols</span><span class="p">,</span> <span class="n">Eq</span><span class="p">,</span> <span class="n">solve</span>
+
+<span class="n">tn</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">tp</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;tn, fp, fn, tp&#39;</span><span class="p">)</span>
+<span class="n">ppv</span><span class="p">,</span> <span class="n">npv</span><span class="p">,</span> <span class="n">prev</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;ppv, npv, prev&#39;</span><span class="p">)</span>
+<span class="n">fpr</span><span class="p">,</span> <span class="n">fnr</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;fpr, fnr&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here are the equations that relate the metrics to the elements of the confusion matrix.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eq1</span> <span class="o">=</span> <span class="n">Eq</span><span class="p">(</span><span class="n">prev</span><span class="p">,</span> <span class="n">tp</span><span class="o">+</span><span class="n">fn</span><span class="p">)</span>
+<span class="n">eq1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle prev = fn + tp\]</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eq2</span> <span class="o">=</span> <span class="n">Eq</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">fp</span> <span class="o">/</span> <span class="p">(</span><span class="n">fp</span><span class="o">+</span><span class="n">tn</span><span class="p">))</span>
+<span class="n">eq2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle fpr = \frac{fp}{fp + tn}\]</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eq3</span> <span class="o">=</span> <span class="n">Eq</span><span class="p">(</span><span class="n">fnr</span><span class="p">,</span> <span class="n">fn</span> <span class="o">/</span> <span class="p">(</span><span class="n">fn</span><span class="o">+</span><span class="n">tp</span><span class="p">))</span>
+<span class="n">eq3</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle fnr = \frac{fn}{fn + tp}\]</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eq4</span> <span class="o">=</span> <span class="n">Eq</span><span class="p">(</span><span class="n">ppv</span><span class="p">,</span> <span class="n">tp</span> <span class="o">/</span> <span class="p">(</span><span class="n">tp</span><span class="o">+</span><span class="n">fp</span><span class="p">))</span>
+<span class="n">eq4</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle ppv = \frac{tp}{fp + tp}\]</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eq5</span> <span class="o">=</span> <span class="n">Eq</span><span class="p">(</span><span class="n">npv</span><span class="p">,</span> <span class="n">tn</span> <span class="o">/</span> <span class="p">(</span><span class="n">tn</span><span class="o">+</span><span class="n">fn</span><span class="p">))</span>
+<span class="n">eq5</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle npv = \frac{tn}{fn + tn}\]</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eq6</span> <span class="o">=</span> <span class="n">Eq</span><span class="p">(</span><span class="n">tn</span><span class="o">+</span><span class="n">fp</span><span class="o">+</span><span class="n">fn</span><span class="o">+</span><span class="n">tp</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">eq6</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle fn + fp + tn + tp = 1\]</div>
+</div>
+</div>
+<p>We can use <code class="docutils literal notranslate"><span class="pre">solve</span></code> to get expressions for the elements of the confusion matrix in terms of <code class="docutils literal notranslate"><span class="pre">ppv</span></code>, <code class="docutils literal notranslate"><span class="pre">npv</span></code>, and <code class="docutils literal notranslate"><span class="pre">prev</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">soln1</span> <span class="o">=</span> <span class="n">solve</span><span class="p">([</span><span class="n">eq1</span><span class="p">,</span> <span class="n">eq2</span><span class="p">,</span> <span class="n">eq3</span><span class="p">,</span> <span class="n">eq4</span><span class="p">,</span> <span class="n">eq5</span><span class="p">,</span> <span class="n">eq6</span><span class="p">],</span> 
+              <span class="p">[</span><span class="n">tp</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">tn</span><span class="p">,</span> <span class="n">fpr</span><span class="p">,</span> <span class="n">fnr</span><span class="p">])</span>
+<span class="n">soln1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(ppv*(npv + prev - 1)/(npv + ppv - 1),
+ -(ppv - 1)*(npv + prev - 1)/(npv + ppv - 1),
+ -(npv - 1)*(ppv - prev)/(npv + ppv - 1),
+ npv*(ppv - prev)/(npv + ppv - 1),
+ (ppv - 1)*(npv + prev - 1)/((prev - 1)*(npv + ppv - 1)),
+ -(npv - 1)*(ppv - prev)/(prev*(npv + ppv - 1)))
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also solve for the elements of the confusion matrix in terms of <code class="docutils literal notranslate"><span class="pre">fpr</span></code>, <code class="docutils literal notranslate"><span class="pre">fnr</span></code>, and <code class="docutils literal notranslate"><span class="pre">prev</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">soln2</span> <span class="o">=</span> <span class="n">solve</span><span class="p">([</span><span class="n">eq1</span><span class="p">,</span> <span class="n">eq2</span><span class="p">,</span> <span class="n">eq3</span><span class="p">,</span> <span class="n">eq4</span><span class="p">,</span> <span class="n">eq5</span><span class="p">,</span> <span class="n">eq6</span><span class="p">],</span> 
+              <span class="p">[</span><span class="n">tp</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">tn</span><span class="p">,</span> <span class="n">ppv</span><span class="p">,</span> <span class="n">npv</span><span class="p">])</span>
+
+<span class="n">soln2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(prev*(1 - fnr),
+ fpr*(1 - prev),
+ fnr*prev,
+ (fpr - 1)*(prev - 1),
+ prev*(fnr - 1)/(fnr*prev + fpr*prev - fpr - prev),
+ (fpr - 1)*(prev - 1)/(fnr*prev + fpr*prev - fpr - prev + 1))
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following function takes <code class="docutils literal notranslate"><span class="pre">ppv</span></code>, <code class="docutils literal notranslate"><span class="pre">npv</span></code>, and <code class="docutils literal notranslate"><span class="pre">prev</span></code> and uses the expressions from <code class="docutils literal notranslate"><span class="pre">soln1</span></code> to compute a confusion matrix with those metrics.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">constant_predictive_value</span><span class="p">(</span><span class="n">ppv</span><span class="p">,</span> <span class="n">npv</span><span class="p">,</span> <span class="n">prev</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make a confusion matrix with given metrics.</span>
+<span class="sd">    </span>
+<span class="sd">    ppv: positive predictive value (0-100)</span>
+<span class="sd">    npv: negative predictive value (0-100)</span>
+<span class="sd">    prev: prevalence (0-100)</span>
+<span class="sd">    </span>
+<span class="sd">    returns: confusion matrix</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ppv</span> <span class="o">/=</span> <span class="mi">100</span>
+    <span class="n">npv</span> <span class="o">/=</span> <span class="mi">100</span>
+    <span class="n">prev</span> <span class="o">/=</span> <span class="mi">100</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">ppv</span><span class="o">*</span><span class="p">(</span><span class="n">npv</span> <span class="o">+</span> <span class="n">prev</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">npv</span> <span class="o">+</span> <span class="n">ppv</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
+                <span class="o">-</span><span class="p">(</span><span class="n">ppv</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">npv</span> <span class="o">+</span> <span class="n">prev</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">npv</span> <span class="o">+</span> <span class="n">ppv</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
+                <span class="o">-</span><span class="p">(</span><span class="n">npv</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">ppv</span> <span class="o">-</span> <span class="n">prev</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">npv</span> <span class="o">+</span> <span class="n">ppv</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
+                <span class="n">npv</span><span class="o">*</span><span class="p">(</span><span class="n">ppv</span> <span class="o">-</span> <span class="n">prev</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">npv</span> <span class="o">+</span> <span class="n">ppv</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span>
+    
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To test it, I’ll use metrics from the confusion matrix for all defendants.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">make_matrix</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">compute_metrics</span>
+
+<span class="n">matrix_all</span> <span class="o">=</span> <span class="n">make_matrix</span><span class="p">(</span><span class="n">cp</span><span class="p">)</span>
+<span class="n">metrics_all</span> <span class="o">=</span> <span class="n">compute_metrics</span><span class="p">(</span><span class="n">matrix_all</span><span class="p">,</span> <span class="s1">&#39;All defendants&#39;</span><span class="p">)</span>
+<span class="n">metrics_all</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Percent</th>
+    </tr>
+    <tr>
+      <th>All defendants</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>FPR</th>
+      <td>32.349230</td>
+    </tr>
+    <tr>
+      <th>FNR</th>
+      <td>37.403876</td>
+    </tr>
+    <tr>
+      <th>PPV</th>
+      <td>61.350618</td>
+    </tr>
+    <tr>
+      <th>NPV</th>
+      <td>68.796510</td>
+    </tr>
+    <tr>
+      <th>Prevalence</th>
+      <td>45.065151</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>I’ll extract PPV, NPV, and prevalence.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">predictive_value</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">prevalence</span>
+
+<span class="n">ppv</span><span class="p">,</span> <span class="n">npv</span> <span class="o">=</span> <span class="n">predictive_value</span><span class="p">(</span><span class="n">matrix_all</span><span class="p">)</span>
+<span class="n">prev</span> <span class="o">=</span> <span class="n">prevalence</span><span class="p">(</span><span class="n">matrix_all</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Given those values, we can reconstruct the confusion matrix and compute the metrics again.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">matrix</span> <span class="o">=</span> <span class="n">constant_predictive_value</span><span class="p">(</span><span class="n">ppv</span><span class="p">,</span> <span class="n">npv</span><span class="p">,</span> <span class="n">prev</span><span class="p">)</span>
+<span class="n">metrics_pred</span> <span class="o">=</span> <span class="n">compute_metrics</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+<span class="n">metrics_pred</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Percent</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>FPR</th>
+      <td>32.349230</td>
+    </tr>
+    <tr>
+      <th>FNR</th>
+      <td>37.403876</td>
+    </tr>
+    <tr>
+      <th>PPV</th>
+      <td>61.350618</td>
+    </tr>
+    <tr>
+      <th>NPV</th>
+      <td>68.796510</td>
+    </tr>
+    <tr>
+      <th>Prevalence</th>
+      <td>45.065151</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>These “predicted metrics” are the same as the actual metrics, except for small errors due to floating-point approximation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metrics_pred</span> <span class="o">-</span> <span class="n">metrics_all</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Percent</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>FPR</th>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>FNR</th>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>PPV</th>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>NPV</th>
+      <td>-1.421085e-14</td>
+    </tr>
+    <tr>
+      <th>Prevalence</th>
+      <td>0.000000e+00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>So that confirms that we can use PPV, NPV and prevalence to compute FPR and FNR.</p>
+<p>Now let’s see what happens if we hold PPV and NPV constant, and vary prevalence.</p>
+</div>
+<div class="section" id="the-constant-predictive-value-model">
+<h2>The constant predictive value model<a class="headerlink" href="#the-constant-predictive-value-model" title="Permalink to this headline">¶</a></h2>
+<p>To show these effects more clearly, I’ll sweep through a range of prevalences and plot the error rates we get if we hold predictive values constant.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">error_rates</span>
+
+<span class="k">def</span> <span class="nf">run_cpv_model</span><span class="p">(</span><span class="n">cp</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Run the constant predictive value model.</span>
+
+<span class="sd">    cp: DataFrame of COMPAS data</span>
+
+<span class="sd">    returns: DataFrame with a row for each prevalence and</span>
+<span class="sd">             a column for each metric (FPR, FNR)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">matrix_all</span> <span class="o">=</span> <span class="n">make_matrix</span><span class="p">(</span><span class="n">cp</span><span class="p">)</span>
+
+    <span class="n">ppv</span><span class="p">,</span> <span class="n">npv</span> <span class="o">=</span> <span class="n">predictive_value</span><span class="p">(</span><span class="n">matrix_all</span><span class="p">)</span>
+    <span class="n">prevalences</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">35</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+
+    <span class="n">pred_er</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;fpr&#39;</span><span class="p">,</span> <span class="s1">&#39;fnr&#39;</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">prev</span> <span class="ow">in</span> <span class="n">prevalences</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">constant_predictive_value</span><span class="p">(</span><span class="n">ppv</span><span class="p">,</span> <span class="n">npv</span><span class="p">,</span> <span class="n">prev</span><span class="p">)</span>
+        <span class="n">pred_er</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">prev</span><span class="p">]</span> <span class="o">=</span> <span class="n">error_rates</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">pred_er</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pred_er</span> <span class="o">=</span> <span class="n">run_cpv_model</span><span class="p">(</span><span class="n">cp</span><span class="p">)</span>
+<span class="n">pred_er</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fpr</th>
+      <th>fnr</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>35.0</th>
+      <td>7.488034</td>
+      <td>77.925569</td>
+    </tr>
+    <tr>
+      <th>37.0</th>
+      <td>11.795671</td>
+      <td>68.118564</td>
+    </tr>
+    <tr>
+      <th>39.0</th>
+      <td>16.385776</td>
+      <td>59.317406</td>
+    </tr>
+    <tr>
+      <th>41.0</th>
+      <td>21.287075</td>
+      <td>51.374897</td>
+    </tr>
+    <tr>
+      <th>43.0</th>
+      <td>26.532324</td>
+      <td>44.171227</td>
+    </tr>
+    <tr>
+      <th>45.0</th>
+      <td>32.159046</td>
+      <td>37.607882</td>
+    </tr>
+    <tr>
+      <th>47.0</th>
+      <td>38.210427</td>
+      <td>31.603121</td>
+    </tr>
+    <tr>
+      <th>49.0</th>
+      <td>44.736425</td>
+      <td>26.088543</td>
+    </tr>
+    <tr>
+      <th>51.0</th>
+      <td>51.795158</td>
+      <td>21.006482</td>
+    </tr>
+    <tr>
+      <th>53.0</th>
+      <td>59.454634</td>
+      <td>16.307973</td>
+    </tr>
+    <tr>
+      <th>55.0</th>
+      <td>67.794953</td>
+      <td>11.951173</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The following figure shows the error rates we would expect from a test with equal predictive value for all groups, regardless of prevalence.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">decorate</span>
+
+<span class="k">def</span> <span class="nf">plot_cpv_model</span><span class="p">(</span><span class="n">pred_er</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot error rates with constant predictive values.</span>
+<span class="sd">    </span>
+<span class="sd">    pred_er: DataFrame of predicted error rates</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pred_er</span><span class="p">[</span><span class="s1">&#39;fpr&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Predicted FPR&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">)</span>
+    <span class="n">pred_er</span><span class="p">[</span><span class="s1">&#39;fnr&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Predicted FNR&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C4&#39;</span><span class="p">)</span>
+    <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Prevalence&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Percent&#39;</span><span class="p">,</span>
+             <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Error rates, constant predictive value&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_cpv_model</span><span class="p">(</span><span class="n">pred_er</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/04_matrix_39_0.png" src="_images/04_matrix_39_0.png" />
+</div>
+</div>
+<p>As prevalence increases, FPR increases and FNR decreases.  Note the vertical scale: the difference in error rates between a low-prevalence group and a high-prevalence group is dramatic!</p>
+<p>For the COMPAS test, the effect is not as extreme.  The following loop computes the actual error rates for white, black, and all defendants.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">black</span> <span class="o">=</span> <span class="p">(</span><span class="n">cp</span><span class="p">[</span><span class="s1">&#39;race&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;African-American&#39;</span><span class="p">)</span>
+<span class="n">matrix_black</span> <span class="o">=</span> <span class="n">make_matrix</span><span class="p">(</span><span class="n">cp</span><span class="p">[</span><span class="n">black</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">white</span> <span class="o">=</span> <span class="p">(</span><span class="n">cp</span><span class="p">[</span><span class="s1">&#39;race&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Caucasian&#39;</span><span class="p">)</span>
+<span class="n">matrix_white</span> <span class="o">=</span> <span class="n">make_matrix</span><span class="p">(</span><span class="n">cp</span><span class="p">[</span><span class="n">white</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>When prevalence is lower, the false positive rate is higher and the false negative rate lower.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">actual_er</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;fpr&#39;</span><span class="p">,</span> <span class="s1">&#39;fnr&#39;</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="p">(</span><span class="n">matrix_white</span><span class="p">,</span> <span class="n">matrix_all</span><span class="p">,</span> <span class="n">matrix_black</span><span class="p">):</span>
+    <span class="n">prev</span> <span class="o">=</span> <span class="n">prevalence</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    <span class="n">actual_er</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">prev</span><span class="p">]</span> <span class="o">=</span> <span class="n">error_rates</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    
+<span class="n">actual_er</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fpr</th>
+      <th>fnr</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>39.364303</th>
+      <td>23.454301</td>
+      <td>47.722567</td>
+    </tr>
+    <tr>
+      <th>45.065151</th>
+      <td>32.349230</td>
+      <td>37.403876</td>
+    </tr>
+    <tr>
+      <th>51.433983</th>
+      <td>44.846797</td>
+      <td>27.985271</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The following figure shows the actual error rates compared to predictions from the constant predictive value (CPV) model.</p>
+<p>The data points show error rates for white defendants (left), all defendants (middle), and black defendants (right).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_cpv_model</span><span class="p">(</span><span class="n">pred_er</span><span class="p">)</span>
+
+<span class="n">actual_er</span><span class="p">[</span><span class="s1">&#39;fpr&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">,</span>
+                      <span class="n">label</span><span class="o">=</span><span class="s1">&#39;COMPAS FPR&#39;</span><span class="p">)</span>
+
+<span class="n">actual_er</span><span class="p">[</span><span class="s1">&#39;fnr&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C4&#39;</span><span class="p">,</span>
+                      <span class="n">label</span><span class="o">=</span><span class="s1">&#39;COMPAS FNR&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/04_matrix_46_0.png" src="_images/04_matrix_46_0.png" />
+</div>
+</div>
+<p>For the higher-prevalence group:</p>
+<ul class="simple">
+<li><p>The actual false positive rate is lower that what we would expect if the test had the same predictive value for all groups.</p></li>
+<li><p>The actual false negative rate is higher than expected.</p></li>
+</ul>
+<p>For the lower-prevalence group:</p>
+<ul class="simple">
+<li><p>The actual false positive rate is higher than what we would expect if the test had the same predictive value for all groups.</p></li>
+<li><p>The actual false negative rate is lower than expected.</p></li>
+</ul>
+<p>Relative to the CPV model, the COMPAS test is what I’ll call “tempered”, that is, less sensitive to variation in prevalence between groups.</p>
+</div>
+<div class="section" id="constant-error-rate-model">
+<h2>Constant error rate model<a class="headerlink" href="#constant-error-rate-model" title="Permalink to this headline">¶</a></h2>
+<p>In the previous section we held predictive value constant and computed the effect on error rates.  In this section we’ll go the other way: if we hold error rates constant for all groups, what effect does that have on predictive value?</p>
+<p>The following function takes prevalence and error rates and returns a confusion matrix.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">constant_error_rates</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">fnr</span><span class="p">,</span> <span class="n">prev</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make a confusion matrix with given metrics.</span>
+<span class="sd">    </span>
+<span class="sd">    fpr: false positive rate (0 - 100)</span>
+<span class="sd">    fnr: false negative rate (0 - 100)</span>
+<span class="sd">    prev: prevalence (0 - 100)</span>
+<span class="sd">    </span>
+<span class="sd">    returns: confusion matrix</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">prev</span> <span class="o">/=</span> <span class="mi">100</span>
+    <span class="n">fpr</span> <span class="o">/=</span> <span class="mi">100</span>
+    <span class="n">fnr</span> <span class="o">/=</span> <span class="mi">100</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">[[</span><span class="n">prev</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">fnr</span><span class="p">),</span>  <span class="n">fpr</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">prev</span><span class="p">)],</span>
+         <span class="p">[</span><span class="n">fnr</span><span class="o">*</span><span class="n">prev</span><span class="p">,</span>       <span class="p">(</span><span class="n">fpr</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">prev</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]]</span>
+    
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To test it, we can extract metrics for all defendants:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fpr</span><span class="p">,</span> <span class="n">fnr</span> <span class="o">=</span> <span class="n">error_rates</span><span class="p">(</span><span class="n">matrix_all</span><span class="p">)</span>
+<span class="n">prev</span> <span class="o">=</span> <span class="n">prevalence</span><span class="p">(</span><span class="n">matrix_all</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And use them to compute the other metrics:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">matrix</span> <span class="o">=</span> <span class="n">constant_error_rates</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">fnr</span><span class="p">,</span> <span class="n">prev</span><span class="p">)</span>
+<span class="n">metrics_pred</span> <span class="o">=</span> <span class="n">compute_metrics</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+<span class="n">metrics_pred</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Percent</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>FPR</th>
+      <td>32.349230</td>
+    </tr>
+    <tr>
+      <th>FNR</th>
+      <td>37.403876</td>
+    </tr>
+    <tr>
+      <th>PPV</th>
+      <td>61.350618</td>
+    </tr>
+    <tr>
+      <th>NPV</th>
+      <td>68.796510</td>
+    </tr>
+    <tr>
+      <th>Prevalence</th>
+      <td>45.065151</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>These “predicted metrics” are the same as the actual metrics, except for small errors due to floating-point approximation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metrics_pred</span> <span class="o">-</span> <span class="n">metrics_all</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Percent</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>FPR</th>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>FNR</th>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>PPV</th>
+      <td>-7.105427e-15</td>
+    </tr>
+    <tr>
+      <th>NPV</th>
+      <td>1.421085e-14</td>
+    </tr>
+    <tr>
+      <th>Prevalence</th>
+      <td>0.000000e+00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Now we can see how predictive value depends on prevalence (with error rates held constant).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_cer_model</span><span class="p">(</span><span class="n">cp</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Run the constant error rate model.</span>
+
+<span class="sd">    cp: DataFrame of COMPAS data</span>
+
+<span class="sd">    returns: DataFrame with a row for each prevalence and</span>
+<span class="sd">             a column for each metric (PPV, NPV)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">matrix_all</span> <span class="o">=</span> <span class="n">make_matrix</span><span class="p">(</span><span class="n">cp</span><span class="p">)</span>
+
+    <span class="n">fpr</span><span class="p">,</span> <span class="n">fnr</span> <span class="o">=</span> <span class="n">error_rates</span><span class="p">(</span><span class="n">matrix_all</span><span class="p">)</span>
+    <span class="n">prevalences</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">35</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+
+    <span class="n">pred_pv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ppv&#39;</span><span class="p">,</span> <span class="s1">&#39;npv&#39;</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">prev</span> <span class="ow">in</span> <span class="n">prevalences</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">constant_error_rates</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">fnr</span><span class="p">,</span> <span class="n">prev</span><span class="p">)</span>
+        <span class="n">pred_pv</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">prev</span><span class="p">]</span> <span class="o">=</span> <span class="n">predictive_value</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">pred_pv</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pred_pv</span> <span class="o">=</span> <span class="n">run_cer_model</span><span class="p">(</span><span class="n">cp</span><span class="p">)</span>
+<span class="n">pred_pv</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ppv</th>
+      <th>npv</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>35.0</th>
+      <td>51.026704</td>
+      <td>77.058610</td>
+    </tr>
+    <tr>
+      <th>38.0</th>
+      <td>54.253815</td>
+      <td>74.689735</td>
+    </tr>
+    <tr>
+      <th>41.0</th>
+      <td>57.350053</td>
+      <td>72.243048</td>
+    </tr>
+    <tr>
+      <th>44.0</th>
+      <td>60.323222</td>
+      <td>69.714652</td>
+    </tr>
+    <tr>
+      <th>47.0</th>
+      <td>63.180516</td>
+      <td>67.100383</td>
+    </tr>
+    <tr>
+      <th>50.0</th>
+      <td>65.928580</td>
+      <td>64.395791</td>
+    </tr>
+    <tr>
+      <th>53.0</th>
+      <td>68.573560</td>
+      <td>61.596113</td>
+    </tr>
+    <tr>
+      <th>56.0</th>
+      <td>71.121148</td>
+      <td>58.696245</td>
+    </tr>
+    <tr>
+      <th>59.0</th>
+      <td>73.576628</td>
+      <td>55.690711</td>
+    </tr>
+    <tr>
+      <th>62.0</th>
+      <td>75.944906</td>
+      <td>52.573628</td>
+    </tr>
+    <tr>
+      <th>65.0</th>
+      <td>78.230545</td>
+      <td>49.338668</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The following function plots results from the constant error rate (CER) model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_cer_model</span><span class="p">(</span><span class="n">pred_pv</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot error rates with constant predictive values.</span>
+<span class="sd">    </span>
+<span class="sd">    pred_er: DataFrame of predicted error rates</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pred_pv</span><span class="p">[</span><span class="s1">&#39;ppv&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Predicted PPV&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">)</span>
+    <span class="n">pred_pv</span><span class="p">[</span><span class="s1">&#39;npv&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Predicted NPV&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
+    <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Prevalence&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Percent&#39;</span><span class="p">,</span>
+             <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Predictive value, constant error rates&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_cer_model</span><span class="p">(</span><span class="n">pred_pv</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/04_matrix_61_0.png" src="_images/04_matrix_61_0.png" />
+</div>
+</div>
+<p>If we hold error rates constant and increase prevalence, PPV increases and NPV decreases.</p>
+<p>For the COMPAS test, the effect is not as extreme.  The following loop computes the actual predictive values for the three groups.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">actual_pv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ppv&#39;</span><span class="p">,</span> <span class="s1">&#39;npv&#39;</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="p">(</span><span class="n">matrix_white</span><span class="p">,</span> <span class="n">matrix_all</span><span class="p">,</span> <span class="n">matrix_black</span><span class="p">):</span>
+    <span class="n">prev</span> <span class="o">=</span> <span class="n">prevalence</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    <span class="n">actual_pv</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">prev</span><span class="p">]</span> <span class="o">=</span> <span class="n">predictive_value</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    
+<span class="n">actual_pv</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ppv</th>
+      <th>npv</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>39.364303</th>
+      <td>59.133489</td>
+      <td>71.187500</td>
+    </tr>
+    <tr>
+      <th>45.065151</th>
+      <td>61.350618</td>
+      <td>68.796510</td>
+    </tr>
+    <tr>
+      <th>51.433983</th>
+      <td>62.971481</td>
+      <td>65.045992</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The following figure shows the actual predictive values compared to predictions from the constant error rate (CER) model.</p>
+<p>The data points show error rates for white defendants (left), all defendants (middle), and black defendants (right).</p>
+<p>The following figure shows the constant error rate model again, along with actual predictive values for white defendants (left), all defendants (middle), and black defendants (right).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_cer_model</span><span class="p">(</span><span class="n">pred_pv</span><span class="p">)</span>
+
+<span class="n">actual_pv</span><span class="p">[</span><span class="s1">&#39;ppv&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span>
+                      <span class="n">label</span><span class="o">=</span><span class="s1">&#39;COMPAS PPV&#39;</span><span class="p">)</span>
+
+<span class="n">actual_pv</span><span class="p">[</span><span class="s1">&#39;npv&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span>
+                      <span class="n">label</span><span class="o">=</span><span class="s1">&#39;COMPAS NPV&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/04_matrix_65_0.png" src="_images/04_matrix_65_0.png" />
+</div>
+</div>
+<p>Again, the test is less sensitive to differences in prevalence between groups than we would expect from the constant error rate model.</p>
+</div>
+<div class="section" id="constant-predictive-value-model">
+<h2>Constant predictive value model<a class="headerlink" href="#constant-predictive-value-model" title="Permalink to this headline">¶</a></h2>
+<p>If two groups have difference prevalence, a binary classifier can have the same predictive values (PPV and NPV) for both groups, or the same error rates (FPR and FNR), but not both at the same time.</p>
+<ul class="simple">
+<li><p>If we are given predictive values, we can compute error rates for any prevalence.  I call this is the constant predictive value (CPV) model.</p></li>
+<li><p>If we are given error rates, we can compute predictive values for any prevalence.  I call this the constant error rate (CER) model.</p></li>
+</ul>
+<p>In the previous sections, we saw that COMPAS does not follow either model with respect to black and white defendants.  Instead it seems to be “tempered”, which means that when we compare groups with lower or higher prevalence:</p>
+<ul class="simple">
+<li><p>Error rates do not vary as much as the CPV model predicts.</p></li>
+<li><p>Predictive values do not vary as much as the CER model predicts.</p></li>
+</ul>
+<p>The algorithms COMPAS uses are kept secret, so we can’t tell whether this behavior is deliberate.</p>
+<p>But we can get a clue by using the same analysis to compare other groups.</p>
+<p>We’ll compare the model with actual error rates for female and male defendants.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">matrix_all</span> <span class="o">=</span> <span class="n">make_matrix</span><span class="p">(</span><span class="n">cp</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">male</span> <span class="o">=</span> <span class="p">(</span><span class="n">cp</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Male&#39;</span><span class="p">)</span>
+<span class="n">matrix_male</span> <span class="o">=</span> <span class="n">make_matrix</span><span class="p">(</span><span class="n">cp</span><span class="p">[</span><span class="n">male</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">female</span> <span class="o">=</span> <span class="p">(</span><span class="n">cp</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Female&#39;</span><span class="p">)</span>
+<span class="n">matrix_female</span> <span class="o">=</span> <span class="n">make_matrix</span><span class="p">(</span><span class="n">cp</span><span class="p">[</span><span class="n">female</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">actual_er</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;fpr&#39;</span><span class="p">,</span> <span class="s1">&#39;fnr&#39;</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="p">(</span><span class="n">matrix_female</span><span class="p">,</span> <span class="n">matrix_all</span><span class="p">,</span> <span class="n">matrix_male</span><span class="p">):</span>
+    <span class="n">prev</span> <span class="o">=</span> <span class="n">prevalence</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    <span class="n">actual_er</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">prev</span><span class="p">]</span> <span class="o">=</span> <span class="n">error_rates</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    
+<span class="n">actual_er</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fpr</th>
+      <th>fnr</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>35.698925</th>
+      <td>32.107023</td>
+      <td>39.156627</td>
+    </tr>
+    <tr>
+      <th>45.065151</th>
+      <td>32.349230</td>
+      <td>37.403876</td>
+    </tr>
+    <tr>
+      <th>47.310534</th>
+      <td>32.420091</td>
+      <td>37.086814</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The following figure compares predictions from the CPV model to actual error rates for female defendants (on the left), all defendants (in the middle), and male defendants (on the right).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_cpv_model</span><span class="p">(</span><span class="n">pred_er</span><span class="p">)</span>
+
+<span class="n">actual_er</span><span class="p">[</span><span class="s1">&#39;fpr&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">,</span>
+                      <span class="n">label</span><span class="o">=</span><span class="s1">&#39;COMPAS FPR&#39;</span><span class="p">)</span>
+
+<span class="n">actual_er</span><span class="p">[</span><span class="s1">&#39;fnr&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C4&#39;</span><span class="p">,</span>
+                      <span class="n">label</span><span class="o">=</span><span class="s1">&#39;COMPAS FNR&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/04_matrix_74_0.png" src="_images/04_matrix_74_0.png" />
+</div>
+</div>
+<p>Although male and female defendants have very difference prevalences (rates of recidivism), their error rates are almost the same.</p>
+<p>This is the “natural” behavior we should expect from a test that does not depend on sex.</p>
+<p>If we look again at the definition of FPR and FNR, using this diagram from <a class="reference external" href="https://en.wikipedia.org/wiki/Confusion_matrix">Wikipedia</a></p>
+<img width=800, src='https://raw.githubusercontent.com/AllenDowney/RecidivismCaseStudy/master/confusion_matrix2.png'>
+<p>We see that FNR depends only on people in the positive condition (people who will recidivate) and FPR depends only on people in the negative condition (people who will “survive” without being charged with another crime).</p>
+<p>Neither error rate depends on how many people are in each condition, so if the test is sex blind, it should have the same error rates for both sexes, regardless of prevalence.</p>
+</div>
+<div class="section" id="id1">
+<h2>Constant error rate model<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>The previous section shows the COMPAS has the same error rates for male and female defendants, even though they have substantially difference prevalences.</p>
+<p>So we expected the test to have different predictive values for these groups.  To confirm that I’ll compute the actual predictive values and compare them to the CER model.</p>
+<p>The I’ll use the CER model to compute PPV and NPV for a range of prevalences.</p>
+<p>Here are the actual values for male and female defendants.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">actual_pv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ppv&#39;</span><span class="p">,</span> <span class="s1">&#39;npv&#39;</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="p">(</span><span class="n">matrix_female</span><span class="p">,</span> <span class="n">matrix_all</span><span class="p">,</span> <span class="n">matrix_male</span><span class="p">):</span>
+    <span class="n">prev</span> <span class="o">=</span> <span class="n">prevalence</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    <span class="n">actual_pv</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">prev</span><span class="p">]</span> <span class="o">=</span> <span class="n">predictive_value</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    
+<span class="n">actual_pv</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ppv</th>
+      <th>npv</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>35.698925</th>
+      <td>51.269036</td>
+      <td>75.746269</td>
+    </tr>
+    <tr>
+      <th>45.065151</th>
+      <td>61.350618</td>
+      <td>68.796510</td>
+    </tr>
+    <tr>
+      <th>47.310534</th>
+      <td>63.536317</td>
+      <td>66.989977</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The following figure compares the actual values to the CER model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_cer_model</span><span class="p">(</span><span class="n">pred_pv</span><span class="p">)</span>
+
+<span class="n">actual_pv</span><span class="p">[</span><span class="s1">&#39;ppv&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span>
+                      <span class="n">label</span><span class="o">=</span><span class="s1">&#39;COMPAS PPV&#39;</span><span class="p">)</span>
+
+<span class="n">actual_pv</span><span class="p">[</span><span class="s1">&#39;npv&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span>
+                      <span class="n">label</span><span class="o">=</span><span class="s1">&#39;COMPAS NPV&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/04_matrix_81_0.png" src="_images/04_matrix_81_0.png" />
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

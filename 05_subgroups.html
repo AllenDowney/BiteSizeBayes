@@ -1,0 +1,2021 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Subgroups &#8212; Recidivism Case Study</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Recidivism Case Study</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Recidivism Case Study
+  </a>
+ </li>
+</ul>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_classification.html">
+   Classification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_calibration.html">
+   Calibration
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_fairness.html">
+   Fairness
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/05_subgroups.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/AllenDowney/RecidivismCaseStudy"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/RecidivismCaseStudy/master?urlpath=tree/05_subgroups.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data">
+   Data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#code">
+   Code
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-reference-class-problem">
+   The reference class problem
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#groups">
+   Groups
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#intersections">
+   Intersections
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reverse-engineering">
+   Reverse engineering
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="subgroups">
+<h1>Subgroups<a class="headerlink" href="#subgroups" title="Permalink to this headline">¶</a></h1>
+<p>Part of a <a class="reference external" href="https://allendowney.github.io/RecidivismCaseStudy/">Recidivism Case Study</a></p>
+<p>by <a class="reference external" href="https://allendowney.com">Allen Downey</a></p>
+<p><a class="reference external" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="data">
+<h2>Data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h2>
+<p>The authors of “Machine Bias” published their data and analysis in <a class="reference external" href="https://github.com/propublica/compas-analysis">this repository</a>.</p>
+<p>The terms of use for the data <a class="reference external" href="https://www.propublica.org/datastore/terms">are here</a>.  In compliance with those terms, I am not redistributing the data.  The following cell downloads the data file we’ll use directly from their repository.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;compas-scores-two-years.csv&#39;</span><span class="p">):</span>
+    <span class="o">!</span>wget https://github.com/propublica/compas-analysis/raw/master/compas-scores-two-years.csv
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell read the data file:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;compas-scores-two-years.csv&quot;</span><span class="p">)</span>
+<span class="n">cp</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(7214, 53)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="code">
+<h2>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h2>
+<p>The functions from the previous notebooks are in a file called <code class="docutils literal notranslate"><span class="pre">utils.py</span></code>; the following cell downloads it if you don’t already have it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;utils.py&#39;</span><span class="p">):</span>
+    <span class="o">!</span>wget https://raw.githubusercontent.com/AllenDowney/RecidivismCaseStudy/master/utils.py
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="the-reference-class-problem">
+<h2>The reference class problem<a class="headerlink" href="#the-reference-class-problem" title="Permalink to this headline">¶</a></h2>
+<p>In the first notebook we replicated the analysis in the ProPublica article and computed various metrics of accuracy for white and black defendants.  We found that the predictive values (PPV and NPV) were similar for the two groups, but the error rates (FPR and FNR) were substantially different.</p>
+<p>In the previous notebook, we ran the same analysis for male and female defendants and found the opposite pattern: the error rates are about the same, but the predictive values are different.</p>
+<p>Neither scenario seems completely fair.  Comparing black and white defendants:</p>
+<ul class="simple">
+<li><p>Among non-recidivists, black defendants were more likely to be classified as high risk (false positive).</p></li>
+<li><p>Among recidivists, white defendants were more likely to be classified as low risk (false negative).</p></li>
+</ul>
+<p>Comparing male and female defendants:</p>
+<ul class="simple">
+<li><p>Among defendants classified as high risk, female defendants were less likely to recidivate; that is, the test has lower PPV for women.</p></li>
+<li><p>Among defendants classified as low risk, male defendants were less likely to “survive”; that is, the test has lower NPV for men.</p></li>
+</ul>
+<p>So it seems like we can’t win.  If predictive values are the same for all groups, error rates are not (in general).  And if error rates are the same, predictive values are not.</p>
+<p>Nevertheless, the designers of a test like COMPAS can make trade-offs among these kinds of errors.  And that raises two questions I would like to explore:</p>
+<ol class="simple">
+<li><p>What kind of fairness is COMPAS designed to achieve?  Are they trying to make predictive value the same for all groups?  Or error rates?  Or some compromise?</p></li>
+<li><p>What kind of fairness <em>should</em> a test like COMPAS achieve?</p></li>
+</ol>
+<p>To explore the first question, I will compute accuracy metrics for defendants grouped by age, race, and sex, and for the intersections of these groups (explained below).</p>
+</div>
+<div class="section" id="groups">
+<h2>Groups<a class="headerlink" href="#groups" title="Permalink to this headline">¶</a></h2>
+<p>The following function takes a DataFrame containing COMPAS data and a list of variables to group by.  It returns a table with one row for each group and one column for each accuracy metric.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">make_matrix</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">compute_metrics</span>
+
+<span class="k">def</span> <span class="nf">make_table</span><span class="p">(</span><span class="n">cp</span><span class="p">,</span> <span class="n">group_vars</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make a table of metrics for each subgroup.</span>
+<span class="sd">    </span>
+<span class="sd">    cp: DataFrame of COMPAS data</span>
+<span class="sd">    group_vars: string or list of variable names to group by</span>
+<span class="sd">    </span>
+<span class="sd">    returns: DataFrame</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># count the number of defendants in each group</span>
+    <span class="n">grouped</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">group_vars</span><span class="p">)</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">grouped</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+
+    <span class="c1"># make the table</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;FPR&#39;</span><span class="p">,</span> <span class="s1">&#39;FNR&#39;</span><span class="p">,</span> <span class="s1">&#39;PPV&#39;</span><span class="p">,</span> <span class="s1">&#39;NPV&#39;</span><span class="p">,</span> <span class="s1">&#39;Prevalence&#39;</span><span class="p">]</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">counts</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> 
+                         <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span> 
+                         <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="c1"># fill in the table</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">grouped</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">group</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">make_matrix</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="n">compute_metrics</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;Percent&#39;</span><span class="p">]</span>
+    
+    <span class="n">table</span><span class="p">[</span><span class="s1">&#39;Count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">counts</span>
+    <span class="k">return</span> <span class="n">table</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s the table for defendants grouped by race.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table1</span> <span class="o">=</span> <span class="n">make_table</span><span class="p">(</span><span class="n">cp</span><span class="p">,</span> <span class="s1">&#39;race&#39;</span><span class="p">)</span>
+<span class="n">table1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>FPR</th>
+      <th>FNR</th>
+      <th>PPV</th>
+      <th>NPV</th>
+      <th>Prevalence</th>
+      <th>Count</th>
+    </tr>
+    <tr>
+      <th>race</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>African-American</th>
+      <td>44.846797</td>
+      <td>27.985271</td>
+      <td>62.971481</td>
+      <td>65.045992</td>
+      <td>51.433983</td>
+      <td>3696</td>
+    </tr>
+    <tr>
+      <th>Asian</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>32</td>
+    </tr>
+    <tr>
+      <th>Caucasian</th>
+      <td>23.454301</td>
+      <td>47.722567</td>
+      <td>59.133489</td>
+      <td>71.187500</td>
+      <td>39.364303</td>
+      <td>2454</td>
+    </tr>
+    <tr>
+      <th>Hispanic</th>
+      <td>21.481481</td>
+      <td>55.603448</td>
+      <td>54.210526</td>
+      <td>71.140940</td>
+      <td>36.420722</td>
+      <td>637</td>
+    </tr>
+    <tr>
+      <th>Native American</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>Other</th>
+      <td>14.754098</td>
+      <td>67.669173</td>
+      <td>54.430380</td>
+      <td>69.798658</td>
+      <td>35.278515</td>
+      <td>377</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Some rows contain <code class="docutils literal notranslate"><span class="pre">NaN</span></code> values because I did not compute metrics for groups with fewer than 50 defendants.</p>
+<p><code class="docutils literal notranslate"><span class="pre">table1</span></code> confirms results from previous analysis and extends them to other groups:</p>
+<ul class="simple">
+<li><p>Predicive values are comparable for all racial groups, although PPV is highest for black defendants and NPV is lowest.</p></li>
+<li><p>Error rates are substantially different in different groups.  FPR is highest for black defendants, lower for white and Hispanic defendants, and lowest for defendants in other racial groups.  FNR is highest for Other and lowest for African-American.</p></li>
+</ul>
+<p>The following table shows the breakdown by sex.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table2</span> <span class="o">=</span> <span class="n">make_table</span><span class="p">(</span><span class="n">cp</span><span class="p">,</span> <span class="s1">&#39;sex&#39;</span><span class="p">)</span>
+<span class="n">table2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>FPR</th>
+      <th>FNR</th>
+      <th>PPV</th>
+      <th>NPV</th>
+      <th>Prevalence</th>
+      <th>Count</th>
+    </tr>
+    <tr>
+      <th>sex</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Female</th>
+      <td>32.107023</td>
+      <td>39.156627</td>
+      <td>51.269036</td>
+      <td>75.746269</td>
+      <td>35.698925</td>
+      <td>1395</td>
+    </tr>
+    <tr>
+      <th>Male</th>
+      <td>32.420091</td>
+      <td>37.086814</td>
+      <td>63.536317</td>
+      <td>66.989977</td>
+      <td>47.310534</td>
+      <td>5819</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Again, these results are consistent with previous analysis.  Comparing male and female defendants, the error rates are comparable, but the predictive values are substantially different.</p>
+<p>Next we’ll look at the breakdown by age, but first I’ll recode the age categories so their ordering in the table is more logical:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span><span class="p">[</span><span class="s1">&#39;age_cat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;25 - 45&#39;, &#39;Greater than 45&#39;, &#39;Less than 25&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Less than 25&#39;</span><span class="p">:</span>   <span class="s1">&#39;1 Younger than 25&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;25 - 45&#39;</span><span class="p">:</span>        <span class="s1">&#39;2 Between 25 - 45&#39;</span><span class="p">,</span> 
+     <span class="s1">&#39;Greater than 45&#39;</span><span class="p">:</span><span class="s1">&#39;3 Older than 45&#39;</span><span class="p">}</span>
+<span class="n">cp</span><span class="p">[</span><span class="s1">&#39;age_cat_recode&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cp</span><span class="p">[</span><span class="s1">&#39;age_cat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s the breakdown by age group:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table3</span> <span class="o">=</span> <span class="n">make_table</span><span class="p">(</span><span class="n">cp</span><span class="p">,</span> <span class="s1">&#39;age_cat_recode&#39;</span><span class="p">)</span>
+<span class="n">table3</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>FPR</th>
+      <th>FNR</th>
+      <th>PPV</th>
+      <th>NPV</th>
+      <th>Prevalence</th>
+      <th>Count</th>
+    </tr>
+    <tr>
+      <th>age_cat_recode</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1 Younger than 25</th>
+      <td>54.135338</td>
+      <td>26.041667</td>
+      <td>63.963964</td>
+      <td>57.547170</td>
+      <td>56.507521</td>
+      <td>1529</td>
+    </tr>
+    <tr>
+      <th>2 Between 25 - 45</th>
+      <td>33.378378</td>
+      <td>37.374272</td>
+      <td>61.486486</td>
+      <td>67.688787</td>
+      <td>45.972256</td>
+      <td>4109</td>
+    </tr>
+    <tr>
+      <th>3 Older than 45</th>
+      <td>16.790353</td>
+      <td>57.228916</td>
+      <td>54.060914</td>
+      <td>75.888325</td>
+      <td>31.598985</td>
+      <td>1576</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>This table shows some patterns we have seen before</p>
+<ul class="simple">
+<li><p>In groups with high prevalence, FPR is relatively high and FNR relatively low.</p></li>
+<li><p>In groups with high prevalence, PPV is relatively hight and NPV relatively low.</p></li>
+</ul>
+<p>But it is still not clear whether COMPAS is trying to achieve constant error rates, constant predictive values, or a compromise between the two.</p>
+<p>It is also not clear what we can say about defendants in the intersections of these groups.  What are the metrics for a white male, or an older Hispanic defendant?</p>
+<p>I’ll compute these intersections in the next section.</p>
+</div>
+<div class="section" id="intersections">
+<h2>Intersections<a class="headerlink" href="#intersections" title="Permalink to this headline">¶</a></h2>
+<p>In this section I’ll compute metrics for defendants grouped by</p>
+<ul class="simple">
+<li><p>Race and sex</p></li>
+<li><p>Race and age</p></li>
+<li><p>Sex and age</p></li>
+<li><p>Race, sex, and age</p></li>
+</ul>
+<p>Then we’ll plot the results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table4</span> <span class="o">=</span> <span class="n">make_table</span><span class="p">(</span><span class="n">cp</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;race&#39;</span><span class="p">,</span> <span class="s1">&#39;sex&#39;</span><span class="p">])</span>
+<span class="n">table4</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>FPR</th>
+      <th>FNR</th>
+      <th>PPV</th>
+      <th>NPV</th>
+      <th>Prevalence</th>
+      <th>Count</th>
+    </tr>
+    <tr>
+      <th>race</th>
+      <th>sex</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="2" valign="top">African-American</th>
+      <th>Female</th>
+      <td>40.493827</td>
+      <td>29.959514</td>
+      <td>51.335312</td>
+      <td>76.507937</td>
+      <td>37.883436</td>
+      <td>652</td>
+    </tr>
+    <tr>
+      <th>Male</th>
+      <td>46.115108</td>
+      <td>27.690447</td>
+      <td>65.106151</td>
+      <td>62.054681</td>
+      <td>54.336399</td>
+      <td>3044</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">Asian</th>
+      <th>Female</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>Male</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">Caucasian</th>
+      <th>Female</th>
+      <td>30.163043</td>
+      <td>43.216080</td>
+      <td>50.446429</td>
+      <td>74.927114</td>
+      <td>35.097002</td>
+      <td>567</td>
+    </tr>
+    <tr>
+      <th>Male</th>
+      <td>21.250000</td>
+      <td>48.891786</td>
+      <td>62.222222</td>
+      <td>70.167064</td>
+      <td>40.646529</td>
+      <td>1887</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">Hispanic</th>
+      <th>Female</th>
+      <td>10.000000</td>
+      <td>72.727273</td>
+      <td>56.250000</td>
+      <td>72.413793</td>
+      <td>32.038835</td>
+      <td>103</td>
+    </tr>
+    <tr>
+      <th>Male</th>
+      <td>23.880597</td>
+      <td>52.763819</td>
+      <td>54.022989</td>
+      <td>70.833333</td>
+      <td>37.265918</td>
+      <td>534</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">Native American</th>
+      <th>Female</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>Male</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">Other</th>
+      <th>Female</th>
+      <td>11.538462</td>
+      <td>66.666667</td>
+      <td>45.454545</td>
+      <td>82.142857</td>
+      <td>22.388060</td>
+      <td>67</td>
+    </tr>
+    <tr>
+      <th>Male</th>
+      <td>15.625000</td>
+      <td>67.796610</td>
+      <td>55.882353</td>
+      <td>66.942149</td>
+      <td>38.064516</td>
+      <td>310</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table5</span> <span class="o">=</span> <span class="n">make_table</span><span class="p">(</span><span class="n">cp</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;race&#39;</span><span class="p">,</span> <span class="s1">&#39;age_cat_recode&#39;</span><span class="p">])</span>
+<span class="n">table5</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>FPR</th>
+      <th>FNR</th>
+      <th>PPV</th>
+      <th>NPV</th>
+      <th>Prevalence</th>
+      <th>Count</th>
+    </tr>
+    <tr>
+      <th>race</th>
+      <th>age_cat_recode</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="3" valign="top">African-American</th>
+      <th>1 Younger than 25</th>
+      <td>59.888579</td>
+      <td>23.172906</td>
+      <td>66.718266</td>
+      <td>52.554745</td>
+      <td>60.978261</td>
+      <td>920</td>
+    </tr>
+    <tr>
+      <th>2 Between 25 - 45</th>
+      <td>44.095941</td>
+      <td>27.657658</td>
+      <td>62.685402</td>
+      <td>66.374589</td>
+      <td>50.592525</td>
+      <td>2194</td>
+    </tr>
+    <tr>
+      <th>3 Older than 45</th>
+      <td>31.818182</td>
+      <td>41.304348</td>
+      <td>54.655870</td>
+      <td>71.641791</td>
+      <td>39.518900</td>
+      <td>582</td>
+    </tr>
+    <tr>
+      <th rowspan="3" valign="top">Asian</th>
+      <th>1 Younger than 25</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>2 Between 25 - 45</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>3 Older than 45</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th rowspan="3" valign="top">Caucasian</th>
+      <th>1 Younger than 25</th>
+      <td>48.743719</td>
+      <td>26.701571</td>
+      <td>59.071730</td>
+      <td>66.666667</td>
+      <td>48.974359</td>
+      <td>390</td>
+    </tr>
+    <tr>
+      <th>2 Between 25 - 45</th>
+      <td>26.809651</td>
+      <td>46.996466</td>
+      <td>60.000000</td>
+      <td>67.241379</td>
+      <td>43.140244</td>
+      <td>1312</td>
+    </tr>
+    <tr>
+      <th>3 Older than 45</th>
+      <td>9.576427</td>
+      <td>68.899522</td>
+      <td>55.555556</td>
+      <td>77.322835</td>
+      <td>27.792553</td>
+      <td>752</td>
+    </tr>
+    <tr>
+      <th rowspan="3" valign="top">Hispanic</th>
+      <th>1 Younger than 25</th>
+      <td>47.540984</td>
+      <td>36.363636</td>
+      <td>59.154930</td>
+      <td>57.142857</td>
+      <td>51.968504</td>
+      <td>127</td>
+    </tr>
+    <tr>
+      <th>2 Between 25 - 45</th>
+      <td>18.534483</td>
+      <td>59.259259</td>
+      <td>56.122449</td>
+      <td>70.260223</td>
+      <td>36.784741</td>
+      <td>367</td>
+    </tr>
+    <tr>
+      <th>3 Older than 45</th>
+      <td>13.392857</td>
+      <td>80.645161</td>
+      <td>28.571429</td>
+      <td>79.508197</td>
+      <td>21.678322</td>
+      <td>143</td>
+    </tr>
+    <tr>
+      <th rowspan="3" valign="top">Native American</th>
+      <th>1 Younger than 25</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2 Between 25 - 45</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>3 Older than 45</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th rowspan="3" valign="top">Other</th>
+      <th>1 Younger than 25</th>
+      <td>45.238095</td>
+      <td>47.500000</td>
+      <td>52.500000</td>
+      <td>54.761905</td>
+      <td>48.780488</td>
+      <td>82</td>
+    </tr>
+    <tr>
+      <th>2 Between 25 - 45</th>
+      <td>10.791367</td>
+      <td>73.239437</td>
+      <td>55.882353</td>
+      <td>70.454545</td>
+      <td>33.809524</td>
+      <td>210</td>
+    </tr>
+    <tr>
+      <th>3 Older than 45</th>
+      <td>3.174603</td>
+      <td>86.363636</td>
+      <td>60.000000</td>
+      <td>76.250000</td>
+      <td>25.882353</td>
+      <td>85</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table6</span> <span class="o">=</span> <span class="n">make_table</span><span class="p">(</span><span class="n">cp</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">,</span> <span class="s1">&#39;age_cat&#39;</span><span class="p">])</span>
+<span class="n">table6</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>FPR</th>
+      <th>FNR</th>
+      <th>PPV</th>
+      <th>NPV</th>
+      <th>Prevalence</th>
+      <th>Count</th>
+    </tr>
+    <tr>
+      <th>sex</th>
+      <th>age_cat</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="3" valign="top">Female</th>
+      <th>25 - 45</th>
+      <td>29.411765</td>
+      <td>40.764331</td>
+      <td>56.193353</td>
+      <td>73.109244</td>
+      <td>38.909542</td>
+      <td>807</td>
+    </tr>
+    <tr>
+      <th>Greater than 45</th>
+      <td>15.283843</td>
+      <td>66.197183</td>
+      <td>40.677966</td>
+      <td>80.497925</td>
+      <td>23.666667</td>
+      <td>300</td>
+    </tr>
+    <tr>
+      <th>Less than 25</th>
+      <td>61.714286</td>
+      <td>17.699115</td>
+      <td>46.268657</td>
+      <td>77.011494</td>
+      <td>39.236111</td>
+      <td>288</td>
+    </tr>
+    <tr>
+      <th rowspan="3" valign="top">Male</th>
+      <th>25 - 45</th>
+      <td>34.510712</td>
+      <td>36.698413</td>
+      <td>62.586315</td>
+      <td>66.179052</td>
+      <td>47.698365</td>
+      <td>3302</td>
+    </tr>
+    <tr>
+      <th>Greater than 45</th>
+      <td>17.196702</td>
+      <td>55.737705</td>
+      <td>56.417910</td>
+      <td>74.707758</td>
+      <td>33.463950</td>
+      <td>1276</td>
+    </tr>
+    <tr>
+      <th>Less than 25</th>
+      <td>51.428571</td>
+      <td>27.296937</td>
+      <td>68.421053</td>
+      <td>53.724605</td>
+      <td>60.515713</td>
+      <td>1241</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table7</span> <span class="o">=</span> <span class="n">make_table</span><span class="p">(</span><span class="n">cp</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;race&#39;</span><span class="p">,</span> <span class="s1">&#39;sex&#39;</span><span class="p">,</span> <span class="s1">&#39;age_cat_recode&#39;</span><span class="p">])</span>
+<span class="n">table7</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th></th>
+      <th>FPR</th>
+      <th>FNR</th>
+      <th>PPV</th>
+      <th>NPV</th>
+      <th>Prevalence</th>
+      <th>Count</th>
+    </tr>
+    <tr>
+      <th>race</th>
+      <th>sex</th>
+      <th>age_cat_recode</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="6" valign="top">African-American</th>
+      <th rowspan="3" valign="top">Female</th>
+      <th>1 Younger than 25</th>
+      <td>63.440860</td>
+      <td>19.736842</td>
+      <td>50.833333</td>
+      <td>69.387755</td>
+      <td>44.970414</td>
+      <td>169</td>
+    </tr>
+    <tr>
+      <th>2 Between 25 - 45</th>
+      <td>36.475410</td>
+      <td>34.437086</td>
+      <td>52.659574</td>
+      <td>74.879227</td>
+      <td>38.227848</td>
+      <td>395</td>
+    </tr>
+    <tr>
+      <th>3 Older than 45</th>
+      <td>23.529412</td>
+      <td>35.000000</td>
+      <td>44.827586</td>
+      <td>88.135593</td>
+      <td>22.727273</td>
+      <td>88</td>
+    </tr>
+    <tr>
+      <th rowspan="3" valign="top">Male</th>
+      <th>1 Younger than 25</th>
+      <td>58.646617</td>
+      <td>23.711340</td>
+      <td>70.342205</td>
+      <td>48.888889</td>
+      <td>64.580559</td>
+      <td>751</td>
+    </tr>
+    <tr>
+      <th>2 Between 25 - 45</th>
+      <td>46.309524</td>
+      <td>26.590198</td>
+      <td>64.409881</td>
+      <td>63.881020</td>
+      <td>53.307393</td>
+      <td>1799</td>
+    </tr>
+    <tr>
+      <th>3 Older than 45</th>
+      <td>33.802817</td>
+      <td>41.904762</td>
+      <td>55.963303</td>
+      <td>68.115942</td>
+      <td>42.510121</td>
+      <td>494</td>
+    </tr>
+    <tr>
+      <th rowspan="5" valign="top">Asian</th>
+      <th rowspan="2" valign="top">Female</th>
+      <th>2 Between 25 - 45</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3 Older than 45</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th rowspan="3" valign="top">Male</th>
+      <th>1 Younger than 25</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>2 Between 25 - 45</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>3 Older than 45</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th rowspan="6" valign="top">Caucasian</th>
+      <th rowspan="3" valign="top">Female</th>
+      <th>1 Younger than 25</th>
+      <td>70.000000</td>
+      <td>3.703704</td>
+      <td>38.235294</td>
+      <td>94.736842</td>
+      <td>31.034483</td>
+      <td>87</td>
+    </tr>
+    <tr>
+      <th>2 Between 25 - 45</th>
+      <td>29.213483</td>
+      <td>41.221374</td>
+      <td>59.689922</td>
+      <td>70.000000</td>
+      <td>42.394822</td>
+      <td>309</td>
+    </tr>
+    <tr>
+      <th>3 Older than 45</th>
+      <td>13.076923</td>
+      <td>75.609756</td>
+      <td>37.037037</td>
+      <td>78.472222</td>
+      <td>23.976608</td>
+      <td>171</td>
+    </tr>
+    <tr>
+      <th rowspan="3" valign="top">Male</th>
+      <th>1 Younger than 25</th>
+      <td>39.568345</td>
+      <td>30.487805</td>
+      <td>67.455621</td>
+      <td>62.686567</td>
+      <td>54.125413</td>
+      <td>303</td>
+    </tr>
+    <tr>
+      <th>2 Between 25 - 45</th>
+      <td>26.056338</td>
+      <td>48.735632</td>
+      <td>60.107817</td>
+      <td>66.455696</td>
+      <td>43.369890</td>
+      <td>1003</td>
+    </tr>
+    <tr>
+      <th>3 Older than 45</th>
+      <td>8.474576</td>
+      <td>67.261905</td>
+      <td>61.111111</td>
+      <td>76.985743</td>
+      <td>28.915663</td>
+      <td>581</td>
+    </tr>
+    <tr>
+      <th rowspan="6" valign="top">Hispanic</th>
+      <th rowspan="3" valign="top">Female</th>
+      <th>1 Younger than 25</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>2 Between 25 - 45</th>
+      <td>7.142857</td>
+      <td>80.952381</td>
+      <td>57.142857</td>
+      <td>69.642857</td>
+      <td>33.333333</td>
+      <td>63</td>
+    </tr>
+    <tr>
+      <th>3 Older than 45</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th rowspan="3" valign="top">Male</th>
+      <th>1 Younger than 25</th>
+      <td>52.941176</td>
+      <td>37.288136</td>
+      <td>57.812500</td>
+      <td>52.173913</td>
+      <td>53.636364</td>
+      <td>110</td>
+    </tr>
+    <tr>
+      <th>2 Between 25 - 45</th>
+      <td>21.052632</td>
+      <td>55.263158</td>
+      <td>56.043956</td>
+      <td>70.422535</td>
+      <td>37.500000</td>
+      <td>304</td>
+    </tr>
+    <tr>
+      <th>3 Older than 45</th>
+      <td>13.829787</td>
+      <td>76.923077</td>
+      <td>31.578947</td>
+      <td>80.198020</td>
+      <td>21.666667</td>
+      <td>120</td>
+    </tr>
+    <tr>
+      <th rowspan="5" valign="top">Native American</th>
+      <th rowspan="2" valign="top">Female</th>
+      <th>2 Between 25 - 45</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3 Older than 45</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th rowspan="3" valign="top">Male</th>
+      <th>1 Younger than 25</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2 Between 25 - 45</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>3 Older than 45</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th rowspan="6" valign="top">Other</th>
+      <th rowspan="3" valign="top">Female</th>
+      <th>1 Younger than 25</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>2 Between 25 - 45</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>37</td>
+    </tr>
+    <tr>
+      <th>3 Older than 45</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th rowspan="3" valign="top">Male</th>
+      <th>1 Younger than 25</th>
+      <td>46.666667</td>
+      <td>45.945946</td>
+      <td>58.823529</td>
+      <td>48.484848</td>
+      <td>55.223881</td>
+      <td>67</td>
+    </tr>
+    <tr>
+      <th>2 Between 25 - 45</th>
+      <td>12.612613</td>
+      <td>75.806452</td>
+      <td>51.724138</td>
+      <td>67.361111</td>
+      <td>35.838150</td>
+      <td>173</td>
+    </tr>
+    <tr>
+      <th>3 Older than 45</th>
+      <td>3.921569</td>
+      <td>84.210526</td>
+      <td>60.000000</td>
+      <td>75.384615</td>
+      <td>27.142857</td>
+      <td>70</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>These tables show how much these metrics vary between groups:</p>
+<ul class="simple">
+<li></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tables</span> <span class="o">=</span> <span class="p">[</span><span class="n">table1</span><span class="p">,</span> <span class="n">table2</span><span class="p">,</span> <span class="n">table3</span><span class="p">,</span> <span class="n">table4</span><span class="p">,</span> <span class="n">table5</span><span class="p">,</span> <span class="n">table6</span><span class="p">,</span> <span class="n">table7</span><span class="p">]</span>
+
+<span class="n">all_groups</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">tables</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">min_max_metric</span><span class="p">(</span><span class="n">all_groups</span><span class="p">,</span> <span class="n">metric</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">all_groups</span><span class="p">[</span><span class="n">metric</span><span class="p">]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">all_groups</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">idx</span><span class="p">])</span>
+    
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">all_groups</span><span class="p">[</span><span class="n">metric</span><span class="p">]</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">all_groups</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">idx</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here are the groups with maximumn and minimum FPR:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">min_max_metric</span><span class="p">(</span><span class="n">all_groups</span><span class="p">,</span> <span class="s1">&#39;FPR&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;Caucasian&#39;, &#39;Female&#39;, &#39;1 Younger than 25&#39;) 70.0
+(&#39;Other&#39;, &#39;3 Older than 45&#39;) 3.1746031746031744
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here are the results for the other metrics:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">min_max_metric</span><span class="p">(</span><span class="n">all_groups</span><span class="p">,</span> <span class="s1">&#39;FNR&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;Other&#39;, &#39;3 Older than 45&#39;) 86.36363636363636
+(&#39;Caucasian&#39;, &#39;Female&#39;, &#39;1 Younger than 25&#39;) 3.7037037037037033
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">min_max_metric</span><span class="p">(</span><span class="n">all_groups</span><span class="p">,</span> <span class="s1">&#39;PPV&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;African-American&#39;, &#39;Male&#39;, &#39;1 Younger than 25&#39;) 70.34220532319392
+(&#39;Hispanic&#39;, &#39;3 Older than 45&#39;) 28.57142857142857
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">min_max_metric</span><span class="p">(</span><span class="n">all_groups</span><span class="p">,</span> <span class="s1">&#39;NPV&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;Caucasian&#39;, &#39;Female&#39;, &#39;1 Younger than 25&#39;) 94.73684210526315
+(&#39;Other&#39;, &#39;Male&#39;, &#39;1 Younger than 25&#39;) 48.484848484848484
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">min_max_metric</span><span class="p">(</span><span class="n">all_groups</span><span class="p">,</span> <span class="s1">&#39;Prevalence&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;African-American&#39;, &#39;Male&#39;, &#39;1 Younger than 25&#39;) 64.58055925432757
+(&#39;Hispanic&#39;, &#39;Male&#39;, &#39;3 Older than 45&#39;) 21.666666666666668
+</pre></div>
+</div>
+</div>
+</div>
+<p>Looking at these results, I have a few thoughts:</p>
+<ol class="simple">
+<li><p>The differences between groups are big.  FNR, which ranges from about 4% to 86%, is particularly striking.</p></li>
+<li><p>For some metrics the most extreme groups are relatively small groups, so that might not be meaningful.  Statistically it is easier for a small group to deviate from the overall averages.</p></li>
+<li><p>It is not clear from these results how much of the variation between groups is due to differences in prevalance.  I’ll explore this relationship in the next section.</p></li>
+</ol>
+</div>
+<div class="section" id="reverse-engineering">
+<h2>Reverse engineering<a class="headerlink" href="#reverse-engineering" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">predictive_value</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">error_rates</span>
+
+<span class="n">matrix_all</span> <span class="o">=</span> <span class="n">make_matrix</span><span class="p">(</span><span class="n">cp</span><span class="p">)</span>
+<span class="n">ppv</span><span class="p">,</span> <span class="n">npv</span> <span class="o">=</span> <span class="n">predictive_value</span><span class="p">(</span><span class="n">matrix_all</span><span class="p">)</span>
+<span class="n">fpr</span><span class="p">,</span> <span class="n">fnr</span> <span class="o">=</span> <span class="n">error_rates</span><span class="p">(</span><span class="n">matrix_all</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">constant_error_rates</span>
+
+<span class="n">prevalences</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+
+<span class="n">pred_pv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ppv&#39;</span><span class="p">,</span> <span class="s1">&#39;npv&#39;</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">prev</span> <span class="ow">in</span> <span class="n">prevalences</span><span class="p">:</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">constant_error_rates</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">fnr</span><span class="p">,</span> <span class="n">prev</span><span class="p">)</span>
+    <span class="n">pred_pv</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">prev</span><span class="p">]</span> <span class="o">=</span> <span class="n">predictive_value</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+<span class="n">pred_pv</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ppv</th>
+      <th>npv</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>20.0</th>
+      <td>32.603329</td>
+      <td>87.856159</td>
+    </tr>
+    <tr>
+      <th>24.5</th>
+      <td>38.571828</td>
+      <td>84.787671</td>
+    </tr>
+    <tr>
+      <th>29.0</th>
+      <td>44.145209</td>
+      <td>81.577315</td>
+    </tr>
+    <tr>
+      <th>33.5</th>
+      <td>49.361450</td>
+      <td>78.215019</td>
+    </tr>
+    <tr>
+      <th>38.0</th>
+      <td>54.253815</td>
+      <td>74.689735</td>
+    </tr>
+    <tr>
+      <th>42.5</th>
+      <td>58.851558</td>
+      <td>70.989317</td>
+    </tr>
+    <tr>
+      <th>47.0</th>
+      <td>63.180516</td>
+      <td>67.100383</td>
+    </tr>
+    <tr>
+      <th>51.5</th>
+      <td>67.263589</td>
+      <td>63.008148</td>
+    </tr>
+    <tr>
+      <th>56.0</th>
+      <td>71.121148</td>
+      <td>58.696245</td>
+    </tr>
+    <tr>
+      <th>60.5</th>
+      <td>74.771374</td>
+      <td>54.146498</td>
+    </tr>
+    <tr>
+      <th>65.0</th>
+      <td>78.230545</td>
+      <td>49.338668</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">constant_predictive_value</span>
+
+<span class="n">prevalences</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">35</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+
+<span class="n">pred_er</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;FPR&#39;</span><span class="p">,</span> <span class="s1">&#39;FNR&#39;</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">prev</span> <span class="ow">in</span> <span class="n">prevalences</span><span class="p">:</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">constant_predictive_value</span><span class="p">(</span><span class="n">ppv</span><span class="p">,</span> <span class="n">npv</span><span class="p">,</span> <span class="n">prev</span><span class="p">)</span>
+    <span class="n">pred_er</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">prev</span><span class="p">]</span> <span class="o">=</span> <span class="n">error_rates</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    
+<span class="n">pred_er</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>FPR</th>
+      <th>FNR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>35.0</th>
+      <td>7.488034</td>
+      <td>77.925569</td>
+    </tr>
+    <tr>
+      <th>37.0</th>
+      <td>11.795671</td>
+      <td>68.118564</td>
+    </tr>
+    <tr>
+      <th>39.0</th>
+      <td>16.385776</td>
+      <td>59.317406</td>
+    </tr>
+    <tr>
+      <th>41.0</th>
+      <td>21.287075</td>
+      <td>51.374897</td>
+    </tr>
+    <tr>
+      <th>43.0</th>
+      <td>26.532324</td>
+      <td>44.171227</td>
+    </tr>
+    <tr>
+      <th>45.0</th>
+      <td>32.159046</td>
+      <td>37.607882</td>
+    </tr>
+    <tr>
+      <th>47.0</th>
+      <td>38.210427</td>
+      <td>31.603121</td>
+    </tr>
+    <tr>
+      <th>49.0</th>
+      <td>44.736425</td>
+      <td>26.088543</td>
+    </tr>
+    <tr>
+      <th>51.0</th>
+      <td>51.795158</td>
+      <td>21.006482</td>
+    </tr>
+    <tr>
+      <th>53.0</th>
+      <td>59.454634</td>
+      <td>16.307973</td>
+    </tr>
+    <tr>
+      <th>55.0</th>
+      <td>67.794953</td>
+      <td>11.951173</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">plot_cpv_model</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">plot_cer_model</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Those are all the possible subgroups for these three variables.</p>
+<p>Now we can see what the results look like.</p>
+<p>The following function plots one data point per subgroup showing the given metric versus prevalence.</p>
+<p>Groups with a small number of people are shown with lighter colors.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_table_var</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot one data point per row.</span>
+<span class="sd">    </span>
+<span class="sd">    table: DataFrame</span>
+<span class="sd">    var: which metric to plot</span>
+<span class="sd">    color: string</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;Prevalence&#39;</span><span class="p">],</span> <span class="n">table</span><span class="p">[</span><span class="n">var</span><span class="p">],</span>
+                 <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s what the results look like for FPR.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">decorate</span>
+
+<span class="n">pred_er</span><span class="p">[</span><span class="s1">&#39;FPR&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Expected FPR, constant PV&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Expected FPR, constant ER&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">tables</span><span class="p">:</span>
+    <span class="n">plot_table_var</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="s1">&#39;FPR&#39;</span><span class="p">,</span> <span class="s1">&#39;C2&#39;</span><span class="p">)</span>
+    
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Prevalence&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;False positive rate&#39;</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;False positive rates by subgroup&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/05_subgroups_49_0.png" src="_images/05_subgroups_49_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pred_er</span><span class="p">[</span><span class="s1">&#39;FNR&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Expected FNR, constant PV&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C4&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">fnr</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Expected FNR, constant ER&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">tables</span><span class="p">:</span>
+    <span class="n">plot_table_var</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="s1">&#39;FNR&#39;</span><span class="p">,</span> <span class="s1">&#39;C4&#39;</span><span class="p">)</span>
+    
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Prevalence&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;False negative rate&#39;</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;False negative rates by subgroup&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/05_subgroups_50_0.png" src="_images/05_subgroups_50_0.png" />
+</div>
+</div>
+<p>In general, groups with higher prevalence have higher false positive rates, but the effect is less extreme than what we would expect from the CPV model.</p>
+<p>Here are the results for positive predictive value.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pred_pv</span><span class="p">[</span><span class="s1">&#39;ppv&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Expected PPV, constant FPR&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">ppv</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Expected PPV, constant PPV&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">tables</span><span class="p">:</span>
+    <span class="n">plot_table_var</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="s1">&#39;PPV&#39;</span><span class="p">,</span> <span class="s1">&#39;C0&#39;</span><span class="p">)</span>
+    
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Prevalence&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Positive predictive value&#39;</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Positive predictive value by subgroup&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/05_subgroups_52_0.png" src="_images/05_subgroups_52_0.png" />
+</div>
+</div>
+<p>Groups with higher prevalence have higher PPV, but the effect is less extreme than we would expect from the CPV model.</p>
+<p>Here are the results for false negative rate.</p>
+<p>Groups with higher prevalence have lower FNR, but the effect is less extreme than we would expect from the CPV model.</p>
+<p>Here are the results for negative predictive value.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pred_pv</span><span class="p">[</span><span class="s1">&#39;npv&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Expected NPV, constant FPR&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">npv</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Expected NPV, constant NPV&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">tables</span><span class="p">:</span>
+    <span class="n">plot_table_var</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="s1">&#39;NPV&#39;</span><span class="p">,</span> <span class="s1">&#39;C1&#39;</span><span class="p">)</span>
+    
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Prevalence&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Negative predictive value&#39;</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Negative predictive value by subgroup&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/05_subgroups_55_0.png" src="_images/05_subgroups_55_0.png" />
+</div>
+</div>
+<p>Groups with higher prevalence have lower NPV.  In this case, the effect is almost exactly what we would expect from the CPV model.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Allen B. Downey<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>
