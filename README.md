@@ -1,5 +1,9 @@
 # Bite Size Bayes
 
+
+This is one of [my workshops and tutorials](https://allendowney.github.io/#workshops).
+
+
 *Bite Size Bayes* is an introduction to Bayesian statistics using Python and (coming soon) R.  It does not assume any previous knowledge of probability or Bayesian methods.
 
 This material is a work in progress, so suggestions are welcome.  The best way to provide feedback is to [click here and create an issue in this GitHub repository](https://github.com/AllenDowney/BiteSizeBayes/issues).
