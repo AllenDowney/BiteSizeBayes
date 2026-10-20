@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Jupyter Book build and copied notebooks
+jb/_build/
+jb/[0-9]*.ipynb
