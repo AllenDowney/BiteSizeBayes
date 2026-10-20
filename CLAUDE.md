@@ -8,7 +8,7 @@ Allen Downey's tutorial *Bite Size Bayes*: a self-paced introduction to probabil
 
 Thirteen notebooks, `01_linda` to `13_price`. The solution versions are in `solutions/` with the same names; the student versions at the root are generated from them by `build.sh` (`remove_soln.py` replaces cells that start with `# Solution` by `# Solution goes here`). Edit the solutions and regenerate; don't edit the root versions by hand.
 
-Extras, not part of the sequence: `bandit` and `monty` (both versions), `solutions/gps.ipynb`, `solutions/flea_beetle_soln.ipynb`, and `clean_gss_bayes.ipynb` (makes `gss_bayes.csv`).
+Extras, not part of the sequence: `bandit` and `monty` (both versions), `solutions/gps.ipynb`, `solutions/flea_beetle_soln.ipynb`, `elvis.ipynb`, and `clean_gss_bayes.ipynb` (makes `gss_bayes.csv`).
 
 Each notebook downloads `utils.py` and its data files from `raw/master` if they are missing, so keep those files at the repo root and keep the branch name `master`.
 
@@ -21,7 +21,7 @@ Each notebook downloads `utils.py` and its data files from `raw/master` if they 
 Environment: mamba env `BiteSizeBayes` (Python 3.12). Run the solution notebooks top to bottom:
 
 ```
-cd solutions && pytest --nbmake [01]*.ipynb
+pytest --nbmake solutions/*.ipynb [01]*.ipynb monty.ipynb elvis.ipynb clean_gss_bayes.ipynb
 ```
 
 The target environment is Google Colab's current Python and libraries.

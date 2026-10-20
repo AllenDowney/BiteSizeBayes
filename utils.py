@@ -265,7 +265,7 @@ def decorate(**options):
              xlabel='x',
              ylabel='y')
     The keyword arguments can be any of the axis properties
-    https://matplotlib.org/api/axes_api.html
+    https://matplotlib.org/stable/api/axes_api.html
     In addition, you can use `legend=False` to suppress the legend.
     And you can use `loc` to indicate the location of the legend
     (the default value is 'best')
@@ -281,7 +281,7 @@ def decorate(**options):
 def legend(**options):
     """Draws a legend only if there is at least one labeled item.
     options are passed to plt.legend()
-    https://matplotlib.org/api/_as_gen/matplotlib.pyplot.legend.html
+    https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.legend.html
     """
     underride(options, loc='best')
 

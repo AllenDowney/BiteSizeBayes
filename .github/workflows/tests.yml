@@ -38,4 +38,4 @@ jobs:
       # The student version of bandit has blanks that don't run.
       - name: Run tests
         run: |
-          pytest --nbmake solutions/*.ipynb [01]*.ipynb monty.ipynb clean_gss_bayes.ipynb
+          pytest --nbmake solutions/*.ipynb [01]*.ipynb monty.ipynb elvis.ipynb clean_gss_bayes.ipynb
