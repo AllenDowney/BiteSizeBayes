@@ -47,9 +47,10 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 **6. Site and visibility**
 - [x] `jb/` brought up to the BayesMadeSimple template (2026-10-20): `index.md` landing page (replaces the README copy), `_toc.yml` in two parts (the 13 notebooks; "More examples": bandit, monty, gps, flea_beetle, elvis, Allen), `prep_notebooks.py` copies the solution notebooks (`flea_beetle_soln` → `flea_beetle`), `utils.py` and the data, and writes the page descriptions; `execute_notebooks: force`; pages show the solutions (Allen; the old site hid them) and link to the versions with blanks on Colab; `build.sh [publish]`
 - [x] SEO checklist in a scratch build: sitemap lists the 19 pages; each has one description, one `og:description`, `rel="canonical"`; landing H1 differs from the site title; page-view counter; social image is the *Think Bayes* 2e cover
-- [ ] Allen reviews the descriptions (`jb/index.md` front matter, `jb/prep_notebooks.py`)
-- [ ] Publish: delete `jb/_build/`, `./build.sh publish` (Pages already serves `gh-pages`); delete the unused root Jekyll `_config.yml`; `Sitemap:` line in `~/AllenDowney.github.io/robots.txt`; Allen submits the sitemap in Search Console; tick in GreenTeaPress Task 22. The old landing page `README.html` goes away
-- [ ] Hub entry, repo description and topics (now: "An introduction to Bayesian statistics using Python"; `bayesian-statistics`, `python`, `tutorial`; add `jupyter-book`)
+- [x] Allen approved the descriptions (2026-10-20)
+- [x] Published (2026-10-20): clean `jb/_build/`, `./build.sh publish`; the old landing page `README.html` redirects to `index.html` (`jb/_extra/`, Allen); root Jekyll `_config.yml` deleted; `Sitemap:` line in `~/AllenDowney.github.io/robots.txt` (`c2af888`); live site checked
+- [ ] Allen submits the sitemap in Search Console; tick in GreenTeaPress Task 22
+- [x] Hub entry unchanged (still accurate); topic `jupyter-book` added (also in GreenTeaPress `scripts/repo_about.sh`); description unchanged
 
 **7. Close**
 - [ ] Tag `2026-refresh`; note in GreenTeaPress Task 24
