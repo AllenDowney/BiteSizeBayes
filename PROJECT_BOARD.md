@@ -29,11 +29,11 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 
 **2. Tests and CI**
 - [x] `pytest --nbmake` on `solutions/*.ipynb`, the 13 student versions (their blanks are placeholders), `monty`, `elvis`, `clean_gss_bayes`: 33 pass. Left out: the student version of `bandit` (its `____` blanks don't run)
-- [x] `.github/workflows/tests.yml` (push to master, PR, monthly, manual; Python 3.12; pip; 30-minute timeout; copies `utils.py` and the data into `solutions/` so CI tests this commit's versions), badge in the README. Not pushed yet, so no run yet
+- [x] `.github/workflows/tests.yml` (push to master, PR, monthly, manual; Python 3.12; pip; 30-minute timeout; copies `utils.py` and the data into `solutions/` so CI tests this commit's versions), badge in the README. First run passed (2026-10-20, 2.5 minutes)
 
 **3. Colab**
 - [x] Colab cell after the title of each notebook (solutions also link to the version with blanks); `remove_soln.py` rewrites it for the student versions; Colab links in the README tables
-- [ ] Allen runs one notebook on Colab end to end (after the push)
+- [ ] Allen runs one notebook on Colab end to end (pushed 2026-10-20)
 
 **4. Text**
 - [x] Typos (codespell): probabilies, expecially, conditonal, priod → prior, probabily (×2), conjuction, distrubution, Probablistic, oppenent, probabilites, actualy, "maximizes your the expected gain"
@@ -45,9 +45,11 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 - [x] Rewritten (2026-10-20): badge, author, abstract (R and "work in progress" dropped, Allen), level (beginner; no length, Allen), outline, Colab table (exercises and solutions), extras, running instructions, next steps (*Think Bayes*, hub), license (code MIT, text CC BY-NC-SA 4.0). No slides or recordings
 
 **6. Site and visibility**
-- [ ] Bring `jb/` up to the BayesMadeSimple template (`index.md`, `prep_notebooks.py` that copies the solutions, writes descriptions; `build.sh [publish]`); SEO checklist; Allen reviews the descriptions
-- [ ] Publish (delete old `jb/_build/` first); `Sitemap:` in `~/AllenDowney.github.io/robots.txt`; Search Console; GreenTeaPress Task 22
-- [ ] Hub entry, repo description and topics (now: "An introduction to Bayesian statistics using Python"; `bayesian-statistics`, `python`, `tutorial`)
+- [x] `jb/` brought up to the BayesMadeSimple template (2026-10-20): `index.md` landing page (replaces the README copy), `_toc.yml` in two parts (the 13 notebooks; "More examples": bandit, monty, gps, flea_beetle, elvis, Allen), `prep_notebooks.py` copies the solution notebooks (`flea_beetle_soln` → `flea_beetle`), `utils.py` and the data, and writes the page descriptions; `execute_notebooks: force`; pages show the solutions (Allen; the old site hid them) and link to the versions with blanks on Colab; `build.sh [publish]`
+- [x] SEO checklist in a scratch build: sitemap lists the 19 pages; each has one description, one `og:description`, `rel="canonical"`; landing H1 differs from the site title; page-view counter; social image is the *Think Bayes* 2e cover
+- [ ] Allen reviews the descriptions (`jb/index.md` front matter, `jb/prep_notebooks.py`)
+- [ ] Publish: delete `jb/_build/`, `./build.sh publish` (Pages already serves `gh-pages`); delete the unused root Jekyll `_config.yml`; `Sitemap:` line in `~/AllenDowney.github.io/robots.txt`; Allen submits the sitemap in Search Console; tick in GreenTeaPress Task 22. The old landing page `README.html` goes away
+- [ ] Hub entry, repo description and topics (now: "An introduction to Bayesian statistics using Python"; `bayesian-statistics`, `python`, `tutorial`; add `jupyter-book`)
 
 **7. Close**
 - [ ] Tag `2026-refresh`; note in GreenTeaPress Task 24

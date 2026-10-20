@@ -136,3 +136,11 @@ jb/[0-9]*.ipynb
 GSS.dat
 GSS.dct
 GSS.do
+jb/bandit.ipynb
+jb/monty.ipynb
+jb/gps.ipynb
+jb/flea_beetle.ipynb
+jb/elvis.ipynb
+jb/utils.py
+jb/*.csv
+jb/*.png
