@@ -131,3 +131,8 @@ dmypy.json
 # Jupyter Book build and copied notebooks
 jb/_build/
 jb/[0-9]*.ipynb
+
+# extracted by clean_gss_bayes.ipynb
+GSS.dat
+GSS.dct
+GSS.do
