@@ -49,7 +49,7 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 - [x] SEO checklist in a scratch build: sitemap lists the 19 pages; each has one description, one `og:description`, `rel="canonical"`; landing H1 differs from the site title; page-view counter; social image is the *Think Bayes* 2e cover
 - [x] Allen approved the descriptions (2026-10-20)
 - [x] Published (2026-10-20): clean `jb/_build/`, `./build.sh publish`; the old landing page `README.html` redirects to `index.html` (`jb/_extra/`, Allen); root Jekyll `_config.yml` deleted; `Sitemap:` line in `~/AllenDowney.github.io/robots.txt` (`c2af888`); live site checked
-- [ ] Allen submits the sitemap in Search Console; tick in GreenTeaPress Task 22
+- [x] Allen submitted the sitemap in Search Console (2026-10-20)
 - [x] Hub entry unchanged (still accurate); topic `jupyter-book` added (also in GreenTeaPress `scripts/repo_about.sh`); description unchanged
 
 **7. Close**
@@ -103,7 +103,6 @@ Each notebook's first code cells download `utils.py` and its data from `raw/mast
 
 Resolved 2026-10-20 (Allen): license (code MIT, text CC BY-NC-SA 4.0); README R and "work in progress" lines dropped; copyright years now 2020–2026; sci-hub links, dead GSS and NAICS links, the `13_price` review stub, the `elvis` link (notebook restored).
 
-Open:
+Resolved 2026-10-20 (Allen): "re-use" → "reuse" in `10_joint`; `13_price` and `clean_gss_bayes` download with the `download` function instead of `!wget` (and `clean_gss_bayes` extracts with `tarfile` instead of `!tar`).
 
-1. `re-use` in `10_joint` (codespell suggests "reuse"); left as is.
-2. `13_price` downloads the data with `!wget` while the other notebooks use the `download` function; it works on Colab and in CI.
+No open content issues.
