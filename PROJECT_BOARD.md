@@ -8,7 +8,7 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 
 ## Task 1: Refresh
 
-**Status:** In progress (2026-10-19)
+**Status:** DONE (2026-10-20)
 
 **Context:** BiteSizeBayes is a "current" tutorial (GreenTeaPress Task 24), refreshed with the checklist in `~/GreenTeaPress/plans/workshops.md` ("Refresh checklist"); BayesMadeSimple was the pilot. It's a self-paced tutorial, not a workshop given live: no recordings (only a 4-minute lightning talk, NWDSE 2020). 136 stars; last content change 2021-03-29. The site (`allendowney.github.io/BiteSizeBayes/`) is a Jupyter Book 1 build from 2021, served from `gh-pages`.
 
@@ -33,7 +33,7 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 
 **3. Colab**
 - [x] Colab cell after the title of each notebook (solutions also link to the version with blanks); `remove_soln.py` rewrites it for the student versions; Colab links in the README tables
-- [ ] Allen runs one notebook on Colab end to end (pushed 2026-10-20)
+- [x] Allen ran `01_linda` on Colab end to end (2026-10-20)
 
 **4. Text**
 - [x] Typos (codespell): probabilies, expecially, conditonal, priod → prior, probabily (×2), conjuction, distrubution, Probablistic, oppenent, probabilites, actualy, "maximizes your the expected gain"
@@ -53,7 +53,7 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 - [x] Hub entry unchanged (still accurate); topic `jupyter-book` added (also in GreenTeaPress `scripts/repo_about.sh`); description unchanged
 
 **7. Close**
-- [ ] Tag `2026-refresh`; note in GreenTeaPress Task 24
+- [x] Tagged `2026-refresh` (pushed 2026-10-20); noted in GreenTeaPress Task 24
 
 ### Inventory (2026-10-19)
 
