@@ -33,6 +33,8 @@ sphinx:
     html_baseurl: https://allendowney.github.io/BiteSizeBayes/
     sitemap_url_scheme: "{link}"
     sitemap_excludes: [genindex.html, search.html]
+    # the old landing page, README.html, redirects to index.html
+    html_extra_path: [_extra]
     ogp_site_url: https://allendowney.github.io/BiteSizeBayes/
     ogp_site_name: Bite Size Bayes
     ogp_image: https://greenteapress.com/wp/wp-content/uploads/2021/04/think_bayes_2e_cover_small.jpg
