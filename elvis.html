@@ -1,0 +1,781 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="The Elvis problem in Python: what is the probability that Elvis was an identical twin? A Bayesian answer using 1935 birth data." name="description" />
+<meta property="og:title" content="The Elvis Problem" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://allendowney.github.io/BiteSizeBayes/elvis.html" />
+<meta property="og:site_name" content="Bite Size Bayes" />
+<meta property="og:description" content="The Elvis problem in Python: what is the probability that Elvis was an identical twin? A Bayesian answer using 1935 birth data." />
+<meta property="og:image" content="https://greenteapress.com/wp/wp-content/uploads/2021/04/think_bayes_2e_cover_small.jpg" />
+<meta property="og:image:alt" content="Cover of Think Bayes by Allen B. Downey" />
+
+    <title>The Elvis Problem &#8212; Bite Size Bayes</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'elvis';</script>
+    <link rel="canonical" href="https://allendowney.github.io/BiteSizeBayes/elvis.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="The Flea Beetle Problem" href="flea_beetle.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Bite Size Bayes</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Bite Size Bayes: An Introduction to Probability and Bayesian Statistics in Python
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">The notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_linda.html">The Laws of Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_bayes.html">Bayes’s Theorem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_cookie.html">The Cookie Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_dice.html">The Dice Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_test.html">Medical Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_pmf.html">Probability Mass Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_euro.html">The Euro Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_soccer.html">The World Cup Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_predict.html">Prediction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_joint.html">Joint Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_faceoff.html">Comparisons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_binomial.html">The Binomial Distribution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_price.html"><em>The Price Is Right</em> Problem</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">More examples</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="bandit.html">Bayesian Bandits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="monty.html">The Monty Hall Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gps.html">The GPS Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="flea_beetle.html">The Flea Beetle Problem</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">The Elvis Problem</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/AllenDowney/BiteSizeBayes" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/elvis.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>The Elvis Problem</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="the-elvis-problem">
+<h1>The Elvis Problem<a class="headerlink" href="#the-elvis-problem" title="Link to this heading">#</a></h1>
+<p>This notebook is part of <a class="reference external" href="https://allendowney.github.io/BiteSizeBayes/">Bite Size Bayes</a>, an introduction to probability and Bayesian statistics using Python.</p>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/elvis.ipynb">Click here to run this notebook on Colab</a></p>
+<p>Here’s a problem from <a class="reference external" href="https://www.stat.columbia.edu/~gelman/book/"><em>Bayesian Data Analysis</em></a>:</p>
+<blockquote>
+<div><p>Elvis Presley had a twin brother (who died at birth).  What is the probability that Elvis was an identical twin?</p>
+</div></blockquote>
+<p>I will answer this question in three steps:</p>
+<ol class="arabic simple">
+<li><p>First, we need some background information about the relative frequencies of identical and fraternal twins.</p></li>
+<li><p>Then we will use Bayes’s Theorem to take into account one piece of data, which is that Elvis’s twin was male.</p></li>
+<li><p>Finally, living up to the name of this blog, I will overthink the problem by taking into account a second piece of data, which is that Elvis’s twin died at birth.</p></li>
+</ol>
+<p>For background information, I’ll use data from 1935, the year Elvis was born, from the
+U.S. Census Bureau, <a class="reference external" href="https://www.cdc.gov/nchs/data/vsushistorical/birthstat_1935.pdf">Birth, Stillbirth, and Infant Mortality Statistics for the Continental United States, the Territory of Hawaii, the Virgin Islands 1935</a>.</p>
+<p>It includes this table:</p>
+<img width="300" src="https://github.com/AllenDowney/BiteSizeBayes/raw/master/birth_data_1935.png"><p>The table doesn’t report which twins are identical or fraternal, but we can use the data to compute</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x\)</span>: The fraction of twins that are opposite sex.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">opposite</span> <span class="o">=</span> <span class="mi">8397</span>
+<span class="n">same</span> <span class="o">=</span> <span class="mi">8678</span> <span class="o">+</span> <span class="mi">8122</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">opposite</span> <span class="o">/</span> <span class="p">(</span><span class="n">opposite</span> <span class="o">+</span> <span class="n">same</span><span class="p">)</span>
+<span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3332539588046196
+</pre></div>
+</div>
+</div>
+</div>
+<p>The quantity we want is</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(f\)</span>: The fraction of twins who are fraternal.</p></li>
+</ul>
+<p>So let’s see how we can get from <span class="math notranslate nohighlight">\(x\)</span> to <span class="math notranslate nohighlight">\(f\)</span>.</p>
+<p>Because identical twins have the same genes, they are almost always the same sex.  Fraternal twins do not have the same genes; like other siblings, they are about equally likely to be the same or opposite sex.</p>
+<p>So we can write this relationship between <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(f\)</span></p>
+<p><span class="math notranslate nohighlight">\(x = f/2 + 0\)</span></p>
+<p>which says that the opposite sex twins include half of the fraternal twins and none of the identical twins.</p>
+<p>And that implies</p>
+<p><span class="math notranslate nohighlight">\(f = 2x\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span>
+<span class="n">f</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6665079176092392
+</pre></div>
+</div>
+</div>
+</div>
+<p>In 1935, about 2/3 of twins were fraternal, and 1/3 were identical.</p>
+<p>Getting back to the Elvis problem, we can use <span class="math notranslate nohighlight">\(1-f\)</span> and <span class="math notranslate nohighlight">\(f\)</span> as prior probabilities for the two hypotheses, <code class="docutils literal notranslate"><span class="pre">identical</span></code> and <code class="docutils literal notranslate"><span class="pre">fraternal</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'identical'</span><span class="p">,</span> <span class="s1">'fraternal'</span><span class="p">]</span>
+<span class="n">prior</span> <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="n">f</span><span class="p">,</span> <span class="n">f</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can take into account the data:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(D\)</span>: Elvis’s twin was male.</p></li>
+</ul>
+<p>The probability of <span class="math notranslate nohighlight">\(D\)</span> is nearly 100% if they were identical twins and about 50% if they were fraternal.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">likelihood</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s a function that takes the hypotheses, the priors, and the likelihoods and puts them in a Bayes table:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">make_bayes_table</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">prior</span><span class="p">,</span> <span class="n">likelihood</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Make a Bayes table.</span>
+<span class="sd">    </span>
+<span class="sd">    index: sequence of hypotheses</span>
+<span class="sd">    prior: prior probabilities</span>
+<span class="sd">    likelihood: sequence of likelihoods</span>
+<span class="sd">    </span>
+<span class="sd">    returns: DataFrame</span>
+<span class="sd">    """</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
+    <span class="n">table</span><span class="p">[</span><span class="s1">'prior'</span><span class="p">]</span> <span class="o">=</span> <span class="n">prior</span>
+    <span class="n">table</span><span class="p">[</span><span class="s1">'likelihood'</span><span class="p">]</span> <span class="o">=</span> <span class="n">likelihood</span>
+    <span class="n">table</span><span class="p">[</span><span class="s1">'unnorm'</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'prior'</span><span class="p">]</span> <span class="o">*</span> <span class="n">table</span><span class="p">[</span><span class="s1">'likelihood'</span><span class="p">]</span>
+    <span class="n">prob_data</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'unnorm'</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">table</span><span class="p">[</span><span class="s1">'posterior'</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'unnorm'</span><span class="p">]</span> <span class="o">/</span> <span class="n">prob_data</span>
+    <span class="k">return</span> <span class="n">table</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here are the results</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">make_bayes_table</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">prior</span><span class="p">,</span> <span class="n">likelihood</span><span class="p">)</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+      <th>likelihood</th>
+      <th>unnorm</th>
+      <th>posterior</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>identical</th>
+      <td>0.333492</td>
+      <td>1.0</td>
+      <td>0.333492</td>
+      <td>0.500179</td>
+    </tr>
+    <tr>
+      <th>fraternal</th>
+      <td>0.666508</td>
+      <td>0.5</td>
+      <td>0.333254</td>
+      <td>0.499821</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>From the Bayes table I’ll extract <span class="math notranslate nohighlight">\(p_i\)</span>, which is the probability that same sex twins are identical:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p_i</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'posterior'</span><span class="p">][</span><span class="s1">'identical'</span><span class="p">]</span>
+<span class="n">p_i</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.5001785714285714)
+</pre></div>
+</div>
+</div>
+</div>
+<p>With priors based on data from 1935, the posterior probability that Elvis was a twin is close to 50%.</p>
+<p>But there is one more piece of data to take into account; the fact that Elvis’s twin died at birth.</p>
+<p>Let’s assume that there are different risks for fraternal and identical twins.  The quantities we want are</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(r_f\)</span>: The probability that one twin is stillborn, given that they are fraternal.</p></li>
+<li><p><span class="math notranslate nohighlight">\(r_i\)</span>: The probability that one twin is stillborn, given that they are identical.</p></li>
+</ul>
+<p>We can’t get those quantities directly from the table, but we can compute:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(y\)</span>: the probability of “1 living”, given that the twins are opposite sex</p></li>
+<li><p><span class="math notranslate nohighlight">\(z\)</span>: the probability of “1 living”, given that the twins are the same sex</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="mi">258</span> <span class="o">+</span> <span class="mi">299</span><span class="p">)</span> <span class="o">/</span> <span class="n">opposite</span>
+<span class="n">y</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.06633321424318209
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="mi">655</span> <span class="o">+</span> <span class="mi">564</span><span class="p">)</span> <span class="o">/</span> <span class="n">same</span>
+<span class="n">z</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.07255952380952381
+</pre></div>
+</div>
+</div>
+</div>
+<p>Assuming that all opposite sex twins are fraternal, we can infer that the risk for fraternal twins is <span class="math notranslate nohighlight">\(y\)</span>, the risk for opposite sex twins:</p>
+<p><span class="math notranslate nohighlight">\(r_f = y\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r_f</span> <span class="o">=</span> <span class="n">y</span>
+<span class="n">r_f</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.06633321424318209
+</pre></div>
+</div>
+</div>
+</div>
+<p>And because we know the fraction of same sex twins who are identical, <span class="math notranslate nohighlight">\(p_i\)</span>, we can write the following relation</p>
+<p><span class="math notranslate nohighlight">\(z = p_i r_i + (1-p_i) r_f\)</span></p>
+<p>which says that the risk for same sex twins is the weighted sum of the risks for identical and fraternal twins, with the weight <span class="math notranslate nohighlight">\(p_i\)</span>.</p>
+<p>Solving for <span class="math notranslate nohighlight">\(r_i\)</span>, we get</p>
+<p><span class="math notranslate nohighlight">\(r_i = 2z - r_f\)</span></p>
+<p>And we have already computed <span class="math notranslate nohighlight">\(z\)</span> and <span class="math notranslate nohighlight">\(r_f\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r_i</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">z</span> <span class="o">-</span> <span class="n">r_f</span>
+<span class="n">r_i</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.07878583337586553
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this dataset, it looks like the probability of “1 alive” is a little higher for identical twins.</p>
+<p>So we can do a second update to take into account the data that Elvis’s twin died at birth.   The posterior probabilities from the first update become the priors for the second.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prior2</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'posterior'</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here are the likelihoods:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">likelihood2</span> <span class="o">=</span> <span class="n">r_i</span><span class="p">,</span> <span class="n">r_f</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here are the results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table2</span> <span class="o">=</span> <span class="n">make_bayes_table</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">prior2</span><span class="p">,</span> <span class="n">likelihood2</span><span class="p">)</span>
+<span class="n">table2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+      <th>likelihood</th>
+      <th>unnorm</th>
+      <th>posterior</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>identical</th>
+      <td>0.500179</td>
+      <td>0.078786</td>
+      <td>0.039407</td>
+      <td>0.543082</td>
+    </tr>
+    <tr>
+      <th>fraternal</th>
+      <td>0.499821</td>
+      <td>0.066333</td>
+      <td>0.033155</td>
+      <td>0.456918</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>With the new data, the posterior probability that Elvis was an identical twin is about 54%.</p>
+<p><strong>Credit:</strong> Thanks to Jonah Spicher, who took my Bayesian Stats class at Olin and came up with the idea to use data from 1935 and take into account the fact that Elvis’s twin died at birth.</p>
+<p>Copyright 2020–2026 Allen Downey</p>
+<p>Code license: <a class="reference external" href="https://opensource.org/license/MIT">MIT License</a></p>
+<p>Text license: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="flea_beetle.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">The Flea Beetle Problem</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Allen B. Downey
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <script>new Image().src="https://greenteapress.com/gh.gif?u="+encodeURIComponent(location.href)+"&r="+encodeURIComponent(document.referrer)</script>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,341 +1,396 @@
 
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="./" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="The Price Is Right problem in Python: kernel density estimation, a Bayesian update, and decision analysis to choose the bid with the best expected gain." name="description" />
+<meta property="og:title" content="The Price Is Right Problem" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://allendowney.github.io/BiteSizeBayes/13_price.html" />
+<meta property="og:site_name" content="Bite Size Bayes" />
+<meta property="og:description" content="The Price Is Right problem in Python: kernel density estimation, a Bayesian update, and decision analysis to choose the bid with the best expected gain." />
+<meta property="og:image" content="https://greenteapress.com/wp/wp-content/uploads/2021/04/think_bayes_2e_cover_small.jpg" />
+<meta property="og:image:alt" content="Cover of Think Bayes by Allen B. Downey" />
+
     <title>The Price Is Right Problem &#8212; Bite Size Bayes</title>
-    
-  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
 
-    
-  <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    
-      
-  <link rel="stylesheet"
-    href="_static/vendor/open-sans_all/1.44.1/index.css">
-  <link rel="stylesheet"
-    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
-    
-  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
-
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/togglebutton.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
-    <script >
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '13_price';</script>
+    <link rel="canonical" href="https://allendowney.github.io/BiteSizeBayes/13_price.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Bayesian Bandits" href="bandit.html" />
     <link rel="prev" title="The Binomial Distribution" href="12_binomial.html" />
-
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
-
-
-
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    <div class="container-xl">
-      <div class="row">
-          
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
     
-        <div class="navbar-brand-box">
-<a class="navbar-brand text-wrap" href="index.html">
-  
-  
-  <h1 class="site-logo" id="site-title">Bite Size Bayes</h1>
-  
-</a>
-</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form>
-<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-    <ul class="nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="README.html">
-   Bite Size Bayes
-  </a>
- </li>
-</ul>
-<ul class="current nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="01_linda.html">
-   The Laws of Probability
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="02_bayes.html">
-   Bayes’s Theorem
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="03_cookie.html">
-   The Cookie Problem
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="04_dice.html">
-   The Dice Problem
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="05_test.html">
-   Medical Tests
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="06_pmf.html">
-   Probability Mass Functions
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="07_euro.html">
-   The Euro Problem
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="08_soccer.html">
-   The World Cup Problem
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="09_predict.html">
-   Prediction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="10_joint.html">
-   Joint Probability
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="11_faceoff.html">
-   Comparisons
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="12_binomial.html">
-   The Binomial Distribution
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   <em>
-    The Price Is Right
-   </em>
-   Problem
-  </a>
- </li>
-</ul>
+  </dialog>
 
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
 
-</div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
 
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
 
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+  
+  <div class="sidebar-header-items sidebar-primary__section">
     
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
 
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Bite Size Bayes</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
         
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/13_price.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/AllenDowney/BiteSizeBayes"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        
-        
-    </div>
-</div>
-
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-                    title="Fullscreen mode"><i
-                        class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/BiteSizeBayes/master?urlpath=tree/13_price.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
-            
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i>
-            Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#review">
-   Review
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
-   The Price is Right problem
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-prior">
-   The prior
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#kernel-density-estimation">
-   Kernel density estimation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#distribution-of-error">
-   Distribution of error
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#update">
-   Update
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#probability-of-winning">
-   Probability of winning
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#decision-analysis">
-   Decision analysis
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#maximizing-expected-gain">
-   Maximizing expected gain
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
-   Review
-  </a>
- </li>
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Bite Size Bayes: An Introduction to Probability and Bayesian Statistics in Python
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">The notebooks</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_linda.html">The Laws of Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_bayes.html">Bayes’s Theorem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_cookie.html">The Cookie Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_dice.html">The Dice Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_test.html">Medical Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_pmf.html">Probability Mass Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_euro.html">The Euro Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_soccer.html">The World Cup Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_predict.html">Prediction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_joint.html">Joint Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_faceoff.html">Comparisons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_binomial.html">The Binomial Distribution</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><em>The Price Is Right</em> Problem</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">More examples</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="bandit.html">Bayesian Bandits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="monty.html">The Monty Hall Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gps.html">The GPS Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="flea_beetle.html">The Flea Beetle Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="elvis.html">The Elvis Problem</a></li>
 </ul>
 
-        </nav>
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
         
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/AllenDowney/BiteSizeBayes" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/13_price.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>The Price Is Right Problem</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#review">Review</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">The Price is Right problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-prior">The prior</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-density-estimation">Kernel density estimation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribution-of-error">Distribution of error</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update">Update</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-of-winning">Probability of winning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-analysis">Decision analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximizing-expected-gain">Maximizing expected gain</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
-              <div>
+
+              
                 
-  <div class="section" id="the-price-is-right-problem">
-<h1><em>The Price Is Right</em> Problem<a class="headerlink" href="#the-price-is-right-problem" title="Permalink to this headline">¶</a></h1>
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="the-price-is-right-problem">
+<h1><em>The Price Is Right</em> Problem<a class="headerlink" href="#the-price-is-right-problem" title="Link to this heading">#</a></h1>
+<p>This notebook is part of <a class="reference external" href="https://allendowney.github.io/BiteSizeBayes/">Bite Size Bayes</a>, an introduction to probability and Bayesian statistics using Python.</p>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/solutions/13_price.ipynb">Click here to run this notebook on Colab</a>. For the exercises, use <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/13_price.ipynb">the version with blanks</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="review">
-<h2>Review<a class="headerlink" href="#review" title="Permalink to this headline">¶</a></h2>
+<section id="review">
+<h2>Review<a class="headerlink" href="#review" title="Link to this heading">#</a></h2>
 <p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/09_predict.ipynb">In a previous notebook</a> we used the time between goals to update our estimate of the goal-scoring rate of a soccer team.</p>
 <p>Under the assumption that goal-scoring is well-modeled by a Poisson process, the time between goals follows an <a class="reference external" href="https://en.wikipedia.org/wiki/Exponential_distribution">exponential distribution</a>.</p>
 <p>In other words, if the goal-scoring rate is λ, the probability of seeing an interval between goals of <span class="math notranslate nohighlight">\(t\)</span> is proportional to the PDF of the exponential distribution:</p>
@@ -344,9 +399,9 @@
 <p>In this notebook, we’ll use the PDF of a normal distribution the same way, in order to estimate the value of prizes on a game show.
 Once we compute a posterior distribution, we’ll use it to optimize a decision-making process.</p>
 <p>This example demonstrates the real power of Bayesian methods, not just computing posterior distributions, but using them to make better decisions.</p>
-</div>
-<div class="section" id="id1">
-<h2>The Price is Right problem<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id1">
+<h2>The Price is Right problem<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <p>On November 1, 2007, contestants named Letia and Nathaniel appeared on <em>The Price is Right</em>, an American game show. They competed in a game called “The Showcase”, where the objective is to guess the price of a collection of prizes. The contestant who comes closest to the actual price, without going over, wins the prizes.</p>
 <p>Nathaniel went first. His showcase included a dishwasher, a wine cabinet, a laptop computer, and a car. He bid $26,000.</p>
 <p>Letia’s showcase included a pinball machine, a video arcade game, a pool table, and a cruise of the Bahamas. She bid $21,500.</p>
@@ -354,65 +409,29 @@ Once we compute a posterior distribution, we’ll use it to optimize a decision-
 <p>The actual price of Letia’s showcase was $21,578.</p>
 <p>She was only off by $78, so she won her showcase and, because her bid was off by less than 250, she also won Nathaniel’s showcase.</p>
 <p>For a Bayesian thinker, this scenario suggests several questions:</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>Before seeing the prizes, what prior beliefs should the contestant have about the price of the showcase?</p></li>
 <li><p>After seeing the prizes, how should the contestant update those beliefs?</p></li>
 <li><p>Based on the posterior distribution, what should the contestant bid?</p></li>
 </ol>
 <p>The third question demonstrates a common use of Bayesian methods: <a class="reference external" href="https://en.wikipedia.org/wiki/Decision_analysis">decision analysis</a>.</p>
-<p>This problem is inspired by <a class="reference external" href="https://nbviewer.jupyter.org/github/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers/blob/master/Chapter5_LossFunctions/Ch5_LossFunctions_PyMC3.ipynb">this example</a> in Cameron Davidson-Pilon’s book, <a class="reference external" href="http://camdavidsonpilon.github.io/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers">Probablistic Programming and Bayesian Methods for Hackers</a>.</p>
-</div>
-<div class="section" id="the-prior">
-<h2>The prior<a class="headerlink" href="#the-prior" title="Permalink to this headline">¶</a></h2>
+<p>This problem is inspired by <a class="reference external" href="https://nbviewer.org/github/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers/blob/master/Chapter5_LossFunctions/Ch5_LossFunctions_PyMC3.ipynb">this example</a> in Cameron Davidson-Pilon’s book, <a class="reference external" href="https://dataorigami.net/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers/">Probabilistic Programming and Bayesian Methods for Hackers</a>.</p>
+</section>
+<section id="the-prior">
+<h2>The prior<a class="headerlink" href="#the-prior" title="Link to this heading">#</a></h2>
 <p>To choose a prior distribution of prices, we can take advantage of data from previous episodes. Fortunately, <a class="reference external" href="https://web.archive.org/web/20121107204942/http://www.tpirsummaries.8m.com/">fans of the show keep detailed records</a>.</p>
 <p>For this example, I downloaded files containing the price of each showcase from the 2011 and 2012 seasons and the bids offered by the contestants.</p>
 <p>The following cells load the data files.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the data files</span>
-<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
-<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;showcases.2011.csv&#39;</span><span class="p">):</span>
-    <span class="o">!</span>wget https://github.com/AllenDowney/BiteSizeBayes/raw/master/showcases.2011.csv
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">'showcases.2011.csv'</span><span class="p">):</span>
+    <span class="o">!</span>wget<span class="w"> </span>https://github.com/AllenDowney/BiteSizeBayes/raw/master/showcases.2011.csv
 
-<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;showcases.2012.csv&#39;</span><span class="p">):</span>
-    <span class="o">!</span>wget http://github.com/AllenDowney/BiteSizeBayes/raw/master/showcases.2012.csv
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--2021-03-29 10:29:34--  https://github.com/AllenDowney/BiteSizeBayes/raw/master/showcases.2011.csv
-Resolving github.com (github.com)... 140.82.113.3
-Connecting to github.com (github.com)|140.82.113.3|:443... connected.
-HTTP request sent, awaiting response... 302 Found
-Location: https://raw.githubusercontent.com/AllenDowney/BiteSizeBayes/master/showcases.2011.csv [following]
---2021-03-29 10:29:34--  https://raw.githubusercontent.com/AllenDowney/BiteSizeBayes/master/showcases.2011.csv
-Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.108.133, 185.199.109.133, 185.199.111.133, ...
-Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.108.133|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 10596 (10K) [text/plain]
-Saving to: ‘showcases.2011.csv’
-
-showcases.2011.csv  100%[===================&gt;]  10.35K  --.-KB/s    in 0.003s  
-
-2021-03-29 10:29:34 (3.25 MB/s) - ‘showcases.2011.csv’ saved [10596/10596]
-
-URL transformed to HTTPS due to an HSTS policy
---2021-03-29 10:29:34--  https://github.com/AllenDowney/BiteSizeBayes/raw/master/showcases.2012.csv
-Resolving github.com (github.com)... 140.82.113.3
-Connecting to github.com (github.com)|140.82.113.3|:443... connected.
-HTTP request sent, awaiting response... 302 Found
-Location: https://raw.githubusercontent.com/AllenDowney/BiteSizeBayes/master/showcases.2012.csv [following]
---2021-03-29 10:29:34--  https://raw.githubusercontent.com/AllenDowney/BiteSizeBayes/master/showcases.2012.csv
-Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.109.133, 185.199.111.133, 185.199.110.133, ...
-Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.109.133|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 6714 (6.6K) [text/plain]
-Saving to: ‘showcases.2012.csv’
-
-showcases.2012.csv  100%[===================&gt;]   6.56K  --.-KB/s    in 0s      
-
-2021-03-29 10:29:34 (20.1 MB/s) - ‘showcases.2012.csv’ saved [6714/6714]
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">'showcases.2012.csv'</span><span class="p">):</span>
+    <span class="o">!</span>wget<span class="w"> </span>https://github.com/AllenDowney/BiteSizeBayes/raw/master/showcases.2012.csv
 </pre></div>
 </div>
 </div>
@@ -420,13 +439,13 @@ showcases.2012.csv  100%[===================&gt;]   6.56K  --.-KB/s    in 0s
 <p>The following function reads the data and cleans it up a little.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">read_data</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Read the showcase price data.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">read_data</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Read the showcase price data.</span>
 <span class="sd">    </span>
 <span class="sd">    filename: string</span>
 <span class="sd">    </span>
 <span class="sd">    returns: DataFrame</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
 </pre></div>
@@ -436,7 +455,7 @@ showcases.2012.csv  100%[===================&gt;]   6.56K  --.-KB/s    in 0s
 <p>I’ll read both files and concatenate them.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df2011</span> <span class="o">=</span> <span class="n">read_data</span><span class="p">(</span><span class="s1">&#39;showcases.2011.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df2011</span> <span class="o">=</span> <span class="n">read_data</span><span class="p">(</span><span class="s1">'showcases.2011.csv'</span><span class="p">)</span>
 <span class="n">df2011</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
@@ -449,7 +468,7 @@ showcases.2012.csv  100%[===================&gt;]   6.56K  --.-KB/s    in 0s
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df2012</span> <span class="o">=</span> <span class="n">read_data</span><span class="p">(</span><span class="s1">&#39;showcases.2012.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df2012</span> <span class="o">=</span> <span class="n">read_data</span><span class="p">(</span><span class="s1">'showcases.2012.csv'</span><span class="p">)</span>
 <span class="n">df2012</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
@@ -557,23 +576,23 @@ showcases.2012.csv  100%[===================&gt;]   6.56K  --.-KB/s    in 0s
 </table>
 </div></div></div>
 </div>
-</div>
-<div class="section" id="kernel-density-estimation">
-<h2>Kernel density estimation<a class="headerlink" href="#kernel-density-estimation" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="kernel-density-estimation">
+<h2>Kernel density estimation<a class="headerlink" href="#kernel-density-estimation" title="Link to this heading">#</a></h2>
 <p>This dataset contains the prices for 313 previous showcases, which we can think of as a sample from the population of possible prices.</p>
 <p>We can use this sample to estimate the prior distribution of showcase prices.  One way to do that is kernel density estimation (KDE), which uses the sample to estimate a smooth distribution.</p>
 <p>SciPy provides <code class="docutils literal notranslate"><span class="pre">gaussian_kde</span></code>, which takes a sample and returns an object that represents the estimated distribution.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">gaussian_kde</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">gaussian_kde</span>
 
-<span class="n">kde</span> <span class="o">=</span> <span class="n">gaussian_kde</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Showcase 1&#39;</span><span class="p">])</span>
+<span class="n">kde</span> <span class="o">=</span> <span class="n">gaussian_kde</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'Showcase 1'</span><span class="p">])</span>
 <span class="n">kde</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;scipy.stats.kde.gaussian_kde at 0x7f4225675950&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;scipy.stats._kde.gaussian_kde at 0x7280c042ac00&gt;
 </pre></div>
 </div>
 </div>
@@ -590,15 +609,15 @@ showcases.2012.csv  100%[===================&gt;]   6.56K  --.-KB/s    in 0s
 <p>And put the results into a normalized Series that represents the prior distribution for Showcase 1.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_pmf</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ps</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Make a Series that represents a PMF.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">make_pmf</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ps</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Make a Series that represents a PMF.</span>
 <span class="sd">    </span>
 <span class="sd">    xs: sequence of values</span>
 <span class="sd">    ps: sequence of probabilities</span>
 <span class="sd">    options: keyword arguments passed to Series constructor</span>
 <span class="sd">    </span>
 <span class="sd">    returns: Pandas Series</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">pmf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">ps</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">xs</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">pmf</span>
 </pre></div>
@@ -616,30 +635,30 @@ showcases.2012.csv  100%[===================&gt;]   6.56K  --.-KB/s    in 0s
 <p>Here’s what it looks like:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prior1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Prior 1&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prior1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">'Prior 1'</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Showcase value ($)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Prior distribution of showcase value&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Showcase value ($)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Probability'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Prior distribution of showcase value'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/13_price_27_0.png" src="_images/13_price_27_0.png" />
+<img alt="_images/5fac959332db04a076aba8051883af0dbed3d410cbc3e78b6498a5773fe7d3e0.png" src="_images/5fac959332db04a076aba8051883af0dbed3d410cbc3e78b6498a5773fe7d3e0.png" />
 </div>
 </div>
 <p>The following function takes a sample, makes a KDE, evaluates it at a given sequence of <code class="docutils literal notranslate"><span class="pre">xs</span></code>, and returns the result as a normalized PMF.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_kde</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">sample</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Make a PMF based on KDE:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">make_kde</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">sample</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Make a PMF based on KDE:</span>
 <span class="sd">    </span>
 <span class="sd">    xs: places where we should evaluate the KDE</span>
 <span class="sd">    sample: sequence of values</span>
 <span class="sd">    </span>
 <span class="sd">    returns: Series that represents a normalized PMF</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">kde</span> <span class="o">=</span> <span class="n">gaussian_kde</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
     <span class="n">ps</span> <span class="o">=</span> <span class="n">kde</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
     <span class="n">pmf</span> <span class="o">=</span> <span class="n">make_pmf</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ps</span><span class="p">)</span>
@@ -650,9 +669,37 @@ showcases.2012.csv  100%[===================&gt;]   6.56K  --.-KB/s    in 0s
 </div>
 </div>
 <p><strong>Exercise:</strong> Use this function to make a Pmf that represents the prior distribution for Showcase 2, and plot it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">80000</span><span class="p">,</span> <span class="mi">71</span><span class="p">)</span>
+<span class="n">prior2</span> <span class="o">=</span> <span class="n">make_kde</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Showcase 2'</span><span class="p">])</span>
+</pre></div>
 </div>
-<div class="section" id="distribution-of-error">
-<h2>Distribution of error<a class="headerlink" href="#distribution-of-error" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">prior1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">'Prior 1'</span><span class="p">)</span>
+<span class="n">prior2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">'Prior 2'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Showcase value ($)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Probability'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Prior and posterior distribution of showcase value'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/0ad7ef4f7f4f4234f8004b06252946e5041446ab9eb723d7bec99e68fed46b0c.png" src="_images/0ad7ef4f7f4f4234f8004b06252946e5041446ab9eb723d7bec99e68fed46b0c.png" />
+</div>
+</div>
+</section>
+<section id="distribution-of-error">
+<h2>Distribution of error<a class="headerlink" href="#distribution-of-error" title="Link to this heading">#</a></h2>
 <p>To update these priors, we have to answer these questions:</p>
 <ul class="simple">
 <li><p>What data should we consider and how should we quantify it?</p></li>
@@ -664,8 +711,8 @@ showcases.2012.csv  100%[===================&gt;]   6.56K  --.-KB/s    in 0s
 <p>To answer this question, I’ll use the historical data again. For each showcase in the dataset, let’s look at the difference between the contestant’s bid and the actual price:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_diff1</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Bid 1&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Showcase 1&#39;</span><span class="p">]</span>
-<span class="n">sample_diff2</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Bid 2&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Showcase 2&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_diff1</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Bid 1'</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Showcase 1'</span><span class="p">]</span>
+<span class="n">sample_diff2</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Bid 2'</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Showcase 2'</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -682,18 +729,18 @@ showcases.2012.csv  100%[===================&gt;]   6.56K  --.-KB/s    in 0s
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kde_diff1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Diff 1&#39;</span><span class="p">)</span>
-<span class="n">kde_diff2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Diff 2&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kde_diff1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">'Diff 1'</span><span class="p">)</span>
+<span class="n">kde_diff2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">'Diff 2'</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Difference in value ($)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Difference between bid and actual value&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Difference in value ($)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Probability'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Difference between bid and actual value'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/13_price_37_0.png" src="_images/13_price_37_0.png" />
+<img alt="_images/d39e5176fb1298c74e2d792fcee956b1e865889cb52930e3f9d53c057c250ea4.png" src="_images/d39e5176fb1298c74e2d792fcee956b1e865889cb52930e3f9d53c057c250ea4.png" />
 </div>
 </div>
 <p>It looks like the bids are too low more often than too high, which makes sense.  Remember that under the rules of the game, you lose if you overbid, so contestants probably underbid to some degree deliberately.</p>
@@ -708,7 +755,7 @@ showcases.2012.csv  100%[===================&gt;]   6.56K  --.-KB/s    in 0s
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-4116.3961661341855, 6899.909806377117)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(np.float64(-4116.3961661341855), np.float64(6899.909806377117))
 </pre></div>
 </div>
 </div>
@@ -723,7 +770,7 @@ showcases.2012.csv  100%[===================&gt;]   6.56K  --.-KB/s    in 0s
 <p>Based on these assumptions, I’ll make a normal distribution with parameters 0 and <code class="docutils literal notranslate"><span class="pre">std_diff1</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">norm</span>
 
 <span class="n">error_dist1</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">std_diff1</span><span class="p">)</span>
 <span class="n">error_dist1</span>
@@ -731,15 +778,15 @@ showcases.2012.csv  100%[===================&gt;]   6.56K  --.-KB/s    in 0s
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;scipy.stats._distn_infrastructure.rv_frozen at 0x7f4223185750&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;scipy.stats._distn_infrastructure.rv_continuous_frozen at 0x7280b75fcf80&gt;
 </pre></div>
 </div>
 </div>
 </div>
 <p>We’ll use this distribution to do the update.</p>
-</div>
-<div class="section" id="update">
-<h2>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="update">
+<h2>Update<a class="headerlink" href="#update" title="Link to this heading">#</a></h2>
 <p>Suppose you are Player 1.  You see the prizes in your showcase and your estimate of the total price is $23,000.</p>
 <p>For each hypothetical price in the prior distribution, I’ll subtract away your guess.
 The result is your error under each hypothesis.</p>
@@ -774,30 +821,30 @@ The result is your error under each hypothesis.</p>
 <p>Here’s what the posterior distribution looks like:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prior1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Prior 1&#39;</span><span class="p">)</span>
-<span class="n">posterior1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Posterior 1&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prior1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">'gray'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Prior 1'</span><span class="p">)</span>
+<span class="n">posterior1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">'C0'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Posterior 1'</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Showcase value ($)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Prior and posterior distribution of showcase value&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Showcase value ($)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Probability'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Prior and posterior distribution of showcase value'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/13_price_50_0.png" src="_images/13_price_50_0.png" />
+<img alt="_images/8c67f95923e868e4f81b0dc251d429c0045e543738039a542be7284dae8870c5.png" src="_images/8c67f95923e868e4f81b0dc251d429c0045e543738039a542be7284dae8870c5.png" />
 </div>
 </div>
 <p>Because your estimate is in the lower end of the range, the posterior distribution has shifted to the left.  We can use the posterior mean to see by how much.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">pmf_mean</span><span class="p">(</span><span class="n">pmf</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Compute the mean of a PMF.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">pmf_mean</span><span class="p">(</span><span class="n">pmf</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Compute the mean of a PMF.</span>
 <span class="sd">    </span>
 <span class="sd">    pmf: Series representing a PMF</span>
 <span class="sd">    </span>
 <span class="sd">    return: float</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pmf</span><span class="o">.</span><span class="n">index</span> <span class="o">*</span> <span class="n">pmf</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -810,7 +857,7 @@ The result is your error under each hypothesis.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(30299.488817891375, 26192.024002392536)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(np.float64(30299.488817891375), np.float64(26192.024002392536))
 </pre></div>
 </div>
 </div>
@@ -822,19 +869,100 @@ The result is your error under each hypothesis.</p>
 <p>Use <code class="docutils literal notranslate"><span class="pre">diff2</span></code> to construct a normal distribution that represents the distribution of your estimation errors.</p>
 <p>Compute the likelihood of your estimate for each actual price and use it to update <code class="docutils literal notranslate"><span class="pre">prior2</span></code>.</p>
 <p>Plot the posterior distribution and compute the posterior mean.  Based on your estimate, what do you expect the actual price of the showcase to be?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">mean_diff2</span> <span class="o">=</span> <span class="n">sample_diff2</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">std_diff2</span> <span class="o">=</span> <span class="n">sample_diff2</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+
+<span class="n">mean_diff2</span><span class="p">,</span> <span class="n">std_diff2</span>
+</pre></div>
 </div>
-<div class="section" id="probability-of-winning">
-<h2>Probability of winning<a class="headerlink" href="#probability-of-winning" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(np.float64(-3675.891373801917), np.float64(6886.260711323408))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">error_dist2</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">std_diff2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">guess2</span> <span class="o">=</span> <span class="mi">38000</span>
+<span class="n">xs</span> <span class="o">=</span> <span class="n">prior2</span><span class="o">.</span><span class="n">index</span>
+<span class="n">error2</span> <span class="o">=</span> <span class="n">guess2</span> <span class="o">-</span> <span class="n">xs</span>
+
+<span class="n">likelihood2</span> <span class="o">=</span> <span class="n">error_dist2</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">error2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">posterior2</span> <span class="o">=</span> <span class="n">prior2</span> <span class="o">*</span> <span class="n">likelihood2</span>
+<span class="n">posterior2</span> <span class="o">/=</span> <span class="n">posterior2</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">prior2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">'gray'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Prior 2'</span><span class="p">)</span>
+<span class="n">posterior2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">'C1'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Posterior 2'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Showcase value ($)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Probability'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Prior and posterior distribution of showcase value'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2a072fb1f13342c70e95e39ba93f1ced07d95ad574f2d9aa80a861d157c01354.png" src="_images/2a072fb1f13342c70e95e39ba93f1ced07d95ad574f2d9aa80a861d157c01354.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">pmf_mean</span><span class="p">(</span><span class="n">prior2</span><span class="p">),</span> <span class="n">pmf_mean</span><span class="p">(</span><span class="n">posterior2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(np.float64(31047.68691552092), np.float64(34305.20163595075))
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="probability-of-winning">
+<h2>Probability of winning<a class="headerlink" href="#probability-of-winning" title="Link to this heading">#</a></h2>
 <p>Now that we have a posterior distribution for each player, let’s think about strategy.</p>
 <p>First, from the point of view of Player 1, let’s compute the probability that Player 2 overbids.  To keep it simple, I’ll use only the performance of past players, ignoring the estimated value of the showcase.</p>
 <p>The following function takes a sequence of past bids and returns the fraction that overbid.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">prob_overbid</span><span class="p">(</span><span class="n">sample_diff</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Returns the probability this player overbids.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">prob_overbid</span><span class="p">(</span><span class="n">sample_diff</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Returns the probability this player overbids.</span>
 
 <span class="sd">    sample_diff: sequence of differences</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sample_diff</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -848,22 +976,22 @@ The result is your error under each hypothesis.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.29073482428115016
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.29073482428115016)
 </pre></div>
 </div>
 </div>
 </div>
 <p>Now suppose Player 1 underbids by $5000.
 What is the probability that Player 2 underbids by more?</p>
-<p>The following function uses past performance to estimate the probabily that a player underbids by more than a given amount, <code class="docutils literal notranslate"><span class="pre">diff</span></code>:</p>
+<p>The following function uses past performance to estimate the probability that a player underbids by more than a given amount, <code class="docutils literal notranslate"><span class="pre">diff</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">prob_worse_than</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span> <span class="n">sample_diff</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Probability the opponents&#39;s diff is worse than the given diff.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">prob_worse_than</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span> <span class="n">sample_diff</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Probability the opponents's diff is worse than the given diff.</span>
 
-<span class="sd">    diff: how much the oppenent is off by (always negative)</span>
+<span class="sd">    diff: how much the opponent is off by (always negative)</span>
 <span class="sd">    sample_diff: sequence of differences for the opponent</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sample_diff</span> <span class="o">&lt;</span> <span class="n">diff</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -877,7 +1005,7 @@ What is the probability that Player 2 underbids by more?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.38338658146964855
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.38338658146964855)
 </pre></div>
 </div>
 </div>
@@ -890,7 +1018,7 @@ What is the probability that Player 2 underbids by more?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.14376996805111822
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.14376996805111822)
 </pre></div>
 </div>
 </div>
@@ -898,12 +1026,12 @@ What is the probability that Player 2 underbids by more?</p>
 <p>We can combine these function to compute the probability that Player 1 wins, given the difference between their bid and the actual price:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_prob_win</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span> <span class="n">sample_diff</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Computes the probability of winning for a given diff.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">compute_prob_win</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span> <span class="n">sample_diff</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Computes the probability of winning for a given diff.</span>
 
 <span class="sd">    diff: how much your bid was off by</span>
 <span class="sd">    sample_diff: sequence of differences for the opponent</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># if you overbid you lose</span>
     <span class="k">if</span> <span class="n">diff</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="mi">0</span>
@@ -926,7 +1054,7 @@ What is the probability that Player 2 underbids by more?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6741214057507987
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.6741214057507987)
 </pre></div>
 </div>
 </div>
@@ -938,21 +1066,21 @@ What is the probability that Player 2 underbids by more?</p>
 <span class="n">ys</span> <span class="o">=</span> <span class="p">[</span><span class="n">compute_prob_win</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sample_diff2</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">xs</span><span class="p">]</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Difference between guess and actual price ($)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability of winning&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Player 1&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Difference between guess and actual price ($)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Probability of winning'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Player 1'</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/13_price_77_0.png" src="_images/13_price_77_0.png" />
+<img alt="_images/8842dda2faddbeb78969a2a4703b8bc31a7e5e6d46876a58997f62ba21eb91ab.png" src="_images/8842dda2faddbeb78969a2a4703b8bc31a7e5e6d46876a58997f62ba21eb91ab.png" />
 </div>
 </div>
 <p>If you underbid by $30,000, the chance of winning is about 30%, which is mostly the chance your opponent overbids.</p>
 <p>As your bids gets closer to the actual price, your chance of winning approaches 1.</p>
 <p>And, of course, if you overbid, you lose (even if your opponent also overbids).</p>
 <p><strong>Exercise:</strong> Run the same analysis from the point of view of Player 2.  Using the sample of differences from Player 1, compute:</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>The probability that Player 1 overbids.</p></li>
 <li><p>The probability that Player 1 underbids by more than $5000.</p></li>
 <li><p>The probability that Player 2 wins, given that they underbid by $5000.</p></li>
@@ -965,7 +1093,7 @@ What is the probability that Player 2 underbids by more?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.24600638977635783
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.24600638977635783)
 </pre></div>
 </div>
 </div>
@@ -977,7 +1105,7 @@ What is the probability that Player 2 underbids by more?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3993610223642173
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.3993610223642173)
 </pre></div>
 </div>
 </div>
@@ -989,7 +1117,7 @@ What is the probability that Player 2 underbids by more?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6453674121405751
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.6453674121405751)
 </pre></div>
 </div>
 </div>
@@ -1000,40 +1128,40 @@ What is the probability that Player 2 underbids by more?</p>
 <span class="n">ys</span> <span class="o">=</span> <span class="p">[</span><span class="n">compute_prob_win</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sample_diff1</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">xs</span><span class="p">]</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Difference between guess and actual price ($)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability of winning&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Player 2&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Difference between guess and actual price ($)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Probability of winning'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Player 2'</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/13_price_83_0.png" src="_images/13_price_83_0.png" />
+<img alt="_images/ecf11ed339af59396e63a57804e4cc1bfcf52e501b86489e18cb01f07eda4f04.png" src="_images/ecf11ed339af59396e63a57804e4cc1bfcf52e501b86489e18cb01f07eda4f04.png" />
 </div>
 </div>
-</div>
-<div class="section" id="decision-analysis">
-<h2>Decision analysis<a class="headerlink" href="#decision-analysis" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="decision-analysis">
+<h2>Decision analysis<a class="headerlink" href="#decision-analysis" title="Link to this heading">#</a></h2>
 <p>In the previous section we computed the probability of winning, given that we have underbid by a particular amount.</p>
 <p>In reality the contestants don’t know how much they have underbid by, because they don’t know the actual price.</p>
 <p>But they do have a posterior distribution that represents their beliefs about the actual price, and they can use that to estimate their probability of winning with a given bid.</p>
 <p>The following function take a possible bid, a posterior distribution of actual prices, and a sample of differences for the opponent.</p>
 <p>It loops through the hypothetical prices in the posterior distribution and for each price:</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>Computes the difference between the bid and the hypothetical price.</p></li>
 <li><p>Computes the probability that the player wins, given that difference.</p></li>
-<li><p>Adds up the weighted sum of the probabilities, where the weights are the probabilites in the posterior distribution.</p></li>
+<li><p>Adds up the weighted sum of the probabilities, where the weights are the probabilities in the posterior distribution.</p></li>
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">total_prob_win</span><span class="p">(</span><span class="n">bid</span><span class="p">,</span> <span class="n">posterior</span><span class="p">,</span> <span class="n">sample_diff</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Computes the total probability of winning with a given bid.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">total_prob_win</span><span class="p">(</span><span class="n">bid</span><span class="p">,</span> <span class="n">posterior</span><span class="p">,</span> <span class="n">sample_diff</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Computes the total probability of winning with a given bid.</span>
 
 <span class="sd">    bid: your bid</span>
 <span class="sd">    posterior: Pmf of showcase value</span>
 <span class="sd">    sample_diff: sequence of differences for the opponent</span>
 <span class="sd">    </span>
 <span class="sd">    returns: probability of winning</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">price</span><span class="p">,</span> <span class="n">prob</span> <span class="ow">in</span> <span class="n">posterior</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">diff</span> <span class="o">=</span> <span class="n">bid</span> <span class="o">-</span> <span class="n">price</span>
@@ -1052,7 +1180,7 @@ What is the probability that Player 2 underbids by more?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.4842210945439812
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.4842210945439812)
 </pre></div>
 </div>
 </div>
@@ -1071,16 +1199,16 @@ What is the probability that Player 2 underbids by more?</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob_win_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob_win_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">'C1'</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Bid ($)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability of winning&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Player 1&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Bid ($)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Probability of winning'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Player 1'</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/13_price_89_0.png" src="_images/13_price_89_0.png" />
+<img alt="_images/4b28cf53fa564f817fa8bd6a2e16ae80f57f3bcb9b536f46bf40cfcedccc0d44.png" src="_images/4b28cf53fa564f817fa8bd6a2e16ae80f57f3bcb9b536f46bf40cfcedccc0d44.png" />
 </div>
 </div>
 <p>And here’s the bid that maximizes your chance of winning.</p>
@@ -1091,7 +1219,7 @@ What is the probability that Player 2 underbids by more?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>21000.0
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(21000.0)
 </pre></div>
 </div>
 </div>
@@ -1100,9 +1228,53 @@ What is the probability that Player 2 underbids by more?</p>
 <p>After using your estimate to compute the posterior distribution, the posterior mean is about $26,000.</p>
 <p>But the bid that maximizes your chance of winning is $21,000.</p>
 <p><strong>Exercise:</strong> Do the same analysis for Player 2.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">bids</span> <span class="o">=</span> <span class="n">posterior2</span><span class="o">.</span><span class="n">index</span>
+
+<span class="n">probs</span> <span class="o">=</span> <span class="p">[</span><span class="n">total_prob_win</span><span class="p">(</span><span class="n">bid</span><span class="p">,</span> <span class="n">posterior2</span><span class="p">,</span> <span class="n">sample_diff1</span><span class="p">)</span> 
+         <span class="k">for</span> <span class="n">bid</span> <span class="ow">in</span> <span class="n">bids</span><span class="p">]</span>
+
+<span class="n">prob_win_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">probs</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">bids</span><span class="p">)</span>
+</pre></div>
 </div>
-<div class="section" id="maximizing-expected-gain">
-<h2>Maximizing expected gain<a class="headerlink" href="#maximizing-expected-gain" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">prob_win_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">'C2'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Bid ($)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Probability of winning'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Player 2'</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/58463c72576adc59f9f66853c20eb371772bc245ab805892e46ae9794e79187e.png" src="_images/58463c72576adc59f9f66853c20eb371772bc245ab805892e46ae9794e79187e.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">prob_win_series</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(29000.0)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="maximizing-expected-gain">
+<h2>Maximizing expected gain<a class="headerlink" href="#maximizing-expected-gain" title="Link to this heading">#</a></h2>
 <p>In the previous section we computed the bid that maximizes your chance of winning.
 And if that’s your goal, the bid we computed is optimal.</p>
 <p>But winning isn’t everything.
@@ -1112,13 +1284,13 @@ So it might be a good idea to increase your bid a little: it increases the chanc
 The following function computes how much you will win, on average, given your bid, the actual price, and a sample of errors for your opponent.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_gain</span><span class="p">(</span><span class="n">bid</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">sample_diff</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Computes expected gain given a bid and actual price.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">compute_gain</span><span class="p">(</span><span class="n">bid</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">sample_diff</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Computes expected gain given a bid and actual price.</span>
 
 <span class="sd">    bid: number</span>
 <span class="sd">    price: actual price</span>
 <span class="sd">    sample_diff: sequence of differences for the opponent</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">diff</span> <span class="o">=</span> <span class="n">bid</span> <span class="o">-</span> <span class="n">price</span>
     <span class="n">prob</span> <span class="o">=</span> <span class="n">compute_prob_win</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span> <span class="n">sample_diff</span><span class="p">)</span>
 
@@ -1141,7 +1313,7 @@ The following function computes how much you will win, on average, given your bi
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>23594.249201277955
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(23594.249201277955)
 </pre></div>
 </div>
 </div>
@@ -1150,13 +1322,13 @@ The following function computes how much you will win, on average, given your bi
 By averaging over the prices and probabilities in the posterior distribution, we can compute the “expected gain” for a particular bid.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">expected_gain</span><span class="p">(</span><span class="n">bid</span><span class="p">,</span> <span class="n">posterior</span><span class="p">,</span> <span class="n">sample_diff</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Computes the expected return of a given bid.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">expected_gain</span><span class="p">(</span><span class="n">bid</span><span class="p">,</span> <span class="n">posterior</span><span class="p">,</span> <span class="n">sample_diff</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Computes the expected return of a given bid.</span>
 
 <span class="sd">    bid: your bid</span>
 <span class="sd">    posterior: distribution of showcase values</span>
 <span class="sd">    sample_diff: distribution of differences for the opponent</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">price</span><span class="p">,</span> <span class="n">prob</span> <span class="ow">in</span> <span class="n">posterior</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">total</span> <span class="o">+=</span> <span class="n">prob</span> <span class="o">*</span> <span class="n">compute_gain</span><span class="p">(</span><span class="n">bid</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="n">sample_diff</span><span class="p">)</span>
@@ -1175,7 +1347,7 @@ By averaging over the prices and probabilities in the posterior distribution, we
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>16923.59933856512
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(16923.59933856512)
 </pre></div>
 </div>
 </div>
@@ -1196,16 +1368,16 @@ By averaging over the prices and probabilities in the posterior distribution, we
 <p>Here are the results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expected_gain_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expected_gain_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">'C1'</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Bid ($)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Expected gain ($)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Player 1&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Bid ($)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Expected gain ($)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Player 1'</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/13_price_108_0.png" src="_images/13_price_108_0.png" />
+<img alt="_images/526ac9c4955fcbd1559b34c7aae650577a4c9674a09efc094f15970961aa28ef.png" src="_images/526ac9c4955fcbd1559b34c7aae650577a4c9674a09efc094f15970961aa28ef.png" />
 </div>
 </div>
 <p>And here is the optimal bid.</p>
@@ -1216,7 +1388,7 @@ By averaging over the prices and probabilities in the posterior distribution, we
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>22000.0
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(22000.0)
 </pre></div>
 </div>
 </div>
@@ -1229,21 +1401,63 @@ By averaging over the prices and probabilities in the posterior distribution, we
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>17384.899584430797
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(17384.899584430797)
 </pre></div>
 </div>
 </div>
 </div>
 <p>Recall that the estimated value of the prizes was $23,000.</p>
 <p>The bid that maximizes the chance of winning is $21,000.</p>
-<p>And the bid that maximizes your the expected gain is $22,000.</p>
+<p>And the bid that maximizes your expected gain is $22,000.</p>
 <p><strong>Exercise:</strong> Do the same analysis for Player 2.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">bids</span> <span class="o">=</span> <span class="n">posterior2</span><span class="o">.</span><span class="n">index</span>
+
+<span class="n">gains</span> <span class="o">=</span> <span class="p">[</span><span class="n">expected_gain</span><span class="p">(</span><span class="n">bid</span><span class="p">,</span> <span class="n">posterior2</span><span class="p">,</span> <span class="n">sample_diff1</span><span class="p">)</span> <span class="k">for</span> <span class="n">bid</span> <span class="ow">in</span> <span class="n">bids</span><span class="p">]</span>
+
+<span class="n">expected_gain_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">gains</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">bids</span><span class="p">)</span>
+</pre></div>
 </div>
-<div class="section" id="id2">
-<h2>Review<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>In this notebook</p>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">expected_gain_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">'C2'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Bid ($)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Expected gain ($)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Player 2'</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/78e300928ee6c08a4de2df249a086e929d11ef849873856883f988a30645d8e8.png" src="_images/78e300928ee6c08a4de2df249a086e929d11ef849873856883f988a30645d8e8.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">expected_gain_series</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(30000.0)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Copyright 2020–2026 Allen Downey</p>
+<p>Code license: <a class="reference external" href="https://opensource.org/license/MIT">MIT License</a></p>
+<p>Text license: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></p>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1257,7 +1471,7 @@ By averaging over the prices and probabilities in the posterior distribution, we
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./."
         },
         predefinedOutput: true
@@ -1265,37 +1479,117 @@ By averaging over the prices and probabilities in the posterior distribution, we
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-        
-        <div class='prev-next-bottom'>
-            
-    <a class='left-prev' id="prev-link" href="12_binomial.html" title="previous page">The Binomial Distribution</a>
 
-        </div>
-        
-        </div>
-    </div>
-    <footer class="footer mt-5 mt-md-0">
-    <div class="container">
-      <p>
-        
-          By Allen B. Downey<br/>
-        
-            &copy; Copyright 2020.<br/>
-      </p>
-    </div>
-  </footer>
-</main>
-
-
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="12_binomial.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">The Binomial Distribution</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="bandit.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Bayesian Bandits</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#review">Review</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">The Price is Right problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-prior">The prior</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-density-estimation">Kernel density estimation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribution-of-error">Distribution of error</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update">Update</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-of-winning">Probability of winning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-analysis">Decision analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximizing-expected-gain">Maximizing expected gain</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Allen B. Downey
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <script>new Image().src="https://greenteapress.com/gh.gif?u="+encodeURIComponent(location.href)+"&r="+encodeURIComponent(document.referrer)</script>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
     </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
-    
-  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
-
-
-    
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

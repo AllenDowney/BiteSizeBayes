@@ -1,323 +1,394 @@
 
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="./" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="A first Bayesian update in Python: solve the cookie problem with Bayes's theorem, then with a Bayes table of priors, likelihoods and posteriors." name="description" />
+<meta property="og:title" content="The Cookie Problem" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://allendowney.github.io/BiteSizeBayes/03_cookie.html" />
+<meta property="og:site_name" content="Bite Size Bayes" />
+<meta property="og:description" content="A first Bayesian update in Python: solve the cookie problem with Bayes's theorem, then with a Bayes table of priors, likelihoods and posteriors." />
+<meta property="og:image" content="https://greenteapress.com/wp/wp-content/uploads/2021/04/think_bayes_2e_cover_small.jpg" />
+<meta property="og:image:alt" content="Cover of Think Bayes by Allen B. Downey" />
+
     <title>The Cookie Problem &#8212; Bite Size Bayes</title>
-    
-  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
 
-    
-  <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    
-      
-  <link rel="stylesheet"
-    href="_static/vendor/open-sans_all/1.44.1/index.css">
-  <link rel="stylesheet"
-    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
-    
-  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
-
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/togglebutton.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
-    <script >
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '03_cookie';</script>
+    <link rel="canonical" href="https://allendowney.github.io/BiteSizeBayes/03_cookie.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="The Dice Problem" href="04_dice.html" />
     <link rel="prev" title="Bayes’s Theorem" href="02_bayes.html" />
-
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
-
-
-
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    <div class="container-xl">
-      <div class="row">
-          
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
     
-        <div class="navbar-brand-box">
-<a class="navbar-brand text-wrap" href="index.html">
-  
-  
-  <h1 class="site-logo" id="site-title">Bite Size Bayes</h1>
-  
-</a>
-</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form>
-<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-    <ul class="nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="README.html">
-   Bite Size Bayes
-  </a>
- </li>
-</ul>
-<ul class="current nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="01_linda.html">
-   The Laws of Probability
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="02_bayes.html">
-   Bayes’s Theorem
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   The Cookie Problem
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="04_dice.html">
-   The Dice Problem
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="05_test.html">
-   Medical Tests
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="06_pmf.html">
-   Probability Mass Functions
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="07_euro.html">
-   The Euro Problem
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="08_soccer.html">
-   The World Cup Problem
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="09_predict.html">
-   Prediction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="10_joint.html">
-   Joint Probability
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="11_faceoff.html">
-   Comparisons
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="12_binomial.html">
-   The Binomial Distribution
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="13_price.html">
-   <em>
-    The Price Is Right
-   </em>
-   Problem
-  </a>
- </li>
-</ul>
+  </dialog>
 
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
 
-</div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
 
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
 
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+  
+  <div class="sidebar-header-items sidebar-primary__section">
     
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
 
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Bite Size Bayes</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
         
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/03_cookie.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/AllenDowney/BiteSizeBayes"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        
-        
-    </div>
-</div>
-
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-                    title="Fullscreen mode"><i
-                        class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/AllenDowney/BiteSizeBayes/master?urlpath=tree/03_cookie.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
-            
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i>
-            Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#review">
-   Review
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#bayes-s-theorem">
-   Bayes’s Theorem
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
-   The cookie problem
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#evidence">
-   Evidence
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-bayes-table">
-   The Bayes table
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#summary">
-   Summary
-  </a>
- </li>
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Bite Size Bayes: An Introduction to Probability and Bayesian Statistics in Python
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">The notebooks</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_linda.html">The Laws of Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_bayes.html">Bayes’s Theorem</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">The Cookie Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_dice.html">The Dice Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_test.html">Medical Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_pmf.html">Probability Mass Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_euro.html">The Euro Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_soccer.html">The World Cup Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_predict.html">Prediction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_joint.html">Joint Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_faceoff.html">Comparisons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_binomial.html">The Binomial Distribution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_price.html"><em>The Price Is Right</em> Problem</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">More examples</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="bandit.html">Bayesian Bandits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="monty.html">The Monty Hall Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gps.html">The GPS Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="flea_beetle.html">The Flea Beetle Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="elvis.html">The Elvis Problem</a></li>
 </ul>
 
-        </nav>
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
         
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/AllenDowney/BiteSizeBayes" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/03_cookie.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>The Cookie Problem</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#review">Review</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bayes-s-theorem">Bayes’s Theorem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">The cookie problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evidence">Evidence</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bayes-table">The Bayes table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
-              <div>
+
+              
                 
-  <div class="section" id="the-cookie-problem">
-<h1>The Cookie Problem<a class="headerlink" href="#the-cookie-problem" title="Permalink to this headline">¶</a></h1>
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="the-cookie-problem">
+<h1>The Cookie Problem<a class="headerlink" href="#the-cookie-problem" title="Link to this heading">#</a></h1>
+<p>This notebook is part of <a class="reference external" href="https://allendowney.github.io/BiteSizeBayes/">Bite Size Bayes</a>, an introduction to probability and Bayesian statistics using Python.</p>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/solutions/03_cookie.ipynb">Click here to run this notebook on Colab</a>. For the exercises, use <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/03_cookie.ipynb">the version with blanks</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">values</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">values</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="review">
-<h2>Review<a class="headerlink" href="#review" title="Permalink to this headline">¶</a></h2>
+<section id="review">
+<h2>Review<a class="headerlink" href="#review" title="Link to this heading">#</a></h2>
 <p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/02_bayes.ipynb">In the previous notebook</a> I presented and proved (sort of) three theorems of probability:</p>
 <p><strong>Theorem 1</strong> gives us a way to compute a conditional probability using a conjunction:</p>
 <p><span class="math notranslate nohighlight">\(P(A|B) = \frac{P(A~\mathrm{and}~B)}{P(B)}\)</span></p>
@@ -326,10 +397,10 @@
 <p><strong>Theorem 3</strong> gives us a way to get from <span class="math notranslate nohighlight">\(P(A|B)\)</span> to <span class="math notranslate nohighlight">\(P(B|A)\)</span>, or the other way around:</p>
 <p><span class="math notranslate nohighlight">\(P(A|B) = \frac{P(A) P(B|A)}{P(B)}\)</span></p>
 <p>In the examples we’ve seen so far, we didn’t really need these theorems, because when you have all of the data, you can compute any probability you want, any conjunction, or any conditional probability, just by counting.</p>
-<p>Starting with this notebook, we will look at examples where we don’t have all of the data, and we’ll see that these theorems are useful, expecially Theorem 3, which is also known as Bayes’s Theorem.</p>
-</div>
-<div class="section" id="bayes-s-theorem">
-<h2>Bayes’s Theorem<a class="headerlink" href="#bayes-s-theorem" title="Permalink to this headline">¶</a></h2>
+<p>Starting with this notebook, we will look at examples where we don’t have all of the data, and we’ll see that these theorems are useful, especially Theorem 3, which is also known as Bayes’s Theorem.</p>
+</section>
+<section id="bayes-s-theorem">
+<h2>Bayes’s Theorem<a class="headerlink" href="#bayes-s-theorem" title="Link to this heading">#</a></h2>
 <p>There are two ways to think about Bayes’s Theorem:</p>
 <ul class="simple">
 <li><p>It is a divide-and conquer strategy for computing conditional probabilities.  If it’s hard to compute <span class="math notranslate nohighlight">\(P(A|B)\)</span> directly, sometimes it is easier to compute the terms on the other side of the equation: <span class="math notranslate nohighlight">\(P(A)\)</span>, <span class="math notranslate nohighlight">\(P(B|A)\)</span>, and <span class="math notranslate nohighlight">\(P(B)\)</span>.</p></li>
@@ -350,9 +421,9 @@
 <li><p><span class="math notranslate nohighlight">\(P(H|D)\)</span> is the “posterior probability” of the hypothesis, which indicates how confident you should be that <span class="math notranslate nohighlight">\(H\)</span> is true after taking the data into account.</p></li>
 </ul>
 <p>An example will make all of this clearer.</p>
-</div>
-<div class="section" id="id1">
-<h2>The cookie problem<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id1">
+<h2>The cookie problem<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <p>Here’s a problem I got from Wikipedia a long time ago, but now it’s been edited away.</p>
 <blockquote>
 <div><p>Suppose you have two bowls of cookies.  Bowl 1 contains 30 vanilla and 10 chocolate cookies.  Bowl 2 contains 20 of each kind.</p>
@@ -366,7 +437,7 @@
 <li><p><span class="math notranslate nohighlight">\(D\)</span> is the datum that the cookie is vanilla (“datum” is the rarely-used singular form of “data”).</p></li>
 </ul>
 <p>What we want is the posterior probability of <span class="math notranslate nohighlight">\(H\)</span>, which is <span class="math notranslate nohighlight">\(P(H|D)\)</span>.  It is not obvious how to compute it directly, but if we can figure out the terms on the right-hand side of Bayes’s Theorem, we can get to it indirectly.</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p><span class="math notranslate nohighlight">\(P(H)\)</span> is the prior probability of <span class="math notranslate nohighlight">\(H\)</span>, which is the probability of choosing Bowl 1 before we see the data.  If there was an equal chance of choosing either bowl, <span class="math notranslate nohighlight">\(P(H)\)</span> is <span class="math notranslate nohighlight">\(1/2\)</span>.</p></li>
 <li><p><span class="math notranslate nohighlight">\(P(D|H)\)</span> is the likelihood of the data, which is the chance of getting a vanilla cookie if <span class="math notranslate nohighlight">\(H\)</span> is true, in other words, the chance of getting a vanilla cookie from Bowl 1, which is <span class="math notranslate nohighlight">\(30/40\)</span> or <span class="math notranslate nohighlight">\(3/4\)</span>.</p></li>
 <li><p><span class="math notranslate nohighlight">\(P(D)\)</span> is the total probability of the data, which is the chance of getting a vanilla cookie whether <span class="math notranslate nohighlight">\(H\)</span> is true or not.  In this example, we can figure out <span class="math notranslate nohighlight">\(P(D)\)</span> directly: because the bowls are equally likely, and they contain the same number of cookies, you were equally likely to choose any cookie.  Combining the two bowls, there are 50 vanilla and 30 chocolate cookies, so the probability of choosing a vanilla cookie is <span class="math notranslate nohighlight">\(50/80\)</span> or <span class="math notranslate nohighlight">\(5/8\)</span>.</p></li>
@@ -427,9 +498,28 @@
 <p>The posterior probability is <span class="math notranslate nohighlight">\(0.6\)</span>, a little higher than the prior, which was <span class="math notranslate nohighlight">\(0.5\)</span>.</p>
 <p>So the vanilla cookie makes us a little more certain that we chose Bowl 1.</p>
 <p><strong>Exercise:</strong> What if we had chosen a chocolate cookie instead; what would be the posterior probability of Bowl 1?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">prior</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span>
+<span class="n">likelihood</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span>
+<span class="n">prob_data</span> <span class="o">=</span> <span class="mi">3</span><span class="o">/</span><span class="mi">8</span>
+
+<span class="n">posterior</span> <span class="o">=</span> <span class="n">prior</span> <span class="o">*</span> <span class="n">likelihood</span> <span class="o">/</span> <span class="n">prob_data</span>
+<span class="n">posterior</span>
+</pre></div>
 </div>
-<div class="section" id="evidence">
-<h2>Evidence<a class="headerlink" href="#evidence" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3333333333333333
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="evidence">
+<h2>Evidence<a class="headerlink" href="#evidence" title="Link to this heading">#</a></h2>
 <p>In the previous example and exercise, notice a pattern:</p>
 <ul class="simple">
 <li><p>A vanilla cookie is more likely if we chose Bowl 1, so getting a vanilla cookie makes Bowl 1 more likely.</p></li>
@@ -443,7 +533,7 @@
 <p>You choose a coin at random and see that one of the sides is heads.  Is this data evidence in favor of, or against, the hypothesis that you chose the trick coin?</p>
 </div></blockquote>
 <p>See if you can figure out the answer before you read my solution.  I suggest these steps:</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>First, state clearly what is the hypothesis and what is the data.</p></li>
 <li><p>Then think about the prior, the likelihood of the data, and the total probability of the data.</p></li>
 <li><p>Apply Bayes’s Theorem to compute the posterior probability of the hypothesis.</p></li>
@@ -480,18 +570,18 @@
 </div>
 <p>The posterior is greater than the prior, so this data is evidence <em>in favor of</em> the hypothesis that you chose the trick coin.</p>
 <p>And that makes sense, because getting heads is more likely if you choose the trick coin rather than the normal coin.</p>
-</div>
-<div class="section" id="the-bayes-table">
-<h2>The Bayes table<a class="headerlink" href="#the-bayes-table" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="the-bayes-table">
+<h2>The Bayes table<a class="headerlink" href="#the-bayes-table" title="Link to this heading">#</a></h2>
 <p>In the cookie problem and the coin problem we were able to compute the probability of the data directly, but that’s not always the case.  In fact, computing the total probability of the data is often the hardest part of the problem.</p>
 <p>Fortunately, there is another way to solve problems like this that makes it easier: the Bayes table.</p>
 <p>You can write a Bayes table on paper or use a spreadsheet, but in this notebook I’ll use a Pandas DataFrame.</p>
 <p>I’ll do the cookie problem first.  Here’s an empty DataFrame with one row for each hypothesis:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
-<span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Bowl 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Bowl 2&#39;</span><span class="p">])</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">'Bowl 1'</span><span class="p">,</span> <span class="s1">'Bowl 2'</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -499,7 +589,7 @@
 <p>Now I’ll add a column to represent the priors:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="p">[</span><span class="s1">'prior'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span>
 <span class="n">table</span>
 </pre></div>
 </div>
@@ -542,7 +632,7 @@
 <p>And a column for the likelihoods:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;likelihood&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="p">[</span><span class="s1">'likelihood'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span>
 <span class="n">table</span>
 </pre></div>
 </div>
@@ -593,7 +683,7 @@
 <p>The next step is similar to what we did with Bayes’s Theorem; we multiply the priors by the likelihoods:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;prior&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;likelihood&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="p">[</span><span class="s1">'unnorm'</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'prior'</span><span class="p">]</span> <span class="o">*</span> <span class="n">table</span><span class="p">[</span><span class="s1">'likelihood'</span><span class="p">]</span>
 <span class="n">table</span>
 </pre></div>
 </div>
@@ -645,7 +735,7 @@
 <p><span class="math notranslate nohighlight">\(P(H) P(D|H)\)</span></p>
 <p>The difference is that we have not divided through by <span class="math notranslate nohighlight">\(P(D)\)</span>, the total probability of the data.  So let’s do that.</p>
 <p>There are two ways to compute <span class="math notranslate nohighlight">\(P(D)\)</span>:</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>Sometimes we can figure it out directly.</p></li>
 <li><p>Otherwise, we can compute it by adding up the unnormalized posteriors.</p></li>
 </ol>
@@ -653,13 +743,13 @@
 <p>Here’s the total of the unnormalized posteriors:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob_data</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob_data</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'unnorm'</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 <span class="n">prob_data</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.625
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.625)
 </pre></div>
 </div>
 </div>
@@ -668,7 +758,7 @@
 <p>Now we divide by <span class="math notranslate nohighlight">\(P(D)\)</span> to get the posteriors:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;posterior&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;unnorm&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">prob_data</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="p">[</span><span class="s1">'posterior'</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'unnorm'</span><span class="p">]</span> <span class="o">/</span> <span class="n">prob_data</span>
 <span class="n">table</span>
 </pre></div>
 </div>
@@ -720,7 +810,7 @@
 <p>The posterior probability for Bowl 1 is 0.6, which is what we got using Bayes’s Theorem explicitly.</p>
 <p>As a bonus, we also get the posterior probability of Bowl 2, which is 0.4.</p>
 <p>The posterior probabilities add up to 1, which they should, because the hypotheses are “complementary”; that is, either one of them is true or the other, but not both.  So their probabilities have to add up to 1.</p>
-<p>When we add up the unnormalized posteriors and divide through, we force the posteriors to add up to 1.  This process is called “normalization”, which is why the total probability of the data is also called the “<a class="reference external" href="https://en.wikipedia.org/wiki/Normalizing_constant#Bayes%27_theorem">normalizing constant</a>”</p>
+<p>When we add up the unnormalized posteriors and divide through, we force the posteriors to add up to 1.  This process is called “normalization”, which is why the total probability of the data is also called the “<a class="reference external" href="https://en.wikipedia.org/wiki/Normalizing_constant#Bayes'_theorem">normalizing constant</a>”</p>
 <p>It might not be clear yet why the unnormalized posteriors add up to <span class="math notranslate nohighlight">\(P(D)\)</span>.  I’ll come back to that in the next notebook.</p>
 <p><strong>Exercise:</strong> Solve the trick coin problem using a Bayes table:</p>
 <blockquote>
@@ -728,14 +818,75 @@
 <p>You choose a coin at random and see the one of the sides is heads.  What is the posterior probability that you chose the trick coin?</p>
 </div></blockquote>
 <p>Hint: The answer should still be 2/3.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">'Trick'</span><span class="p">,</span> <span class="s1">'Normal'</span><span class="p">])</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">'prior'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">'likelihood'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">'unnorm'</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'prior'</span><span class="p">]</span> <span class="o">*</span> <span class="n">table</span><span class="p">[</span><span class="s1">'likelihood'</span><span class="p">]</span>
+<span class="n">prob_data</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'unnorm'</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">'posterior'</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'unnorm'</span><span class="p">]</span> <span class="o">/</span> <span class="n">prob_data</span>
+<span class="n">table</span>
+</pre></div>
 </div>
-<div class="section" id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+      <th>likelihood</th>
+      <th>unnorm</th>
+      <th>posterior</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Trick</th>
+      <td>0.5</td>
+      <td>1.0</td>
+      <td>0.50</td>
+      <td>0.666667</td>
+    </tr>
+    <tr>
+      <th>Normal</th>
+      <td>0.5</td>
+      <td>0.5</td>
+      <td>0.25</td>
+      <td>0.333333</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
 <p>In this notebook I introduced two example problems: the cookie problem and the trick coin problem.</p>
 <p>We solved both problem using Bayes’s Theorem; then I presented the Bayes table, a method for solving problems where it is hard to compute the total probability of the data directly.</p>
 <p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/04_dice.ipynb">In the next notebook</a>, we’ll see examples with more than two hypotheses, and I’ll explain more carefully how the Bayes table works.</p>
-</div>
-</div>
+<p>Copyright 2020–2026 Allen Downey</p>
+<p>Code license: <a class="reference external" href="https://opensource.org/license/MIT">MIT License</a></p>
+<p>Text license: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></p>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -749,7 +900,7 @@
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./."
         },
         predefinedOutput: true
@@ -757,38 +908,114 @@
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-        
-        <div class='prev-next-bottom'>
-            
-    <a class='left-prev' id="prev-link" href="02_bayes.html" title="previous page">Bayes’s Theorem</a>
-    <a class='right-next' id="next-link" href="04_dice.html" title="next page">The Dice Problem</a>
 
-        </div>
-        
-        </div>
-    </div>
-    <footer class="footer mt-5 mt-md-0">
-    <div class="container">
-      <p>
-        
-          By Allen B. Downey<br/>
-        
-            &copy; Copyright 2020.<br/>
-      </p>
-    </div>
-  </footer>
-</main>
-
-
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="02_bayes.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Bayes’s Theorem</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="04_dice.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">The Dice Problem</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#review">Review</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bayes-s-theorem">Bayes’s Theorem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">The cookie problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evidence">Evidence</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bayes-table">The Bayes table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Allen B. Downey
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <script>new Image().src="https://greenteapress.com/gh.gif?u="+encodeURIComponent(location.href)+"&r="+encodeURIComponent(document.referrer)</script>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
     </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
-    
-  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
-
-
-    
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

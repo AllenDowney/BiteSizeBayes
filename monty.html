@@ -1,0 +1,1420 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="The Monty Hall problem in Python: solve it with a Bayes table, and check the answer symbolically with SymPy." name="description" />
+<meta property="og:title" content="The Monty Hall Problem" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://allendowney.github.io/BiteSizeBayes/monty.html" />
+<meta property="og:site_name" content="Bite Size Bayes" />
+<meta property="og:description" content="The Monty Hall problem in Python: solve it with a Bayes table, and check the answer symbolically with SymPy." />
+<meta property="og:image" content="https://greenteapress.com/wp/wp-content/uploads/2021/04/think_bayes_2e_cover_small.jpg" />
+<meta property="og:image:alt" content="Cover of Think Bayes by Allen B. Downey" />
+
+    <title>The Monty Hall Problem &#8212; Bite Size Bayes</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'monty';</script>
+    <link rel="canonical" href="https://allendowney.github.io/BiteSizeBayes/monty.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The GPS Problem" href="gps.html" />
+    <link rel="prev" title="Bayesian Bandits" href="bandit.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Bite Size Bayes</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Bite Size Bayes: An Introduction to Probability and Bayesian Statistics in Python
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">The notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_linda.html">The Laws of Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_bayes.html">Bayes’s Theorem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_cookie.html">The Cookie Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_dice.html">The Dice Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_test.html">Medical Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_pmf.html">Probability Mass Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_euro.html">The Euro Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_soccer.html">The World Cup Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_predict.html">Prediction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_joint.html">Joint Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_faceoff.html">Comparisons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_binomial.html">The Binomial Distribution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_price.html"><em>The Price Is Right</em> Problem</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">More examples</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="bandit.html">Bayesian Bandits</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">The Monty Hall Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gps.html">The GPS Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="flea_beetle.html">The Flea Beetle Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="elvis.html">The Elvis Problem</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/AllenDowney/BiteSizeBayes" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/monty.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>The Monty Hall Problem</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-coins">Two coins</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">The Monty Hall problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bayes-s-theorem">Bayes’s Theorem</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="the-monty-hall-problem">
+<h1>The Monty Hall Problem<a class="headerlink" href="#the-monty-hall-problem" title="Link to this heading">#</a></h1>
+<p>This notebook is part of <a class="reference external" href="https://allendowney.github.io/BiteSizeBayes/">Bite Size Bayes</a>, an introduction to probability and Bayesian statistics using Python.</p>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/solutions/monty.ipynb">Click here to run this notebook on Colab</a>. For the exercises, use <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/monty.ipynb">the version with blanks</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">prob</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Computes the probability of a proposition, A.</span>
+<span class="sd">    </span>
+<span class="sd">    A: Boolean series</span>
+<span class="sd">    </span>
+<span class="sd">    returns: probability</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">A</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">conditional</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Conditional probability of A given B.</span>
+<span class="sd">    </span>
+<span class="sd">    A: Boolean series</span>
+<span class="sd">    B: Boolean series</span>
+<span class="sd">    </span>
+<span class="sd">    returns: probability</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">prob</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">B</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="two-coins">
+<h2>Two coins<a class="headerlink" href="#two-coins" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>Suppose I flip two fair coins and tell you (honestly) that at least one of the coins is heads.  What is the probability that both coins are heads?</p>
+</div></blockquote>
+<p>The answer is 1/3, and here’s an argument that explains it.</p>
+<ol class="arabic simple">
+<li><p>If you toss two coins, there are 4 equally likely outcomes: HH, HT, TH, TT</p></li>
+<li><p>If I tell you that at least one is heads, that eliminates TT.</p></li>
+<li><p>The remaining 3 outcomes are still equally likely, so their probability is now 1/3 each.</p></li>
+<li><p>Therefore, the probability of HH is now 1/3.</p></li>
+</ol>
+<p>However, you might still have some doubts.  For me, Step 3 feels like an unsupported assertion: How do we know the 3 remaining outcomes are still equally likely?</p>
+<p>The following simulation might help convince you.</p>
+<p>First I’ll generate two sets of coin flips.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">size</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">first</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">'H'</span><span class="p">,</span> <span class="s1">'T'</span><span class="p">],</span> <span class="n">size</span><span class="p">)</span>
+<span class="n">second</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">'H'</span><span class="p">,</span> <span class="s1">'T'</span><span class="p">],</span> <span class="n">size</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can confirm that each coin has a 50% chance of landing heads:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">first</span> <span class="o">==</span> <span class="s1">'H'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.5032)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">second</span> <span class="o">==</span> <span class="s1">'H'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.5)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can compute a Boolean Series that is <code class="docutils literal notranslate"><span class="pre">True</span></code> if either coin landed heads, or both.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">at_least_one</span> <span class="o">=</span> <span class="p">(</span><span class="n">first</span> <span class="o">==</span> <span class="s1">'H'</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">second</span> <span class="o">==</span> <span class="s1">'H'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And we can confirm that happens 75% of the time:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">at_least_one</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.7511)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can compute a Boolean Series that is <code class="docutils literal notranslate"><span class="pre">True</span></code> if both coins landed heads.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">both</span> <span class="o">=</span> <span class="p">(</span><span class="n">first</span> <span class="o">==</span> <span class="s1">'H'</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">second</span> <span class="o">==</span> <span class="s1">'H'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And confirm that it happens 25% of the time.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="p">(</span><span class="n">both</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.2521)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we can compute the conditional probability of <code class="docutils literal notranslate"><span class="pre">both</span></code> given <code class="docutils literal notranslate"><span class="pre">at_least_one</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conditional</span><span class="p">(</span><span class="n">both</span><span class="p">,</span> <span class="n">at_least_one</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.33564105977899084)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id1">
+<h2>The Monty Hall problem<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>From <a class="reference external" href="https://en.wikipedia.org/wiki/Monty_Hall_problem">Wikipedia</a>:</p>
+<blockquote>
+<div><p>Suppose you’re on a game show, and you’re given the choice of three doors: Behind one door is a car; behind the others, goats. You pick a door, say No. 1, and the host, who knows what’s behind the doors, opens another door, say No. 3, which has a goat. He then says to you, “Do you want to pick door No. 2?” Is it to your advantage to switch your choice?</p>
+</div></blockquote>
+<p>To avoid ambiguities, we have to make some assumptions about the behavior of the host:</p>
+<ol class="arabic simple">
+<li><p>The host never opens the door you picked.</p></li>
+<li><p>The host never opens the door with the car.</p></li>
+<li><p>If you choose the door with the car, the host chooses one of the other doors at random.</p></li>
+<li><p>The host always offers you the option to switch.</p></li>
+</ol>
+<p>Under these assumptions, are you better off sticking or switching?</p>
+<p>The correct answer is that you are better off switching.  If you stick, you win 1/3 of the time.  If you switch, you win 2/3 of the time.</p>
+<p>Here’s one of many arguments that might persuade you.</p>
+<blockquote>
+<div><p>If you always stick, you win if you initially choose the door with the car, so the probability is 1/3.</p>
+<p>If you always switch, you win if you did <em>not</em> choose the door with the car, so the probability is 2/3.</p>
+</div></blockquote>
+<p>However, many people do not find any verbal arguments persuasive.  So, maybe a simulation will help.</p>
+<p><strong>Exercise:</strong> Write a simulation that confirms that you are better off switching if the host opens Door 3.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+<span class="n">size</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'winner'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="n">size</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">win1</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'winner'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">win2</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'winner'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">win3</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'winner'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">win1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">win2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">win3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(np.float64(0.3342), np.float64(0.3307), np.float64(0.3351))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">win1</span><span class="p">,</span> <span class="s1">'open'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">win1</span><span class="p">))</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">win2</span><span class="p">,</span> <span class="s1">'open'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">win3</span><span class="p">,</span> <span class="s1">'open'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>winner</th>
+      <th>open</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3</td>
+      <td>2.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">open3</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'open'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">conditional</span><span class="p">(</span><span class="n">win1</span><span class="p">,</span> <span class="n">open3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.3380704563650921)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">conditional</span><span class="p">(</span><span class="n">win2</span><span class="p">,</span> <span class="n">open3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.661929543634908)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">conditional</span><span class="p">(</span><span class="n">win3</span><span class="p">,</span> <span class="n">open3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.0)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="bayes-s-theorem">
+<h2>Bayes’s Theorem<a class="headerlink" href="#bayes-s-theorem" title="Link to this heading">#</a></h2>
+<p>In the previous two examples, you might have noticed a seeming contradiction:</p>
+<ul class="simple">
+<li><p>In the coin example, we start with four hypotheses with equal probability; one of them is eliminated by the data, and I argue that the other three still have equal probability.</p></li>
+<li><p>In the Monty Hall example, we start with three hypotheses with equal probability; one of them is eliminated by the data, but it turns out that the other two do <em>not</em> have equal probability.</p></li>
+</ul>
+<p>When one hypothesis is eliminated, its probability is redistributed to the remaining hypotheses, but it seems like there is no general rule for <em>how</em> it is redistributed.</p>
+<p>Fortunately, Bayes’s Theorem resolves this contradiction; if we apply it carefully, it tells us exactly how the probability should be redistributed.</p>
+<p>First I’ll solve the coin problem using a Bayes table.  Again, we start with four hypotheses with equal prior probability.  Just for fun, I’ll use <code class="docutils literal notranslate"><span class="pre">Fraction</span></code> objects so the results are represented as rational numbers rather than floating-point.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">fractions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Fraction</span>
+
+<span class="n">hypos</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'HH'</span><span class="p">,</span> <span class="s1">'HT'</span><span class="p">,</span> <span class="s1">'TH'</span><span class="p">,</span> <span class="s1">'TT'</span><span class="p">]</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">hypos</span><span class="p">)</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">'prior'</span><span class="p">]</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>HH</th>
+      <td>1/4</td>
+    </tr>
+    <tr>
+      <th>HT</th>
+      <td>1/4</td>
+    </tr>
+    <tr>
+      <th>TH</th>
+      <td>1/4</td>
+    </tr>
+    <tr>
+      <th>TT</th>
+      <td>1/4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The data, in this example, is my report that there is at least one heads.  Assuming that I report honestly, we can compute the likelihood of the data under each hypothesis.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="p">[</span><span class="s1">'likelihood'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+      <th>likelihood</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>HH</th>
+      <td>1/4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>HT</th>
+      <td>1/4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>TH</th>
+      <td>1/4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>TT</th>
+      <td>1/4</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>And we fill in the rest of the table in the usual way.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="p">[</span><span class="s1">'unnorm'</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'prior'</span><span class="p">]</span> <span class="o">*</span> <span class="n">table</span><span class="p">[</span><span class="s1">'likelihood'</span><span class="p">]</span>
+<span class="n">prob_data</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'unnorm'</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">'posterior'</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'unnorm'</span><span class="p">]</span> <span class="o">/</span> <span class="n">prob_data</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+      <th>likelihood</th>
+      <th>unnorm</th>
+      <th>posterior</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>HH</th>
+      <td>1/4</td>
+      <td>1</td>
+      <td>1/4</td>
+      <td>1/3</td>
+    </tr>
+    <tr>
+      <th>HT</th>
+      <td>1/4</td>
+      <td>1</td>
+      <td>1/4</td>
+      <td>1/3</td>
+    </tr>
+    <tr>
+      <th>TH</th>
+      <td>1/4</td>
+      <td>1</td>
+      <td>1/4</td>
+      <td>1/3</td>
+    </tr>
+    <tr>
+      <th>TT</th>
+      <td>1/4</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>In this example the remaining hypotheses have the same posterior probability because the likelihood of the data is the same under any of them.</p>
+<p>For the Monty Hall problem, that is not the case.  We’ll start with three hypotheses, one for each door, and equal priors.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hypos</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Door 1'</span><span class="p">,</span> <span class="s1">'Door 2'</span><span class="p">,</span> <span class="s1">'Door 3'</span><span class="p">]</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">hypos</span><span class="p">)</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">'prior'</span><span class="p">]</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Door 1</th>
+      <td>1/3</td>
+    </tr>
+    <tr>
+      <th>Door 2</th>
+      <td>1/3</td>
+    </tr>
+    <tr>
+      <th>Door 3</th>
+      <td>1/3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Now, the data is that the host opens Door 3.  So the question is, what is the probability of the data under each hypothesis.  In reverse order:</p>
+<ul class="simple">
+<li><p>Door 3: If the car is behind Door 3 and you choose Door 1, the host has no choice but to open Door 2, so the probability that he opens Door 3 is 0.</p></li>
+<li><p>Door 2: If the car is behind Door 2 and you choose Door 1, the host has not choice but to open Door 3, so the probability that he opens Door 3 is 1.</p></li>
+<li><p>Door 1: If the car is behind Door 1 and you choose Door 1, the host has a choice, and the statement of the problem indicates that he chooses either Door 2 or Door 3 with equal probability, so the probability that he opens Door 3 is 1/2.</p></li>
+</ul>
+<p>That’s all we need to fill in the likelihoods:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="p">[</span><span class="s1">'likelihood'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+      <th>likelihood</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Door 1</th>
+      <td>1/3</td>
+      <td>1/2</td>
+    </tr>
+    <tr>
+      <th>Door 2</th>
+      <td>1/3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Door 3</th>
+      <td>1/3</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>And we fill in the rest of the table in the usual way.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="p">[</span><span class="s1">'unnorm'</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'prior'</span><span class="p">]</span> <span class="o">*</span> <span class="n">table</span><span class="p">[</span><span class="s1">'likelihood'</span><span class="p">]</span>
+<span class="n">prob_data</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'unnorm'</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">'posterior'</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'unnorm'</span><span class="p">]</span> <span class="o">/</span> <span class="n">prob_data</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+      <th>likelihood</th>
+      <th>unnorm</th>
+      <th>posterior</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Door 1</th>
+      <td>1/3</td>
+      <td>1/2</td>
+      <td>1/6</td>
+      <td>1/3</td>
+    </tr>
+    <tr>
+      <th>Door 2</th>
+      <td>1/3</td>
+      <td>1</td>
+      <td>1/3</td>
+      <td>2/3</td>
+    </tr>
+    <tr>
+      <th>Door 3</th>
+      <td>1/3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>In this example the likelihood of the data is not the same under the remaining hypotheses, so the posterior probabilities are not the same.</p>
+<p><strong>Exercise:</strong> Here’s a variation on the Monty Hall problem.  Suppose that whenever the host has a choice, he opens Door 3.  In that case, what are the posterior probabilities for the three doors?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">hypos</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Door 1'</span><span class="p">,</span> <span class="s1">'Door 2'</span><span class="p">,</span> <span class="s1">'Door 3'</span><span class="p">]</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">hypos</span><span class="p">)</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">'prior'</span><span class="p">]</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">table</span><span class="p">[</span><span class="s1">'likelihood'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+      <th>likelihood</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Door 1</th>
+      <td>1/3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Door 2</th>
+      <td>1/3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Door 3</th>
+      <td>1/3</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">table</span><span class="p">[</span><span class="s1">'unnorm'</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'prior'</span><span class="p">]</span> <span class="o">*</span> <span class="n">table</span><span class="p">[</span><span class="s1">'likelihood'</span><span class="p">]</span>
+<span class="n">prob_data</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'unnorm'</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">'posterior'</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'unnorm'</span><span class="p">]</span> <span class="o">/</span> <span class="n">prob_data</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+      <th>likelihood</th>
+      <th>unnorm</th>
+      <th>posterior</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Door 1</th>
+      <td>1/3</td>
+      <td>1</td>
+      <td>1/3</td>
+      <td>1/2</td>
+    </tr>
+    <tr>
+      <th>Door 2</th>
+      <td>1/3</td>
+      <td>1</td>
+      <td>1/3</td>
+      <td>1/2</td>
+    </tr>
+    <tr>
+      <th>Door 3</th>
+      <td>1/3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>Exercise:</strong> Suppose that whenever the host has a choice he chooses Door 3 with probability <code class="docutils literal notranslate"><span class="pre">p</span></code> and Door 2 with probability <code class="docutils literal notranslate"><span class="pre">1-p</span></code>.  What are the posterior probabilities for the three doors?</p>
+<p>Hint: If you use SymPy to create a symbol for <code class="docutils literal notranslate"><span class="pre">p</span></code>, it will carry through the computation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="kn">import</span> <span class="n">symbols</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s1">'p'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">hypos</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Door 1'</span><span class="p">,</span> <span class="s1">'Door 2'</span><span class="p">,</span> <span class="s1">'Door 3'</span><span class="p">]</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">hypos</span><span class="p">)</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">'prior'</span><span class="p">]</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">table</span><span class="p">[</span><span class="s1">'likelihood'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">table</span>
+
+<span class="c1"># Solution</span>
+
+<span class="n">table</span><span class="p">[</span><span class="s1">'unnorm'</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'prior'</span><span class="p">]</span> <span class="o">*</span> <span class="n">table</span><span class="p">[</span><span class="s1">'likelihood'</span><span class="p">]</span>
+<span class="n">prob_data</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'unnorm'</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">table</span><span class="p">[</span><span class="s1">'posterior'</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'unnorm'</span><span class="p">]</span> <span class="o">/</span> <span class="n">prob_data</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prior</th>
+      <th>likelihood</th>
+      <th>unnorm</th>
+      <th>posterior</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Door 1</th>
+      <td>1/3</td>
+      <td>p</td>
+      <td>p/3</td>
+      <td>p/(3*(p/3 + 1/3))</td>
+    </tr>
+    <tr>
+      <th>Door 2</th>
+      <td>1/3</td>
+      <td>1</td>
+      <td>1/3</td>
+      <td>1/(3*(p/3 + 1/3))</td>
+    </tr>
+    <tr>
+      <th>Door 3</th>
+      <td>1/3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">table</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">'Door 1'</span><span class="p">,</span> <span class="s1">'posterior'</span><span class="p">]</span><span class="o">.</span><span class="n">simplify</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \frac{p}{p + 1}\]</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">table</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">'Door 2'</span><span class="p">,</span> <span class="s1">'posterior'</span><span class="p">]</span><span class="o">.</span><span class="n">simplify</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \frac{1}{p + 1}\]</div>
+</div>
+</div>
+<p>Copyright 2020–2026 Allen Downey</p>
+<p>Code license: <a class="reference external" href="https://opensource.org/license/MIT">MIT License</a></p>
+<p>Text license: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="bandit.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Bayesian Bandits</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="gps.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">The GPS Problem</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-coins">Two coins</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">The Monty Hall problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bayes-s-theorem">Bayes’s Theorem</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Allen B. Downey
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <script>new Image().src="https://greenteapress.com/gh.gif?u="+encodeURIComponent(location.href)+"&r="+encodeURIComponent(document.referrer)</script>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

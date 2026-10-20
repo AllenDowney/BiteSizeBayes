@@ -1,0 +1,1151 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="The GPS problem in Python: infer a position in two dimensions from noisy measurements, with a joint prior, a Bayesian update and marginal posteriors." name="description" />
+<meta property="og:title" content="The GPS Problem" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://allendowney.github.io/BiteSizeBayes/gps.html" />
+<meta property="og:site_name" content="Bite Size Bayes" />
+<meta property="og:description" content="The GPS problem in Python: infer a position in two dimensions from noisy measurements, with a joint prior, a Bayesian update and marginal posteriors." />
+<meta property="og:image" content="https://greenteapress.com/wp/wp-content/uploads/2021/04/think_bayes_2e_cover_small.jpg" />
+<meta property="og:image:alt" content="Cover of Think Bayes by Allen B. Downey" />
+
+    <title>The GPS Problem &#8212; Bite Size Bayes</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'gps';</script>
+    <link rel="canonical" href="https://allendowney.github.io/BiteSizeBayes/gps.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The Flea Beetle Problem" href="flea_beetle.html" />
+    <link rel="prev" title="The Monty Hall Problem" href="monty.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Bite Size Bayes</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Bite Size Bayes: An Introduction to Probability and Bayesian Statistics in Python
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">The notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_linda.html">The Laws of Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_bayes.html">Bayes’s Theorem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_cookie.html">The Cookie Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_dice.html">The Dice Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_test.html">Medical Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_pmf.html">Probability Mass Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_euro.html">The Euro Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_soccer.html">The World Cup Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_predict.html">Prediction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_joint.html">Joint Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_faceoff.html">Comparisons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_binomial.html">The Binomial Distribution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_price.html"><em>The Price Is Right</em> Problem</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">More examples</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="bandit.html">Bayesian Bandits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="monty.html">The Monty Hall Problem</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">The GPS Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="flea_beetle.html">The Flea Beetle Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="elvis.html">The Elvis Problem</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/AllenDowney/BiteSizeBayes" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/gps.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>The GPS Problem</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fixing-gps">Fixing GPS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inferring-position">Inferring position</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parachuting-in">Parachuting in</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-away">Running away</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#marginal-posterior-distributions">Marginal posterior distributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="the-gps-problem">
+<h1>The GPS Problem<a class="headerlink" href="#the-gps-problem" title="Link to this heading">#</a></h1>
+<p>This notebook is part of <a class="reference external" href="https://allendowney.github.io/BiteSizeBayes/">Bite Size Bayes</a>, an introduction to probability and Bayesian statistics using Python.</p>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/BiteSizeBayes/blob/master/solutions/gps.ipynb">Click here to run this notebook on Colab</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="fixing-gps">
+<h2>Fixing GPS<a class="headerlink" href="#fixing-gps" title="Link to this heading">#</a></h2>
+<p>The Global Positioning System (GPS) is widely used satellite-based navigation system.  If you have a GPS receiver, you can use it to estimate your position on earth in three dimensions: latitude, longitude, and altitude.</p>
+<p>Although GPS is accurate enough for applications like getting driving directions, is is subject to errors from several sources, <a class="reference external" href="https://en.wikipedia.org/wiki/Error_analysis_for_the_Global_Positioning_System">described in this Wikipedia article</a>.</p>
+<p>For purposes of this problem, I’ll assume that the distribution of errors in the horizontal directions is a normal distribution with mean 0 and standard deviation 5 m.  I’ll also assume that errors in the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> directions are independent.</p>
+<p>In other words, if you stand on a survey marker placed by the <a class="reference external" href="https://en.wikipedia.org/wiki/U.S._National_Geodetic_Survey">National Geodetic Survey (NGS)</a>, so that your position is known with high accuracy, and take a single reading from a GPS receiver, the difference between the reading and the actual position would be well-modeled by a normal distribution.</p>
+<p>SciPy provides an object called <code class="docutils literal notranslate"><span class="pre">norm</span></code> we can use to represent a normal distribution with a given mean and standard deviation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">norm</span>
+
+<span class="n">error_dist</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">norm</span></code> provides a function called <code class="docutils literal notranslate"><span class="pre">pdf</span></code> that compute the Probability Density Function (PDF) of the distribution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">ps</span> <span class="o">=</span> <span class="n">error_dist</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">ps</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">xs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error_series</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Error (m)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Probability density'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Error distribution'</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/9df67857ff67821507cae9b3eeec8649dadac34822cd33b6203873b81da19d75.png" src="_images/9df67857ff67821507cae9b3eeec8649dadac34822cd33b6203873b81da19d75.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">outer_product</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Compute the outer product of two Series.</span>
+<span class="sd">    </span>
+<span class="sd">    First Series goes down the rows;</span>
+<span class="sd">    second goes across the columns.</span>
+<span class="sd">    </span>
+<span class="sd">    s1: Series</span>
+<span class="sd">    s2: Series</span>
+<span class="sd">    </span>
+<span class="sd">    return: DataFrame</span>
+<span class="sd">    """</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">s1</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">s2</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">s1</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">s2</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s what the distributions of width look like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">joint_dist</span> <span class="o">=</span> <span class="n">outer_product</span><span class="p">(</span><span class="n">error_series</span><span class="p">,</span> <span class="n">error_series</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_contour</span><span class="p">(</span><span class="n">joint</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Plot a joint distribution.</span>
+<span class="sd">    </span>
+<span class="sd">    joint: DataFrame representing a joint PMF</span>
+<span class="sd">    """</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">joint</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">joint</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">joint</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'y position in m'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'x position in m'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_contour</span><span class="p">(</span><span class="n">joint_dist</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/25d5351bdff33614133a2c5e0371d310eed356eef225b252856187905f516120.png" src="_images/25d5351bdff33614133a2c5e0371d310eed356eef225b252856187905f516120.png" />
+</div>
+</div>
+</section>
+<section id="inferring-position">
+<h2>Inferring position<a class="headerlink" href="#inferring-position" title="Link to this heading">#</a></h2>
+<p>Now suppose I am standing in a field with a survey marker at the center.  I’ll define the position of the marker to be the origin, where <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> positions are <code class="docutils literal notranslate"><span class="pre">0</span></code>, and I’ll define east to be the positive <code class="docutils literal notranslate"><span class="pre">x</span></code> axis and north to be the positive <code class="docutils literal notranslate"><span class="pre">y</span></code> axis.</p>
+<p>I don’t know my actual location, but based on a single GPS reading, I compute that I am 10 m east and 20 m north of the marker.</p>
+<p>Based on this reading, what is the posterior distribution of my actual location?</p>
+<p>Well, it depends on how I got there.</p>
+<p>To get started, let’s assume that I am equally likely to be at any location in a large, square field.  In that case, <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are independent and their distributions are uniform.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">make_pmf</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ps</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Make a Series that represents a PMF.</span>
+<span class="sd">    </span>
+<span class="sd">    xs: sequence of values</span>
+<span class="sd">    ps: sequence of probabilities</span>
+<span class="sd">    options: keyword arguments passed to Series constructor</span>
+<span class="sd">    </span>
+<span class="sd">    returns: Pandas Series</span>
+<span class="sd">    """</span>
+    <span class="n">pmf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">ps</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">xs</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="n">pmf</span> <span class="o">/=</span> <span class="n">pmf</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">pmf</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">prior_x</span> <span class="o">=</span> <span class="n">make_pmf</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">prior_y</span> <span class="o">=</span> <span class="n">make_pmf</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>I’ll group the data by species and compute summary statistics.</p>
+<p>To compute the likelihood of the <code class="docutils literal notranslate"><span class="pre">x</span></code> data, we can ask, “If my actual position were <code class="docutils literal notranslate"><span class="pre">x</span></code>, what is the probability my GPS reading would be 10 m?”</p>
+<p>To answer that question, we can compute the hypothetical error for each value of <code class="docutils literal notranslate"><span class="pre">x</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error_x</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">-</span> <span class="n">xs</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then we can use <code class="docutils literal notranslate"><span class="pre">error_dist</span></code> to compute the probability of the hypothetical errors.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">likelihood</span> <span class="o">=</span> <span class="n">error_dist</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">error_x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And the posterior distribution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">posterior_x</span> <span class="o">=</span> <span class="n">prior_x</span> <span class="o">*</span> <span class="n">likelihood</span>
+<span class="n">posterior_x</span> <span class="o">/=</span> <span class="n">posterior_x</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prior_x</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">'prior'</span><span class="p">)</span>
+<span class="n">posterior_x</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">'posterior'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Position (m)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Probability'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Prior distribution of position'</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ff4b2db51140dfebd8151e8a6ef4662990073e3b9302b9c3df426494d4a265fc.png" src="_images/ff4b2db51140dfebd8151e8a6ef4662990073e3b9302b9c3df426494d4a265fc.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error_y</span> <span class="o">=</span> <span class="mi">20</span> <span class="o">-</span> <span class="n">ys</span>
+
+<span class="n">likelihood</span> <span class="o">=</span> <span class="n">error_dist</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">error_y</span><span class="p">)</span>
+
+<span class="n">posterior_y</span> <span class="o">=</span> <span class="n">prior_y</span> <span class="o">*</span> <span class="n">likelihood</span>
+<span class="n">posterior_y</span> <span class="o">/=</span> <span class="n">posterior_y</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">joint_posterior1</span> <span class="o">=</span> <span class="n">outer_product</span><span class="p">(</span><span class="n">posterior_y</span><span class="p">,</span> <span class="n">posterior_x</span><span class="p">)</span>
+<span class="n">plot_contour</span><span class="p">(</span><span class="n">joint_posterior1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/5344552d456d4acc7ba69e39f75a6a6c5b3e78f040a816527edafd46423ae0c4.png" src="_images/5344552d456d4acc7ba69e39f75a6a6c5b3e78f040a816527edafd46423ae0c4.png" />
+</div>
+</div>
+<p>This result might not come as a surprise to you.  With a uniform prior, the posterior is just a normalized version of the likelihood function.</p>
+<p>Since the likelihood function is the PDF of a normal distribution, the posterior is a normal distribution with mean at the measured location, (10, 20), and the same standard deviation as the error distribution.</p>
+<p>So we could have figured that out in our heads.  But now that we have done it the hard way, we are ready to solve harder problems.</p>
+</section>
+<section id="parachuting-in">
+<h2>Parachuting in<a class="headerlink" href="#parachuting-in" title="Link to this heading">#</a></h2>
+<p>Suppose I parachute into the field and try to land on the marker, and suppose my actual landing position is well modeled by a normal distribution, along both axes, with mean 0 and standard deviation 15 m.</p>
+<p>We can construct the marginal distributions for my positions along the <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> axes, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">landing_dist</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">ps</span> <span class="o">=</span> <span class="n">landing_dist</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+<span class="n">prior_x</span> <span class="o">=</span> <span class="n">make_pmf</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ps</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">ps</span> <span class="o">=</span> <span class="n">landing_dist</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+<span class="n">prior_y</span> <span class="o">=</span> <span class="n">make_pmf</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">ps</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Assuming that my errors along the two axes are independent, we can use <code class="docutils literal notranslate"><span class="pre">outer_product</span></code> to construct the joint distribution for my landing spot.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">joint_posterior</span> <span class="o">=</span> <span class="n">outer_product</span><span class="p">(</span><span class="n">prior_y</span><span class="p">,</span> <span class="n">prior_x</span><span class="p">)</span>
+
+<span class="n">plot_contour</span><span class="p">(</span><span class="n">joint_posterior</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/41ce2ad45332c38fa3330c11bed54f01ed0f62ab9caf32790e8176495bdf5e42.png" src="_images/41ce2ad45332c38fa3330c11bed54f01ed0f62ab9caf32790e8176495bdf5e42.png" />
+</div>
+</div>
+<p>After landing, suppose I take a single GPS reading that indicates I am 10 m east and 20 m north of the marker.</p>
+<p>I can use the GPS reading to update the distribution of my <code class="docutils literal notranslate"><span class="pre">x</span></code> coordinate, exactly as in the previous problem.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error_x</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">-</span> <span class="n">xs</span>
+
+<span class="n">likelihood</span> <span class="o">=</span> <span class="n">error_dist</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">error_x</span><span class="p">)</span>
+
+<span class="n">posterior_x</span> <span class="o">=</span> <span class="n">prior_x</span> <span class="o">*</span> <span class="n">likelihood</span>
+<span class="n">posterior_x</span> <span class="o">/=</span> <span class="n">posterior_x</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s what the prior and posterior distributions look like for my <code class="docutils literal notranslate"><span class="pre">x</span></code> coordinate:</p>
+<p>prior_x.plot(label=’prior’)
+posterior_x.plot(label=’posterior’)</p>
+<p>plt.xlabel(‘Position (m)’)
+plt.ylabel(‘Probability’)
+plt.title(‘Prior distribution of position’)
+plt.legend();</p>
+<p>To compute the posterior mean, I’ll use this function, which we’ve seen in a previous notebook.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">pmf_mean</span><span class="p">(</span><span class="n">pmf</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Compute the mean of a PMF.</span>
+<span class="sd">    </span>
+<span class="sd">    pmf: Series representing a PMF</span>
+<span class="sd">    </span>
+<span class="sd">    return: float</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pmf</span><span class="o">.</span><span class="n">index</span> <span class="o">*</span> <span class="n">pmf</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The posterior mean is 9, a little less than the GPS reading, because in the prior distribution, values closer to 0 are more likely.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf_mean</span><span class="p">(</span><span class="n">posterior_x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(9.0)
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong>  Update the <code class="docutils literal notranslate"><span class="pre">y</span></code> coordinate with the GPS read (20 m north) and compute the posterior mean.  We expect it to be a bit less than 20 m.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">error_y</span> <span class="o">=</span> <span class="mi">20</span> <span class="o">-</span> <span class="n">ys</span>
+
+<span class="n">likelihood</span> <span class="o">=</span> <span class="n">error_dist</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">error_y</span><span class="p">)</span>
+
+<span class="n">posterior_y</span> <span class="o">=</span> <span class="n">prior_y</span> <span class="o">*</span> <span class="n">likelihood</span>
+<span class="n">posterior_y</span> <span class="o">/=</span> <span class="n">posterior_y</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">pmf_mean</span><span class="p">(</span><span class="n">posterior_y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(17.999999999888672)
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this version of the problem, the <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> coordinates are independent, so we can use <code class="docutils literal notranslate"><span class="pre">outer_product</span></code> to construct the joint posterior.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">joint_posterior2</span> <span class="o">=</span> <span class="n">outer_product</span><span class="p">(</span><span class="n">posterior_y</span><span class="p">,</span> <span class="n">posterior_x</span><span class="p">)</span>
+<span class="n">plot_contour</span><span class="p">(</span><span class="n">joint_posterior2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/f038fa3e9301b807c11ce92d88b3e1155903be7a029edbb65b888d85915e6779.png" src="_images/f038fa3e9301b807c11ce92d88b3e1155903be7a029edbb65b888d85915e6779.png" />
+</div>
+</div>
+<p>If you are not convinced that the coordinates are independent, just because I say say, you could update the joint prior distribution rather than the marginal distributions.  In the next example, we’ll see how.</p>
+</section>
+<section id="running-away">
+<h2>Running away<a class="headerlink" href="#running-away" title="Link to this heading">#</a></h2>
+<p>Suppose I start out standing on the marker, spin until I am facing in a random direction, and then walk about 30 m, where my margin of error is 3 m.</p>
+<p>So my distance from the origin is well modeled by a normal distribution with mean 30 and standard deviation 3.</p>
+<p>Before I get a GPS reading, what is the prior distribution of my position?</p>
+<p>In this example, <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are not independent.  For example, if I know that <code class="docutils literal notranslate"><span class="pre">x</span></code> is near 30 m, that implies that <code class="docutils literal notranslate"><span class="pre">y</span></code> is near 0.  And if I know <code class="docutils literal notranslate"><span class="pre">y</span></code> is near 0, that implies that <code class="docutils literal notranslate"><span class="pre">x</span></code> is close to 30 m or -30 m.</p>
+<p>To construct the prior distribution, I’ll start with a joint distribution for <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> that is uniform and independent.  Then I’ll do a Bayesian update with the data that I am 15 from the origin.</p>
+<p>Here are the uniform marginal priors we’ve used before.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">prior_x</span> <span class="o">=</span> <span class="n">make_pmf</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">prior_y</span> <span class="o">=</span> <span class="n">make_pmf</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here is the uniform joint prior.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">joint_prior</span> <span class="o">=</span> <span class="n">outer_product</span><span class="p">(</span><span class="n">prior_x</span><span class="p">,</span> <span class="n">prior_y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To compute the distances from the center, I’ll use the <code class="docutils literal notranslate"><span class="pre">outer</span></code> version of the NumPy function <code class="docutils literal notranslate"><span class="pre">hypot</span></code>, which computes the hypotenuse of a triangle with the given sides.</p>
+<p>See how useful outer function are?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hypot</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">)</span>
+<span class="n">distances</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(101, 101)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, to compute a likelihood function, we can compute <code class="docutils literal notranslate"><span class="pre">error</span></code>, which is the difference between each hypothetical distance and the data, which is 30 m.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error</span> <span class="o">=</span> <span class="n">distances</span> <span class="o">-</span> <span class="mi">30</span>
+<span class="n">error</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(101, 101)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The distribution of these errors is normal with standard deviation 3 m.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error_dist</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To get the likelihoods, we evaluate the normal PDF for each hypothetical error.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">likelihood</span> <span class="o">=</span> <span class="n">error_dist</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+<span class="n">likelihood</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(101, 101)
+</pre></div>
+</div>
+</div>
+</div>
+<p>As usual, the posterior distribution is the normalize product of the prior and the likelihood.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">joint_posterior3</span> <span class="o">=</span> <span class="n">joint_prior</span> <span class="o">*</span> <span class="n">likelihood</span>
+<span class="n">joint_posterior3</span> <span class="o">/=</span> <span class="n">joint_posterior3</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here’s what the posterior joint distribution looks like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_contour</span><span class="p">(</span><span class="n">joint_posterior3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Joint distribution'</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/240c41b089a6329907ff495ec5544cd3e0429a1b8ff3254bd23b0c523dbc1ceb.png" src="_images/240c41b089a6329907ff495ec5544cd3e0429a1b8ff3254bd23b0c523dbc1ceb.png" />
+</div>
+</div>
+<p>Remember that we did all that to compute the prior before we get a GPS reading.</p>
+<p>Now suppose we take a reading and it indicates that we are 10 m east and 20 m north of the marker (as in the previous versions).</p>
+<p>We’ll use the posterior we just computed as the prior for the next update.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">donut_prior</span> <span class="o">=</span> <span class="n">joint_posterior3</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To compute the likelihoods, I’m going to cheat a little.</p>
+<p>Remember that in the first version of the problem we started with a uniform prior and did an update with the same data.  The posterior we computed is just the normalized likelihood of the data, so we can use it as the likelihood for this update.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">likelihood</span> <span class="o">=</span> <span class="n">joint_posterior1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As usual, the posterior is the normalized product of the prior and the likelihood.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">donut_posterior</span> <span class="o">=</span> <span class="n">donut_prior</span> <span class="o">*</span> <span class="n">likelihood</span>
+<span class="n">donut_posterior</span> <span class="o">/=</span> <span class="n">donut_posterior</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here’s what it looks like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_contour</span><span class="p">(</span><span class="n">donut_posterior</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Joint posterior distribution'</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/7b41c940f5a89dbe214dbebb37b4739c19a741e0d69028d1a059dcd876784646.png" src="_images/7b41c940f5a89dbe214dbebb37b4739c19a741e0d69028d1a059dcd876784646.png" />
+</div>
+</div>
+<p>It reminds me of <a class="reference external" href="https://en.wikipedia.org/wiki/Cloud_Gate">The Bean</a>.</p>
+</section>
+<section id="marginal-posterior-distributions">
+<h2>Marginal posterior distributions<a class="headerlink" href="#marginal-posterior-distributions" title="Link to this heading">#</a></h2>
+<p>From the joint posterior distribution we can extract the marginal distributions for the coordinates.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">marginal</span><span class="p">(</span><span class="n">joint</span><span class="p">,</span> <span class="n">axis</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Compute a marginal distribution.</span>
+<span class="sd">    </span>
+<span class="sd">    axis=0 returns the marginal distribution of the second variable</span>
+<span class="sd">    axis=1 returns the marginal distribution of the first variable</span>
+<span class="sd">    </span>
+<span class="sd">    joint: DataFrame representing a joint PMF</span>
+<span class="sd">    axis: int axis to sum along</span>
+<span class="sd">    </span>
+<span class="sd">    returns: Series representing a marginal PMF</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">joint</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">donut_posterior_x</span> <span class="o">=</span> <span class="n">marginal</span><span class="p">(</span><span class="n">donut_posterior</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">donut_posterior_y</span> <span class="o">=</span> <span class="n">marginal</span><span class="p">(</span><span class="n">donut_posterior</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s what they look like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">donut_posterior_x</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">'x'</span><span class="p">)</span>
+<span class="n">donut_posterior_y</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">'y'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Position (m)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Probability'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Marginal posterior distributions'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/aa317c6690ce4cf010517b0f417011d5ed362f3b557c06c64484462b8fceda0e.png" src="_images/aa317c6690ce4cf010517b0f417011d5ed362f3b557c06c64484462b8fceda0e.png" />
+</div>
+</div>
+<p>And here are the posterior means.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean_x</span> <span class="o">=</span> <span class="n">pmf_mean</span><span class="p">(</span><span class="n">donut_posterior_x</span><span class="p">)</span>
+<span class="n">mean_x</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(12.31200634472568)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean_y</span> <span class="o">=</span> <span class="n">pmf_mean</span><span class="p">(</span><span class="n">donut_posterior_y</span><span class="p">)</span>
+<span class="n">mean_y</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(24.624012689451366)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s the distance from the marker to the location of the posterior means:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">hypot</span><span class="p">(</span><span class="n">mean_x</span><span class="p">,</span> <span class="n">mean_y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(27.530483126215334)
+</pre></div>
+</div>
+</div>
+</div>
+<p>This distance represents a compromise between two sources of information:</p>
+<ul class="simple">
+<li><p>I started with the prior belief that I was 30 m from the marker, but</p></li>
+<li><p>My GPS reading suggests that I am only about 22 m from the marker.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">hypot</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(22.360679774997898)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The posterior mean distance is close to 30 m than 22 m because the margin of error in the prior, 3 m, is less than the margin of error of GPS, which is 5 m in each direction.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">hypot</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(7.0710678118654755)
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this case, Bayes’s theorem tells us that we should give more weight to out prior belief about the distance.</p>
+<p>Actually, the posterior mean distance we just computed is not quite right because we computed the means of the marginal distributions independently.</p>
+<p>To compute the posterior mean correctly, we have to compute the weighted sum of the hypothetical distances, using the posterior probabilities as weights.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qs</span> <span class="o">=</span> <span class="n">distances</span>
+<span class="n">ps</span> <span class="o">=</span> <span class="n">donut_posterior</span><span class="o">.</span><span class="n">values</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">qs</span> <span class="o">*</span> <span class="n">ps</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(28.095352174426058)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>Copyright 2020–2026 Allen Downey</p>
+<p>Code license: <a class="reference external" href="https://opensource.org/license/MIT">MIT License</a></p>
+<p>Text license: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="monty.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">The Monty Hall Problem</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="flea_beetle.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">The Flea Beetle Problem</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fixing-gps">Fixing GPS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inferring-position">Inferring position</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parachuting-in">Parachuting in</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-away">Running away</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#marginal-posterior-distributions">Marginal posterior distributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Allen B. Downey
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <script>new Image().src="https://greenteapress.com/gh.gif?u="+encodeURIComponent(location.href)+"&r="+encodeURIComponent(document.referrer)</script>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
