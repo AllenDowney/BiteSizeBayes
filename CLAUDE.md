@@ -18,7 +18,7 @@ Each notebook downloads `utils.py` and its data files from `raw/master` if they 
 
 ## Testing
 
-Environment: mamba env `BiteSizeBayes` (Python 3.12). Run the solution notebooks top to bottom:
+Environment: mamba env `BiteSizeBayes` (Python 3.13). Run the solution notebooks top to bottom:
 
 ```
 pytest --nbmake solutions/*.ipynb [01]*.ipynb monty.ipynb elvis.ipynb clean_gss_bayes.ipynb
